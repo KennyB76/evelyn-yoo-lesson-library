@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Rational Expressions &amp; Equations — ANSWER KEY — Evelyn Yoo (2026-04-24)</title>
+
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['$','$'], ['\\(','\\)']] },
+  startup: { ready: () => { MathJax.startup.defaultReady(); MathJax.startup.promise.then(() => { window.mathJaxDone = true; }); } }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+<style>
+/* ===== base-print.css ===== */
+@page { size: letter; margin: 0.5in; }
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; background: #fafafa; }
+body { font-family: 'Century Schoolbook', 'Times New Roman', serif; color: #000; }
+.page { max-width: 720px; margin: 0 auto; padding: 70px 50px 40px 50px; background: #fff; }
+.page-break { page-break-before: always; break-before: page; }
+@media print {
+  html, body { background: #fff; }
+  .page { max-width: none; padding: 0.55in 0.5in 0.4in 0.5in; margin: 0; box-shadow: none; }
+  .problem, .answer-block, .reminder, .parent-note, .example, .word-problem {
+    page-break-inside: avoid; break-inside: avoid;
+  }
+  .part-header, .directions, .problem-header, h1, h2, h3 {
+    page-break-after: avoid; break-after: avoid;
+  }
+  .page-break { page-break-before: always; break-before: page; }
+}
+
+/* ===== theme-girl.css ===== */
+:root {
+  --color-primary:       #c2185b;
+  --color-primary-dark:  #880e4f;
+  --color-accent:        #7b1fa2;
+  --color-header-border: #c2185b;
+  --color-final-answer:  #2e7d32;
+  --color-warning:       #d84315;
+  --color-parent-note:   #6a1b9a;
+  --color-tag-bg:        transparent;
+  --color-tag-border:    #c2185b;
+  --color-tag-text:      #c2185b;
+  --color-muted:         #555;
+  --color-rule:          #ccc;
+}
+
+/* ===== level-middle.css (answer-key trimmed to 10pt) ===== */
+body { font-family: 'Times New Roman', serif; font-size: 10pt; line-height: 1.45; }
+.header { text-align: center; padding-bottom: 8px; margin-bottom: 12px; border-bottom: 2px solid var(--color-header-border); }
+.school-name { font-size: 9pt; letter-spacing: 4px; color: var(--color-primary); font-weight: bold; }
+.subject-tag, .key-tag { display: inline-block; padding: 2px 10px; font-size: 8pt; letter-spacing: 2px; margin: 3px 3px 5px 3px; font-weight: bold; }
+.subject-tag { border: 1.5px solid var(--color-primary); color: var(--color-primary); }
+.key-tag { border: 1.5px solid var(--color-warning); color: var(--color-warning); }
+h1 { font-size: 14pt; margin: 4px 0 6px 0; font-weight: bold; line-height: 1.25; }
+.info { display: flex; justify-content: space-between; font-size: 10pt; margin-top: 4px; }
+.standard { font-size: 8pt; font-style: italic; margin-top: 4px; color: var(--color-muted); }
+.part-header { font-size: 12pt; font-weight: bold; color: var(--color-primary); margin: 16px 0 4px 0; padding-bottom: 3px; border-bottom: 2px solid var(--color-primary); }
+.footer { text-align: center; font-size: 8pt; color: #666; border-top: 1px solid var(--color-rule); margin-top: 16px; padding-top: 4px; }
+
+.answer-block { margin: 10px 0; padding: 8px 12px; border: 1px solid #ddd; border-radius: 4px; }
+.problem-header { font-weight: bold; color: var(--color-primary); font-size: 10.5pt; margin-bottom: 4px; }
+.problem-text { font-size: 9.5pt; padding: 5px 8px; background: #f7f7f7; border-left: 3px solid #bbb; margin-bottom: 6px; line-height: 1.4; }
+.concept-tag { display: inline-block; font-size: 7.5pt; padding: 1px 6px; margin: 2px 3px 4px 0; border: 1px solid var(--color-tag-border); color: var(--color-tag-text); border-radius: 10px; }
+.solution { margin: 5px 0; padding-left: 8px; border-left: 3px solid var(--color-final-answer); }
+.solution-step { margin: 3px 0; font-size: 9.5pt; line-height: 1.5; }
+.final-answer { display: inline-block; border: 2px solid var(--color-final-answer); color: var(--color-final-answer); font-weight: bold; padding: 3px 10px; border-radius: 4px; margin-top: 4px; font-size: 10.5pt; }
+.extraneous-note {
+  display: inline-block;
+  border: 1.5px dashed var(--color-warning);
+  color: var(--color-warning);
+  font-size: 8.5pt;
+  padding: 1px 6px;
+  margin-left: 6px;
+  font-weight: bold;
+}
+.subgroup-label {
+  display: block;
+  font-size: 10pt;
+  font-weight: bold;
+  color: var(--color-accent);
+  margin: 10px 0 4px 0;
+  padding: 3px 8px;
+  border-left: 3px solid var(--color-accent);
+}
+</style>
+</head>
+
+<body>
+<div class="page">
+
+<!-- ===== Header ===== -->
+<div class="header">
+  <div class="school-name">NEWTON SCHOOL</div>
+  <div class="subject-tag">ALGEBRA 1</div>
+  <span class="key-tag">ANSWER KEY</span>
+  <h1>Rational Expressions &amp; Equations — Test Redo Mix</h1>
+  <div class="info">
+    <span><strong>Student:</strong> Evelyn Yoo</span>
+    <span><strong>Date:</strong> 2026-04-24</span>
+  </div>
+  <div class="standard">
+    <strong>Standard:</strong> CCSS.MATH.CONTENT.HSA-APR.D.6 &amp; HSA-REI.A.2
+  </div>
+</div>
+
+<!-- ========== PART A ========== -->
+<div class="part-header">Part A — SIMPLIFY</div>
+
+<span class="subgroup-label">A-1 · Linear Simplify</span>
+
+<div class="answer-block">
+  <div class="problem-header">Problem 1</div>
+  <div class="problem-text">Simplify and state restriction: \(\displaystyle \frac{a - b}{a^2 - b^2}\)</div>
+  <span class="concept-tag">Difference of Squares</span>
+  <span class="concept-tag">Cancel</span>
+  <span class="concept-tag">Restriction</span>
+  <div class="solution">
+    <div class="solution-step"><strong>Step 1.</strong> Factor denominator: \(a^2 - b^2 = (a-b)(a+b)\).</div>
+    <div class="solution-step"><strong>Step 2.</strong> \(\displaystyle \frac{\cancel{(a-b)}}{\cancel{(a-b)}(a+b)} = \frac{1}{a+b}\).</div>
+    <div class="solution-step"><strong>Step 3 — Restriction:</strong> original denominator zero when \(a = b\) or \(a = -b\). After cancel we still need \(a \ne b\) (lost factor) AND \(a \ne -b\).</div>
+  </div>
+  <div class="final-answer">\(\displaystyle \frac{1}{a+b}, \;\; a \ne b, \;\; a \ne -b\)</div>
+</div>
+
+<div class="answer-block">
+  <div class="problem-header">Problem 2</div>
+  <div class="problem-text">Simplify: \(\displaystyle \frac{y}{x - y} + \frac{x}{y - x}\)</div>
+  <span class="concept-tag">Opposites</span>
+  <span class="concept-tag">Common Denom</span>
+  <div class="solution">
+    <div class="solution-step"><strong>Step 1.</strong> Rewrite \((y-x) = -(x-y)\): \(\displaystyle \frac{x}{y-x} = \frac{x}{-(x-y)} = -\frac{x}{x-y}\).</div>
+    <div class="solution-step"><strong>Step 2.</strong> \(\displaystyle \frac{y}{x-y} - \frac{x}{x-y} = \frac{y - x}{x - y}\).</div>
+    <div class="solution-step"><strong>Step 3.</strong> \(\displaystyle \frac{y - x}{x - y} = \frac{-(x-y)}{x-y} = -1\).</div>
+  </div>
+  <div class="final-answer">\(-1\), \(x \ne y\)</div>
+</div>
+
+<div class="answer-block">
+  <div class="problem-header">Problem 3</div>
+  <div class="problem-text">Simplify: \(\displaystyle \frac{3}{x - 3} - \frac{x}{3 - x}\)</div>
+  <span class="concept-tag">Opposites</span>
+  <span class="concept-tag">Common Denom</span>
+  <div class="solution">
+    <div class="solution-step"><strong>Step 1.</strong> \((3 - x) = -(x - 3)\), so \(\displaystyle \frac{x}{3-x} = -\frac{x}{x-3}\).</div>
+    <div class="solution-step"><strong>Step 2.</strong> \(\displaystyle \frac{3}{x-3} - \left(-\frac{x}{x-3}\right) = \frac{3}{x-3} + \frac{x}{x-3}\).</div>
+    <div class="solution-step"><strong>Step 3.</strong> \(\displaystyle = \frac{3 + x}{x - 3} = \frac{x + 3}{x - 3}\).</div>
+  </div>
+  <div class="final-answer">\(\displaystyle \frac{x+3}{x-3}, \;\; x \ne 3\)</div>
+</div>
+
+<span class="subgroup-label">A-2 · Quadratic Simplify</span>
+
+<div class="answer-block">
+  <div class="problem-header">Problem 4</div>
+  <div class="problem-text">Simplify: \(\displaystyle \frac{9m^2 - 4}{3m^2 + 4m - 4}\)</div>
+  <span class="concept-tag">Difference of Squares</span>
+  <span class="concept-tag">Factor Trinomial (AC method)</span>
+  <div class="solution">
+    <div class="solution-step"><strong>Step 1.</strong> Numerator: \(9m^2 - 4 = (3m - 2)(3m + 2)\).</div>
+    <div class="solution-step"><strong>Step 2.</strong> Denominator \(3m^2 + 4m - 4\): AC \(= 3 \cdot (-4) = -12\). Split \(4m = 6m - 2m\):
+      \(3m^2 + 6m - 2m - 4 = 3m(m+2) - 2(m+2) = (3m-2)(m+2)\).</div>
+    <div class="solution-step"><strong>Step 3.</strong> Cancel \((3m-2)\): \(\displaystyle \frac{\cancel{(3m-2)}(3m+2)}{\cancel{(3m-2)}(m+2)}\).</div>
+  </div>
+  <div class="final-answer">\(\displaystyle \frac{3m + 2}{m + 2}, \;\; m \ne \tfrac{2}{3}, \;\; m \ne -2\)</div>
+</div>
+
+<div class="answer-block">
+  <div class="problem-header">Problem 5</div>
+  <div class="problem-text">Simplify: \(\displaystyle \frac{x^2 - 4}{x^2 - x - 6} \div \frac{x^2 + 4x + 4}{x^2 - 9}\)</div>
+  <span class="concept-tag">Division → Reciprocal</span>
+  <span class="concept-tag">Factor All</span>
+  <div class="solution">
+    <div class="solution-step"><strong>Step 1.</strong> Multiply by reciprocal: \(\displaystyle \frac{x^2-4}{x^2-x-6} \cdot \frac{x^2-9}{x^2+4x+4}\).</div>
+    <div class="solution-step"><strong>Step 2.</strong> Factor every polynomial: \(\displaystyle \frac{(x-2)(x+2)}{(x-3)(x+2)} \cdot \frac{(x-3)(x+3)}{(x+2)^2}\).</div>
+    <div class="solution-step"><strong>Step 3.</strong> Cancel \((x+2)\) once and \((x-3)\): result is \(\displaystyle \frac{(x-2)(x+3)}{(x+2)^2}\).</div>
+  </div>
+  <div class="final-answer">\(\displaystyle \frac{(x-2)(x+3)}{(x+2)^2}\)</div>
+</div>
+
+<div class="answer-block">
+  <div class="problem-header">Problem 6 (bonus-style)</div>
+  <div class="problem-text">Simplify: \(\displaystyle \left( y - \frac{2}{y-1} \right)\left( y + \frac{1}{y-2} \right)\)</div>
+  <span class="concept-tag">Combine Fractions</span>
+  <span class="concept-tag">Factor Trinomials</span>
+  <span class="concept-tag">Cancel</span>
+  <div class="solution">
+    <div class="solution-step"><strong>Step 1.</strong> First factor (common denom \(y-1\)): \(\displaystyle \frac{y(y-1) - 2}{y-1} = \frac{y^2 - y - 2}{y-1} = \frac{(y-2)(y+1)}{y-1}\).</div>
+    <div class="solution-step"><strong>Step 2.</strong> Second factor (common denom \(y-2\)): \(\displaystyle \frac{y(y-2) + 1}{y-2} = \frac{y^2 - 2y + 1}{y-2} = \frac{(y-1)^2}{y-2}\).</div>
+    <div class="solution-step"><strong>Step 3.</strong> Multiply and cancel: \(\displaystyle \frac{(y-2)(y+1)}{\cancel{(y-1)}} \cdot \frac{\cancel{(y-1)}(y-1)}{\cancel{(y-2)}} = (y+1)(y-1)\).</div>
+  </div>
+  <div class="final-answer">\(y^2 - 1\)</div>
+</div>
+
+<!-- ========== PART B ========== -->
+<div class="part-header page-break">Part B — SOLVE</div>
+
+<span class="subgroup-label">B-1 · Linear Solve</span>
+
+<div class="answer-block">
+  <div class="problem-header">Problem 7</div>
+  <div class="problem-text">Solve: \(\displaystyle \frac{3}{x+2} = \frac{1}{x-2}\)</div>
+  <span class="concept-tag">Cross-Multiply</span>
+  <span class="concept-tag">Check</span>
+  <div class="solution">
+    <div class="solution-step"><strong>Step 1.</strong> Cross-multiply: \(3(x-2) = 1(x+2)\).</div>
+    <div class="solution-step"><strong>Step 2.</strong> \(3x - 6 = x + 2 \;\Rightarrow\; 2x = 8 \;\Rightarrow\; x = 4\).</div>
+    <div class="solution-step"><strong>Step 3 — Check.</strong> \(x+2 = 6, \; x-2 = 2\) — both non-zero. Valid.</div>
+  </div>
+  <div class="final-answer">\(x = 4\)</div>
+</div>
+
+<div class="answer-block">
+  <div class="problem-header">Problem 8</div>
+  <div class="problem-text">Solve: \(\displaystyle \frac{x-1}{x+3} = 2\)</div>
+  <span class="concept-tag">Clear Denom</span>
+  <span class="concept-tag">Linear</span>
+  <div class="solution">
+    <div class="solution-step"><strong>Step 1.</strong> Multiply both sides by \(x+3\): \(x - 1 = 2(x + 3)\).</div>
+    <div class="solution-step"><strong>Step 2.</strong> \(x - 1 = 2x + 6 \;\Rightarrow\; -7 = x\).</div>
+    <div class="solution-step"><strong>Step 3 — Check.</strong> \(x+3 = -4 \ne 0\). Valid.</div>
+  </div>
+  <div class="final-answer">\(x = -7\)</div>
+</div>
+
+<div class="answer-block">
+  <div class="problem-header">Problem 9</div>
+  <div class="problem-text">Solve: \(\displaystyle \frac{2}{x-1} + \frac{3}{x-1} = \frac{5}{2}\)</div>
+  <span class="concept-tag">Combine LHS</span>
+  <span class="concept-tag">Cross-Multiply</span>
+  <div class="solution">
+    <div class="solution-step"><strong>Step 1.</strong> Combine: \(\displaystyle \frac{2+3}{x-1} = \frac{5}{x-1}\).</div>
+    <div class="solution-step"><strong>Step 2.</strong> \(\displaystyle \frac{5}{x-1} = \frac{5}{2} \;\Rightarrow\; x - 1 = 2 \;\Rightarrow\; x = 3\).</div>
+    <div class="solution-step"><strong>Step 3 — Check.</strong> \(x - 1 = 2 \ne 0\). Valid.</div>
+  </div>
+  <div class="final-answer">\(x = 3\)</div>
+</div>
+
+<span class="subgroup-label page-break">B-2 · Quadratic Solve</span>
+
+<div class="answer-block">
+  <div class="problem-header">Problem 10</div>
+  <div class="problem-text">Solve: \(\displaystyle \frac{x}{x-1} - \frac{2}{x+1} = \frac{4}{x^2-1}\)</div>
+  <span class="concept-tag">Clear Denom</span>
+  <span class="concept-tag">Quadratic</span>
+  <span class="concept-tag">Check Extraneous</span>
+  <div class="solution">
+    <div class="solution-step"><strong>Step 1.</strong> \(x^2-1 = (x-1)(x+1)\). Multiply everything by \((x-1)(x+1)\):
+      \(x(x+1) - 2(x-1) = 4\).</div>
+    <div class="solution-step"><strong>Step 2.</strong> \(x^2 + x - 2x + 2 = 4 \;\Rightarrow\; x^2 - x - 2 = 0\).</div>
+    <div class="solution-step"><strong>Step 3.</strong> \((x-2)(x+1) = 0 \;\Rightarrow\; x = 2\) or \(x = -1\).</div>
+    <div class="solution-step"><strong>Step 4 — Check.</strong> \(x = -1\) makes \(x+1 = 0\).
+      <span class="extraneous-note">⚠ x = -1 EXTRANEOUS</span></div>
+  </div>
+  <div class="final-answer">\(x = 2\)</div>
+</div>
+
+<div class="answer-block">
+  <div class="problem-header">Problem 11</div>
+  <div class="problem-text">Solve: \(\displaystyle \frac{1}{x} + \frac{1}{x+3} = \frac{1}{2}\)</div>
+  <span class="concept-tag">LCD</span>
+  <span class="concept-tag">Quadratic</span>
+  <div class="solution">
+    <div class="solution-step"><strong>Step 1.</strong> LCD = \(2x(x+3)\): \(2(x+3) + 2x = x(x+3)\).</div>
+    <div class="solution-step"><strong>Step 2.</strong> \(2x + 6 + 2x = x^2 + 3x \;\Rightarrow\; 4x + 6 = x^2 + 3x\).</div>
+    <div class="solution-step"><strong>Step 3.</strong> \(x^2 - x - 6 = 0 \;\Rightarrow\; (x-3)(x+2) = 0\).</div>
+    <div class="solution-step"><strong>Step 4 — Check.</strong> Neither \(x=3\) nor \(x=-2\) makes a denominator zero. Both valid.</div>
+  </div>
+  <div class="final-answer">\(x = 3\) or \(x = -2\)</div>
+</div>
+
+<div class="answer-block">
+  <div class="problem-header">Problem 12</div>
+  <div class="problem-text">Solve: \(\displaystyle \frac{2x}{x-3} = \frac{6}{x-3} + \frac{x}{2}\)</div>
+  <span class="concept-tag">Clear Denom</span>
+  <span class="concept-tag">Quadratic</span>
+  <span class="concept-tag">Check Extraneous</span>
+  <div class="solution">
+    <div class="solution-step"><strong>Step 1.</strong> Multiply by \(2(x-3)\): \(4x = 12 + x(x-3)\).</div>
+    <div class="solution-step"><strong>Step 2.</strong> \(4x = 12 + x^2 - 3x \;\Rightarrow\; 0 = x^2 - 7x + 12\).</div>
+    <div class="solution-step"><strong>Step 3.</strong> \((x-3)(x-4) = 0 \;\Rightarrow\; x = 3\) or \(x = 4\).</div>
+    <div class="solution-step"><strong>Step 4 — Check.</strong> \(x = 3\) makes \(x - 3 = 0\).
+      <span class="extraneous-note">⚠ x = 3 EXTRANEOUS</span></div>
+  </div>
+  <div class="final-answer">\(x = 4\)</div>
+</div>
+
+<div class="footer">Created by Newton School 2026-04-24 &copy; Copyright</div>
+
+</div>
+</body>
+</html>

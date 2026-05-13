@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Rational Expressions & Equations — Test Redo Mix — Evelyn Yoo (2026-04-24)</title>
+
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['$','$'], ['\\(','\\)']] },
+  startup: { ready: () => { MathJax.startup.defaultReady(); MathJax.startup.promise.then(() => { window.mathJaxDone = true; }); } }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+<style>
+/* ===== base-print.css ===== */
+@page { size: letter; margin: 0.5in; }
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; background: #fafafa; }
+body { font-family: 'Century Schoolbook', 'Times New Roman', serif; color: #000; }
+.page { max-width: 720px; margin: 0 auto; padding: 70px 50px 40px 50px; background: #fff; }
+.page-break { page-break-before: always; break-before: page; }
+@media print {
+  html, body { background: #fff; }
+  .page { max-width: none; padding: 0.6in 0.55in 0.45in 0.55in; margin: 0; box-shadow: none; }
+  .problem, .answer-block, .reminder, .parent-note, .example, .word-problem,
+  .confusion-note, .subgroup-label {
+    page-break-inside: avoid; break-inside: avoid;
+  }
+  .part-header, .directions, .problem-header, h1, h2, h3, .subgroup-label {
+    page-break-after: avoid; break-after: avoid;
+  }
+  .page-break { page-break-before: always; break-before: page; }
+}
+
+/* ===== theme-girl.css ===== */
+:root {
+  --color-primary:       #c2185b;
+  --color-primary-dark:  #880e4f;
+  --color-accent:        #7b1fa2;
+  --color-header-border: #c2185b;
+  --color-final-answer:  #2e7d32;
+  --color-warning:       #d84315;
+  --color-parent-note:   #6a1b9a;
+  --color-tag-bg:        transparent;
+  --color-tag-border:    #c2185b;
+  --color-tag-text:      #c2185b;
+  --color-muted:         #555;
+  --color-rule:          #ccc;
+}
+
+/* ===== level-middle.css ===== */
+body { font-family: 'Times New Roman', serif; font-size: 11pt; line-height: 1.5; }
+.header { text-align: center; padding-bottom: 10px; margin-bottom: 14px; border-bottom: 2px solid var(--color-header-border); }
+.school-name { font-size: 9pt; letter-spacing: 4px; color: var(--color-primary); font-weight: bold; }
+.subject-tag, .key-tag { display: inline-block; padding: 2px 10px; font-size: 8pt; letter-spacing: 2px; margin: 4px 3px 6px 3px; font-weight: bold; }
+.subject-tag { border: 1.5px solid var(--color-primary); color: var(--color-primary); }
+.key-tag { border: 1.5px solid var(--color-warning); color: var(--color-warning); }
+h1 { font-size: 14pt; margin: 4px 0 6px 0; font-weight: bold; line-height: 1.25; }
+.info { display: flex; justify-content: space-between; font-size: 10pt; margin-top: 4px; }
+.standard { font-size: 8pt; font-style: italic; margin-top: 4px; color: var(--color-muted); }
+.part-header { font-size: 12pt; font-weight: bold; color: var(--color-primary); margin: 18px 0 4px 0; padding-bottom: 3px; border-bottom: 2px solid var(--color-primary); }
+.directions { font-size: 10pt; font-style: italic; color: #333; margin-bottom: 10px; line-height: 1.4; }
+.directions strong { color: #000; font-style: normal; }
+.subgroup-label {
+  display: block;
+  font-size: 10pt;
+  font-weight: bold;
+  color: var(--color-accent);
+  margin: 12px 0 4px 0;
+  padding: 4px 10px;
+  border-left: 3px solid var(--color-accent);
+  background: #fff;
+}
+.problem { margin: 8px 0; font-size: 11pt; line-height: 1.55; }
+.q-num { display: inline-block; min-width: 26px; font-weight: bold; color: var(--color-primary); }
+.work-space { min-height: 95px; margin-left: 28px; margin-top: 4px; }
+.word-problem .work-space { min-height: 105px; }
+.footer { text-align: center; font-size: 8pt; color: #666; border-top: 1px solid var(--color-rule); margin-top: 18px; padding-top: 4px; }
+
+/* warning callout box */
+.confusion-note {
+  border: 1.5px solid var(--color-warning);
+  padding: 8px 12px;
+  margin: 10px 0 14px 0;
+  font-size: 9.5pt;
+  line-height: 1.45;
+}
+.confusion-note strong { color: var(--color-warning); }
+.tip-inline {
+  font-size: 9pt;
+  color: var(--color-warning);
+  font-style: italic;
+  margin: 2px 0 0 28px;
+}
+</style>
+</head>
+
+<body>
+<div class="page">
+
+<!-- ===== Header ===== -->
+<div class="header">
+  <div class="school-name">NEWTON SCHOOL</div>
+  <div class="subject-tag">ALGEBRA 1</div>
+  <h1>Rational Expressions &amp; Equations — Test Redo Mix</h1>
+  <div class="info">
+    <span><strong>Student:</strong> Evelyn Yoo</span>
+    <span><strong>Date:</strong> 2026-04-24</span>
+  </div>
+  <div class="standard">
+    <strong>Standard:</strong> CCSS.MATH.CONTENT.HSA-APR.D.6 &amp; HSA-REI.A.2 —
+    Rewrite rational expressions; solve rational equations and identify extraneous solutions.
+  </div>
+</div>
+
+<!-- ===== Confusion Note ===== -->
+<div class="confusion-note">
+<strong>⚠ READ FIRST — Two Easy-to-Miss Ideas</strong><br>
+<strong>1. SIMPLIFY vs SOLVE:</strong>
+  &nbsp;<em>Simplify</em> = rewrite an expression (no equals sign → answer is an expression; assume denom ≠ 0).
+  &nbsp;<em>Solve</em> = find $x$ in an equation (equals sign → answer is a number; check extraneous).<br>
+<strong>2. OPPOSITES:</strong>
+  &nbsp;$(2 - x) = -(x - 2)$, &nbsp; $(3 - x) = -(x - 3)$, &nbsp; $(y - x) = -(x - y)$.
+  &nbsp;Whenever you see "flipped" binomials, factor out $-1$ from one side so the other cancels.
+</div>
+
+<!-- ========== PART A — SIMPLIFY (6 problems) ========== -->
+<div class="part-header">Part A — SIMPLIFY (6 problems, no denominator = 0)</div>
+<div class="directions"><strong>Directions:</strong> Simplify each expression. Show factoring &amp; cancellation. State restrictions where asked. <em>Do not solve — there is nothing to solve.</em></div>
+
+<span class="subgroup-label">A-1 · Linear Simplify (cancels cleanly to a linear or constant expression)</span>
+
+<div class="problem">
+  <span class="q-num">1.</span>
+  Simplify <strong>and state the restriction</strong>: \(\displaystyle \frac{a - b}{a^2 - b^2}\)
+  <div class="tip-inline">Hint: factor denominator as a difference of squares. Write answer and restriction like $\;\tfrac{1}{\,\cdots\,},\;a\ne b$.</div>
+  <div class="work-space"></div>
+</div>
+
+<div class="problem">
+  <span class="q-num">2.</span>
+  Simplify (opposites): \(\displaystyle \frac{y}{x - y} + \frac{x}{y - x}\)
+  <div class="tip-inline">Hint: $(y - x) = -(x - y)$.</div>
+  <div class="work-space"></div>
+</div>
+
+<div class="problem">
+  <span class="q-num">3.</span>
+  Simplify (opposites): \(\displaystyle \frac{3}{x - 3} - \frac{x}{3 - x}\)
+  <div class="work-space"></div>
+</div>
+
+<span class="subgroup-label page-break">A-2 · Quadratic Simplify (factor trinomials, difference of squares, division)</span>
+
+<div class="problem">
+  <span class="q-num">4.</span>
+  Simplify: \(\displaystyle \frac{9m^2 - 4}{3m^2 + 4m - 4}\)
+  <div class="work-space"></div>
+</div>
+
+<div class="problem">
+  <span class="q-num">5.</span>
+  Simplify: \(\displaystyle \frac{x^2 - 4}{x^2 - x - 6} \div \frac{x^2 + 4x + 4}{x^2 - 9}\)
+  <div class="tip-inline">Hint: division → multiply by reciprocal, then factor everything.</div>
+  <div class="work-space"></div>
+</div>
+
+<div class="problem">
+  <span class="q-num">6.</span>
+  Simplify (bonus-style): \(\displaystyle \left( y - \frac{2}{y - 1} \right)\left( y + \frac{1}{y - 2} \right)\)
+  <div class="work-space"></div>
+</div>
+
+<!-- ========== PART B — SOLVE (6 problems) ========== -->
+<div class="part-header page-break">Part B — SOLVE (6 problems, check extraneous)</div>
+<div class="directions"><strong>Directions:</strong> Solve each equation. Always <strong>check</strong> candidate solutions against the original denominators. Reject any that make a denominator zero (extraneous).</div>
+
+<span class="subgroup-label">B-1 · Linear Solve (reduces to linear after clearing denominators)</span>
+
+<div class="problem">
+  <span class="q-num">7.</span>
+  Solve: \(\displaystyle \frac{3}{x + 2} = \frac{1}{x - 2}\)
+  <div class="tip-inline">Hint: cross-multiply.</div>
+  <div class="work-space"></div>
+</div>
+
+<div class="problem">
+  <span class="q-num">8.</span>
+  Solve: \(\displaystyle \frac{x - 1}{x + 3} = 2\)
+  <div class="work-space"></div>
+</div>
+
+<div class="problem">
+  <span class="q-num">9.</span>
+  Solve: \(\displaystyle \frac{2}{x - 1} + \frac{3}{x - 1} = \frac{5}{2}\)
+  <div class="work-space"></div>
+</div>
+
+<span class="subgroup-label page-break">B-2 · Quadratic Solve (reduces to a quadratic — extraneous possible)</span>
+
+<div class="problem">
+  <span class="q-num">10.</span>
+  Solve: \(\displaystyle \frac{x}{x - 1} - \frac{2}{x + 1} = \frac{4}{x^2 - 1}\)
+  <div class="work-space"></div>
+</div>
+
+<div class="problem">
+  <span class="q-num">11.</span>
+  Solve: \(\displaystyle \frac{1}{x} + \frac{1}{x + 3} = \frac{1}{2}\)
+  <div class="work-space"></div>
+</div>
+
+<div class="problem">
+  <span class="q-num">12.</span>
+  Solve: \(\displaystyle \frac{2x}{x - 3} = \frac{6}{x - 3} + \frac{x}{2}\)
+  <div class="work-space"></div>
+</div>
+
+<div class="footer">Created by Newton School 2026-04-24 &copy; Copyright</div>
+
+</div>
+</body>
+</html>

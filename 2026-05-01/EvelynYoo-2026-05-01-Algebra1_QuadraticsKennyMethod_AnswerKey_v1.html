@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Evelyn Yoo — Quadratics Answer Key (v1)</title>
+<script>
+MathJax = {
+    tex: {inlineMath: [['$','$'], ['\\(','\\)']]},
+    startup: {ready: () => { MathJax.startup.defaultReady(); }}
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+<style>
+@page { size: letter; margin: 0.5in; }
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; background: #fafafa; }
+body { font-family: 'Times New Roman', serif; color: #000; font-size: 10pt; line-height: 1.5; }
+.page { max-width: 720px; margin: 0 auto; padding: 70px 50px 40px 50px; background: #fff; }
+.page-break { page-break-before: always; break-before: page; }
+@media print {
+    html, body { background: #fff; }
+    .page { max-width: none; padding: 0.7in 0.6in 0.5in 0.6in; margin: 0; }
+    .answer-block, .part-header { page-break-inside: avoid; break-inside: avoid; }
+    .part-header, h1, h2, h3 { page-break-after: avoid; break-after: avoid; }
+    .page-break { page-break-before: always; break-before: page; }
+}
+:root {
+    --color-primary: #c2185b; --color-accent: #7b1fa2; --color-final-answer: #2e7d32;
+    --color-warning: #d84315; --color-muted: #555;
+}
+.header { text-align: center; padding-bottom: 12px; margin-bottom: 18px; border-bottom: 2px solid var(--color-primary); }
+.school-name { font-size: 9pt; letter-spacing: 4px; color: var(--color-primary); font-weight: bold; }
+.subject-tag { display: inline-block; padding: 2px 10px; font-size: 8pt; letter-spacing: 2px; margin: 5px 3px 8px 3px; font-weight: bold; border: 1.5px solid var(--color-primary); color: var(--color-primary); }
+.key-tag { display: inline-block; padding: 2px 10px; font-size: 8pt; letter-spacing: 2px; margin: 5px 3px 8px 3px; font-weight: bold; border: 1.5px solid var(--color-warning); color: var(--color-warning); }
+.ver-tag { display: inline-block; padding: 2px 8px; font-size: 8pt; border: 1.5px solid var(--color-accent); color: var(--color-accent); margin-left: 6px; letter-spacing: 1px; font-weight: bold; }
+h1 { font-size: 14pt; margin: 6px 0 10px 0; font-weight: bold; line-height: 1.3; }
+.info { display: flex; justify-content: space-between; font-size: 10pt; }
+.part-header { font-size: 12pt; font-weight: bold; color: var(--color-primary); margin: 22px 0 6px 0; padding-bottom: 3px; border-bottom: 2px solid var(--color-primary); }
+.answer-block { margin: 12px 0; padding: 10px 12px; border: 1px solid #ddd; border-radius: 4px; page-break-inside: avoid; }
+.problem-header { font-weight: bold; color: var(--color-primary); font-size: 11pt; margin-bottom: 5px; }
+.problem-text { font-size: 10pt; padding: 5px 9px; background: #f7f7f7; border-left: 3px solid #bbb; margin-bottom: 8px; line-height: 1.5; }
+.concept-tag { display: inline-block; font-size: 8pt; padding: 2px 8px; margin: 2px 3px 5px 0; border: 1px solid var(--color-primary); color: var(--color-primary); border-radius: 10px; }
+.solution { margin: 6px 0; padding-left: 8px; border-left: 3px solid var(--color-final-answer); }
+.solution-step { margin: 3px 0; font-size: 10pt; line-height: 1.6; }
+.final-answer { display: inline-block; border: 2px solid var(--color-final-answer); color: var(--color-final-answer); font-weight: bold; padding: 3px 11px; border-radius: 4px; margin-top: 6px; font-size: 10.5pt; }
+.method-call { display: inline-block; padding: 2px 8px; background: transparent; border: 1.5px solid var(--color-warning); color: var(--color-warning); font-weight: bold; font-size: 9pt; margin: 4px 4px 4px 0; letter-spacing: 0.5px; }
+.footer { text-align: center; font-size: 8pt; color: #666; border-top: 1px solid #ccc; margin-top: 22px; padding-top: 6px; }
+</style>
+</head>
+<body>
+<div class="page">
+
+<div class="header">
+    <div class="school-name">NEWTON SCHOOL</div>
+    <div class="subject-tag">ALGEBRA 1</div>
+    <span class="key-tag">ANSWER KEY</span>
+    <span class="ver-tag">v1 &middot; ROUND 1</span>
+    <h1>Solving Quadratics &mdash; Method Selection &amp; Solve</h1>
+    <div class="info">
+        <span><strong>Student:</strong> Evelyn Yoo</span>
+        <span><strong>Date:</strong> 2026-05-01 (Fri)</span>
+    </div>
+</div>
+
+<!-- ================= PART A ================= -->
+<div class="part-header">Part A &mdash; Method Identification</div>
+
+<div class="answer-block">
+<div class="problem-header">Problem 1</div>
+<div class="problem-text">$2x^2 + 5x - 3 = 0$</div>
+<div class="solution">
+<div class="solution-step">$D = 5^2 - 4(2)(-3) = 25 + 24 = 49 = 7^2$ &nbsp; <strong>perfect square &#10004;</strong></div>
+<div class="solution-step">$b = 5$ (odd), but $D$ is PS &mdash; PS check wins.</div>
+</div>
+<div class="method-call">METHOD: FACTOR</div>
+</div>
+
+<div class="answer-block">
+<div class="problem-header">Problem 2</div>
+<div class="problem-text">$x^2 + 4x + 1 = 0$</div>
+<div class="solution">
+<div class="solution-step">$D = 16 - 4 = 12$ &nbsp; <strong>NOT a perfect square</strong></div>
+<div class="solution-step">$b = 4$ &nbsp; <strong>even</strong></div>
+</div>
+<div class="method-call">METHOD: COMPLETE THE SQUARE</div>
+</div>
+
+<div class="answer-block">
+<div class="problem-header">Problem 3</div>
+<div class="problem-text">$x^2 + 3x - 5 = 0$</div>
+<div class="solution">
+<div class="solution-step">$D = 9 + 20 = 29$ &nbsp; <strong>NOT a perfect square</strong></div>
+<div class="solution-step">$b = 3$ &nbsp; <strong>odd</strong></div>
+</div>
+<div class="method-call">METHOD: QUADRATIC FORMULA</div>
+</div>
+
+<div class="answer-block">
+<div class="problem-header">Problem 4</div>
+<div class="problem-text">$x^2 - 8x + 12 = 0$</div>
+<div class="solution">
+<div class="solution-step">$D = 64 - 48 = 16 = 4^2$ &nbsp; <strong>perfect square &#10004;</strong></div>
+<div class="solution-step">$b = -8$ even, but PS check wins &rarr; factor.</div>
+</div>
+<div class="method-call">METHOD: FACTOR</div>
+</div>
+
+<div class="answer-block">
+<div class="problem-header">Problem 5</div>
+<div class="problem-text">$3x^2 + 4x + 1 = 0$</div>
+<div class="solution">
+<div class="solution-step">$D = 16 - 12 = 4 = 2^2$ &nbsp; <strong>perfect square &#10004;</strong></div>
+<div class="solution-step">$b = 4$ even, but PS check wins.</div>
+</div>
+<div class="method-call">METHOD: FACTOR</div>
+</div>
+
+<!-- ================= PART B ================= -->
+<div class="page-break"></div>
+<div class="part-header">Part B &mdash; Solve Completely</div>
+
+<div class="answer-block">
+<div class="problem-header">Problem 6</div>
+<div class="problem-text">$x^2 + 6x + 4 = 0$</div>
+<div class="solution">
+<div class="solution-step">$D = 36 - 16 = 20$ (not PS), $b = 6$ even &rarr; <strong>complete the square</strong>.</div>
+<div class="solution-step">Magic number $= (6/2)^2 = 9$.</div>
+<div class="solution-step">$x^2 + 6x + 9 - 9 + 4 = 0$ &nbsp;&rArr;&nbsp; $(x + 3)^2 - 5 = 0$</div>
+<div class="solution-step">$(x + 3)^2 = 5$ &nbsp;&rArr;&nbsp; $x + 3 = \pm\sqrt{5}$</div>
+</div>
+<span class="concept-tag">Complete Square</span>
+<span class="concept-tag">$a = 1$</span>
+<div class="final-answer">$x = -3 \pm \sqrt{5}$</div>
+</div>
+
+<div class="answer-block">
+<div class="problem-header">Problem 7</div>
+<div class="problem-text">$x^2 - 5x - 14 = 0$</div>
+<div class="solution">
+<div class="solution-step">$D = 25 + 56 = 81 = 9^2$ &nbsp; <strong>PS &rarr; factor</strong>.</div>
+<div class="solution-step">Two numbers: product $-14$, sum $-5$ &rarr; $-7$ and $+2$.</div>
+<div class="solution-step">$(x - 7)(x + 2) = 0$</div>
+</div>
+<span class="concept-tag">Factor</span>
+<span class="concept-tag">PS Discriminant</span>
+<div class="final-answer">$x = 7 \text{ or } x = -2$</div>
+</div>
+
+<div class="answer-block">
+<div class="problem-header">Problem 8</div>
+<div class="problem-text">$2x^2 + 3x - 1 = 0$</div>
+<div class="solution">
+<div class="solution-step">$D = 9 + 8 = 17$ (not PS), $b = 3$ odd &rarr; <strong>quadratic formula</strong>.</div>
+<div class="solution-step">$x = \dfrac{-3 \pm \sqrt{17}}{2(2)} = \dfrac{-3 \pm \sqrt{17}}{4}$</div>
+</div>
+<span class="concept-tag">Quadratic Formula</span>
+<span class="concept-tag">$b$ odd</span>
+<div class="final-answer">$x = \dfrac{-3 \pm \sqrt{17}}{4}$</div>
+</div>
+
+<div class="answer-block">
+<div class="problem-header">Problem 9</div>
+<div class="problem-text">$x^2 - 4x - 7 = 0$</div>
+<div class="solution">
+<div class="solution-step">$D = 16 + 28 = 44$ (not PS), $b = -4$ even &rarr; <strong>complete the square</strong>.</div>
+<div class="solution-step">Magic number $= (-4/2)^2 = 4$.</div>
+<div class="solution-step">$x^2 - 4x + 4 - 4 - 7 = 0$ &nbsp;&rArr;&nbsp; $(x - 2)^2 - 11 = 0$</div>
+<div class="solution-step">$(x - 2)^2 = 11$ &nbsp;&rArr;&nbsp; $x - 2 = \pm\sqrt{11}$</div>
+</div>
+<span class="concept-tag">Complete Square</span>
+<span class="concept-tag">$b$ even</span>
+<div class="final-answer">$x = 2 \pm \sqrt{11}$</div>
+</div>
+
+<div class="answer-block">
+<div class="problem-header">Problem 10</div>
+<div class="problem-text">$3x^2 - 5x + 1 = 0$</div>
+<div class="solution">
+<div class="solution-step">$D = 25 - 12 = 13$ (not PS), $b = -5$ odd, $a \neq 1$ &rarr; <strong>quadratic formula</strong>.</div>
+<div class="solution-step">$x = \dfrac{-(-5) \pm \sqrt{13}}{2(3)} = \dfrac{5 \pm \sqrt{13}}{6}$</div>
+</div>
+<span class="concept-tag">Quadratic Formula</span>
+<span class="concept-tag">$b$ odd</span>
+<div class="final-answer">$x = \dfrac{5 \pm \sqrt{13}}{6}$</div>
+</div>
+
+<!-- ================= PART C ================= -->
+<div class="page-break"></div>
+<div class="part-header">Part C &mdash; Understanding Check</div>
+
+<div class="answer-block">
+<div class="problem-header">Problem 11 &mdash; Why "inside" not "both sides"?</div>
+<div class="solution">
+<div class="solution-step"><strong>Sample answer:</strong> When $a \neq 1$, the bracket has $a$ multiplying it, so anything that comes <em>out</em> of the bracket gets multiplied by $a$. If you instead "add the magic number to both sides," you must add $a$ times the magic number to the right side &mdash; but students forget the $a$ and just add the bare magic number. The equation breaks.</div>
+<div class="solution-step"><strong>Specific mistake:</strong> For $3(x^2 + 2x) = 5$, magic $= 1$. Wrong move: $3(x^2 + 2x + 1) = 5 + 1$. Correct: $5 + 3$ on the right (because $a = 3$ multiplies the $1$).</div>
+<div class="solution-step"><strong>Kenny's fix:</strong> Add and subtract inside the bracket. Net change is $0$, no chance to forget multiplying by $a$, because the $-$ piece carries $a$ with it as it leaves the bracket.</div>
+</div>
+<span class="concept-tag">Conceptual</span>
+</div>
+
+<div class="answer-block">
+<div class="problem-header">Problem 12 &mdash; $b$ even: complete square or formula?</div>
+<div class="solution">
+<div class="solution-step"><strong>Complete the square is cleaner.</strong></div>
+<div class="solution-step"><strong>Why:</strong> Half of an even $b$ is a clean integer, so the magic number is an integer (no fractions). The result $(x + b/2)^2 = k$ leads to $x = -b/2 \pm \sqrt{k}$ in one shot.</div>
+<div class="solution-step"><strong>Formula gives the same answer</strong>, but you end up with $\dfrac{-b \pm \sqrt{D}}{2}$ where both numerator pieces are even, forcing you to reduce. Extra arithmetic, more chances to slip.</div>
+</div>
+<span class="concept-tag">Conceptual</span>
+<span class="concept-tag">Method choice</span>
+</div>
+
+<div class="footer">
+Created by Newton School &middot; Newton School Fort Lee &middot; Kenny Baek &middot; 2026-05-01 &middot; v1 &middot; &copy; Copyright
+</div>
+
+</div>
+</body>
+</html>

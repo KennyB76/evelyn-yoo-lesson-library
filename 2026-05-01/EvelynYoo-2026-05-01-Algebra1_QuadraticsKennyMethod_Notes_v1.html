@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Evelyn Yoo — Quadratics: Kenny's Method (v1)</title>
+<script>
+MathJax = {
+    tex: {inlineMath: [['$','$'], ['\\(','\\)']]},
+    startup: {ready: () => { MathJax.startup.defaultReady(); }}
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+<style>
+/* === base-print.css === */
+@page { size: letter; margin: 0.5in; }
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; background: #fafafa; }
+body { font-family: 'Century Schoolbook', 'Times New Roman', serif; color: #000; }
+.page { max-width: 720px; margin: 0 auto; padding: 70px 50px 40px 50px; background: #fff; }
+.page-break { page-break-before: always; break-before: page; }
+@media print {
+    html, body { background: #fff; }
+    .page { max-width: none; padding: 0.7in 0.6in 0.5in 0.6in; margin: 0; box-shadow: none; }
+    .problem, .answer-block, .reminder, .parent-note, .example, .word-problem,
+    .callout, .proof-step, .method-card, .tree, .formula-box {
+        page-break-inside: avoid; break-inside: avoid;
+    }
+    .part-header, .directions, .problem-header, h1, h2, h3 {
+        page-break-after: avoid; break-after: avoid;
+    }
+    .page-break { page-break-before: always; break-before: page; }
+}
+
+/* === theme-girl.css === */
+:root {
+    --color-primary:        #c2185b;
+    --color-primary-dark:   #880e4f;
+    --color-accent:         #7b1fa2;
+    --color-header-border:  #c2185b;
+    --color-final-answer:   #2e7d32;
+    --color-warning:        #d84315;
+    --color-parent-note:    #6a1b9a;
+    --color-tag-bg:         transparent;
+    --color-tag-border:     #c2185b;
+    --color-tag-text:       #c2185b;
+    --color-muted:          #555;
+    --color-rule:           #ccc;
+}
+
+/* === level-middle.css === */
+body { font-family: 'Times New Roman', serif; font-size: 11pt; line-height: 1.5; }
+.header { text-align: center; padding-bottom: 12px; margin-bottom: 18px; border-bottom: 2px solid var(--color-header-border); }
+.school-name { font-size: 9pt; letter-spacing: 4px; color: var(--color-primary); font-weight: bold; }
+.subject-tag, .key-tag { display: inline-block; padding: 2px 10px; font-size: 8pt; letter-spacing: 2px; margin: 5px 3px 8px 3px; font-weight: bold; }
+.subject-tag { border: 1.5px solid var(--color-primary); color: var(--color-primary); }
+.key-tag { border: 1.5px solid var(--color-warning); color: var(--color-warning); }
+h1 { font-size: 15pt; margin: 6px 0 10px 0; font-weight: bold; line-height: 1.3; }
+.info { display: flex; justify-content: space-between; font-size: 10pt; margin-top: 6px; }
+.standard { font-size: 8pt; font-style: italic; margin-top: 5px; color: var(--color-muted); }
+.part-header { font-size: 12pt; font-weight: bold; color: var(--color-primary); margin: 22px 0 6px 0; padding-bottom: 3px; border-bottom: 2px solid var(--color-primary); }
+.directions { font-size: 10pt; font-style: italic; color: #333; margin-bottom: 12px; line-height: 1.5; }
+.directions strong { color: #000; font-style: normal; }
+.problem { margin: 12px 0; font-size: 11pt; line-height: 1.6; }
+.q-num { display: inline-block; min-width: 26px; font-weight: bold; color: var(--color-primary); }
+.example { border: 2px solid var(--color-final-answer); padding: 12px 16px; margin: 14px 0; }
+.example-title { font-weight: bold; color: var(--color-final-answer); margin-bottom: 8px; font-size: 11pt; }
+.example-solution { border-left: 3px solid var(--color-final-answer); padding-left: 12px; margin-top: 8px; font-size: 10pt; }
+.footer { text-align: center; font-size: 8pt; color: #666; border-top: 1px solid var(--color-rule); margin-top: 22px; padding-top: 6px; }
+
+/* === Notes-specific add-ons === */
+.callout { border-left: 4px solid var(--color-warning); background: #fff8f5; padding: 10px 14px; margin: 14px 0; font-size: 10.5pt; }
+.callout strong { color: var(--color-warning); }
+.callout-good { border-left: 4px solid var(--color-final-answer); background: #f3faf3; padding: 10px 14px; margin: 14px 0; font-size: 10.5pt; }
+.callout-good strong { color: var(--color-final-answer); }
+.proof-step { margin: 6px 0; padding: 4px 0 4px 14px; border-left: 2px solid var(--color-accent); font-size: 11pt; line-height: 1.7; }
+.proof-step .label { font-weight: bold; color: var(--color-accent); display: inline-block; min-width: 80px; font-size: 9.5pt; }
+.method-card { border: 2px solid var(--color-primary); padding: 12px 16px; margin: 14px 0; }
+.method-card h3 { margin: 0 0 6px 0; color: var(--color-primary); font-size: 12pt; }
+.method-card .when { font-style: italic; color: #444; font-size: 10pt; margin-bottom: 6px; }
+.tree { border: 1.5px dashed var(--color-accent); padding: 14px 18px; margin: 14px 0; font-size: 10.5pt; background: #faf5fc; }
+.tree ol { margin: 0; padding-left: 20px; }
+.tree li { margin: 6px 0; line-height: 1.6; }
+.formula-box { background: #f7f0f5; border-left: 4px solid var(--color-primary); padding: 10px 14px; margin: 12px 0; font-size: 12pt; text-align: center; }
+.cheat-table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 10pt; }
+.cheat-table th, .cheat-table td { border: 1px solid #999; padding: 6px 8px; text-align: left; vertical-align: top; }
+.cheat-table th { background: transparent; border-bottom: 2px solid var(--color-primary); color: var(--color-primary); font-weight: bold; }
+.lead { font-size: 10.5pt; color: #333; line-height: 1.6; margin: 8px 0; }
+.bad { color: var(--color-warning); }
+.good { color: var(--color-final-answer); }
+.ver-tag { display: inline-block; padding: 2px 8px; font-size: 8pt; border: 1.5px solid var(--color-accent); color: var(--color-accent); margin-left: 6px; letter-spacing: 1px; font-weight: bold; }
+</style>
+</head>
+<body>
+<div class="page">
+
+<div class="header">
+    <div class="school-name">NEWTON SCHOOL</div>
+    <div class="subject-tag">ALGEBRA 1 &mdash; LECTURE NOTES</div>
+    <span class="ver-tag">v1 &middot; ROUND 1</span>
+    <h1>Solving Quadratics &mdash; Kenny's Method<br>(Completing the Square Proof + Method Selection)</h1>
+    <div class="info">
+        <span><strong>Student:</strong> Evelyn Yoo</span>
+        <span><strong>Date:</strong> 2026-05-01 (Fri)</span>
+    </div>
+    <div class="standard"><strong>Standard:</strong> CCSS.MATH.CONTENT.HSA-REI.B.4 &mdash; Solve quadratic equations in one variable. Derive the quadratic formula by completing the square.</div>
+</div>
+
+<!-- ================= § 1 ================= -->
+<div class="part-header">&sect; 1. Why Kenny's Way? "Add &amp; Subtract Inside" vs "Add to Both Sides"</div>
+
+<p class="lead">When you complete the square on $ax^2 + bx + c = 0$ where $a \neq 1$, two methods exist. They both work mathematically, but one is <strong>much safer</strong> for students.</p>
+
+<div class="callout">
+<strong>&#9888; The Common Mistake (textbook way):</strong> Students factor out $a$, then "add the magic number to both sides" &mdash; but they <strong>forget that $a$ is still multiplying the bracket</strong>. So they add $\dfrac{b^2}{4a^2}$ to the right side instead of $a \cdot \dfrac{b^2}{4a^2} = \dfrac{b^2}{4a}$. The equation is now broken, and Evelyn won't know why her answer is wrong.
+</div>
+
+<p class="lead"><strong>Example of the danger:</strong></p>
+<p class="lead">
+$3(x^2 + 2x) = 5$. Inside, the magic number is $1$. <br>
+<span class="bad">&#10060; WRONG (both-sides method):</span> $3(x^2 + 2x + 1) = 5 + 1$. <em>(Forgot to multiply $1$ by $3$. Right side should be $5 + 3$.)</em><br>
+<span class="good">&#10004; RIGHT:</span> $3(x^2 + 2x + 1) = 5 + 3$.
+</p>
+
+<div class="callout-good">
+<strong>&#10004; Kenny's Way (Add &amp; Subtract Inside):</strong> Don't touch the right side. Inside the bracket, add the magic number AND subtract it &mdash; the bracket is mathematically unchanged (you added zero). Then peel out the &minus; piece, multiplying by $a$ as you take it out. <br><br>
+<strong>Why this is safer:</strong> The leading coefficient $a$ stays attached to whatever leaves the bracket, so you <em>can't forget to multiply it</em>.
+</div>
+
+<!-- ================= § 2 ================= -->
+<div class="part-header">&sect; 2. Completing the Square &mdash; Full Proof of the Quadratic Formula</div>
+
+<p class="lead">Start with the general form. Use Kenny's "add &amp; subtract inside" technique step by step. By the end you will have <em>derived</em> the quadratic formula yourself.</p>
+
+<div class="proof-step"><span class="label">Start</span> $ax^2 + bx + c = 0,\quad a \neq 0$</div>
+
+<div class="proof-step"><span class="label">Step 1</span> Factor $a$ from the first two terms only:<br>
+$\quad a\!\left(x^2 + \dfrac{b}{a}x\right) + c = 0$</div>
+
+<div class="proof-step"><span class="label">Step 2</span> Magic number $= \left(\dfrac{1}{2}\cdot\dfrac{b}{a}\right)^2 = \dfrac{b^2}{4a^2}$. <strong>Add and subtract it INSIDE</strong> the bracket (net change = $0$):<br>
+$\quad a\!\left(x^2 + \dfrac{b}{a}x + \dfrac{b^2}{4a^2} - \dfrac{b^2}{4a^2}\right) + c = 0$</div>
+
+<div class="proof-step"><span class="label">Step 3</span> Peel the &minus; piece OUT of the bracket. Multiply it by $a$ as it leaves:<br>
+$\quad a\!\left(x^2 + \dfrac{b}{a}x + \dfrac{b^2}{4a^2}\right) - a\cdot\dfrac{b^2}{4a^2} + c = 0$<br>
+$\quad a\!\left(x^2 + \dfrac{b}{a}x + \dfrac{b^2}{4a^2}\right) - \dfrac{b^2}{4a} + c = 0$</div>
+
+<div class="proof-step"><span class="label">Step 4</span> The bracket is now a perfect square: $\left(x + \dfrac{b}{2a}\right)^2$.<br>
+$\quad a\!\left(x + \dfrac{b}{2a}\right)^2 = \dfrac{b^2}{4a} - c$</div>
+
+<div class="proof-step"><span class="label">Step 5</span> Common denominator on the right: $\dfrac{b^2}{4a} - c = \dfrac{b^2 - 4ac}{4a}$. Then divide both sides by $a$:<br>
+$\quad \left(x + \dfrac{b}{2a}\right)^2 = \dfrac{b^2 - 4ac}{4a^2}$</div>
+
+<div class="proof-step"><span class="label">Step 6</span> Square root both sides (don't forget $\pm$):<br>
+$\quad x + \dfrac{b}{2a} = \pm\dfrac{\sqrt{b^2 - 4ac}}{2a}$</div>
+
+<div class="proof-step"><span class="label">Step 7</span> Subtract $\dfrac{b}{2a}$ from both sides:<br>
+$\quad x = \dfrac{-b \pm \sqrt{b^2 - 4ac}}{2a}$</div>
+
+<div class="formula-box">
+<strong>Quadratic Formula:</strong> &nbsp;&nbsp; $x = \dfrac{-b \pm \sqrt{b^2 - 4ac}}{2a}$
+</div>
+
+<p class="lead"><strong>Big idea:</strong> The quadratic formula is <em>nothing but</em> "completing the square done once for the general case." If you can do completing the square, you already know where the formula came from.</p>
+
+<!-- ================= § 3 ================= -->
+<div class="page-break"></div>
+<div class="part-header">&sect; 3. Three Methods &mdash; Which One When?</div>
+
+<p class="lead">Always start by computing the <strong>discriminant</strong> $D = b^2 - 4ac$. The shape of $D$ (and the parity of $b$) tells you which method is cleanest.</p>
+
+<div class="tree">
+<strong>Decision Tree:</strong>
+<ol>
+<li><strong>Compute</strong> $D = b^2 - 4ac$.</li>
+<li>If $D$ is a <strong>perfect square</strong> ($0, 1, 4, 9, 16, 25, 36, 49, 64, 81, 100, \ldots$) &nbsp;&rarr;&nbsp; <strong>FACTOR.</strong> &nbsp;<em>(Easiest, no radicals.)</em></li>
+<li>Else if $b$ is <strong>even</strong> &nbsp;&rarr;&nbsp; <strong>COMPLETE THE SQUARE.</strong> &nbsp;<em>(Half of $b$ is a clean integer &mdash; no fractions.)</em></li>
+<li>Else &nbsp;&rarr;&nbsp; <strong>QUADRATIC FORMULA.</strong> &nbsp;<em>(Always works.)</em></li>
+</ol>
+</div>
+
+<div class="callout">
+<strong>&#9888; Note:</strong> If $b$ is even, the quadratic formula will reduce at the end (the $2$'s cancel). So completing the square gets you there with cleaner arithmetic. Save the formula for when $b$ is odd or $a \neq 1$ in a messy way.
+</div>
+
+<div class="method-card">
+<h3>Method 1 &mdash; Factor</h3>
+<div class="when">Use when $D = b^2 - 4ac$ is a perfect square. Roots are rational.</div>
+<p>Find two numbers whose product is $ac$ and whose sum is $b$. Split the middle term, factor by grouping (or use the standard "two binomials" form when $a = 1$).</p>
+</div>
+
+<div class="method-card">
+<h3>Method 2 &mdash; Complete the Square (Kenny's "Inside" Style)</h3>
+<div class="when">Use when $D$ is NOT a perfect square AND $b$ is even.</div>
+<p>If $a = 1$: just take half of $b$, square it, add &amp; subtract inside. <br>
+If $a \neq 1$: factor $a$ first, then add &amp; subtract inside the bracket as in &sect; 2.</p>
+</div>
+
+<div class="method-card">
+<h3>Method 3 &mdash; Quadratic Formula</h3>
+<div class="when">Use when $b$ is odd, or when $a \neq 1$ and the bracket gets messy.</div>
+<p>$x = \dfrac{-b \pm \sqrt{b^2 - 4ac}}{2a}$. Always works, but most arithmetic. Simplify the radical at the end.</p>
+</div>
+
+<!-- ================= § 4 ================= -->
+<div class="page-break"></div>
+<div class="part-header">&sect; 4. Worked Examples &mdash; One Per Method</div>
+
+<div class="example">
+<div class="example-title">Example 1 &mdash; FACTOR ($D$ is a perfect square)</div>
+<p><strong>Solve:</strong> $x^2 - 2x - 15 = 0$</p>
+<div class="example-solution">
+<p><strong>Step 1 (decision):</strong> $D = (-2)^2 - 4(1)(-15) = 4 + 60 = 64 = 8^2$. &nbsp;&rArr;&nbsp; <strong>Perfect square &rarr; FACTOR.</strong></p>
+<p><strong>Step 2:</strong> Two numbers with product $-15$ and sum $-2$: $-5$ and $+3$.</p>
+<p><strong>Step 3:</strong> $(x - 5)(x + 3) = 0$.</p>
+<p><strong>Answer:</strong> $\mathbf{x = 5}$ or $\mathbf{x = -3}$.</p>
+</div>
+</div>
+
+<div class="example">
+<div class="example-title">Example 2 &mdash; COMPLETE THE SQUARE ($b$ even, $D$ not perfect square)</div>
+<p><strong>Solve:</strong> $x^2 + 6x + 4 = 0$</p>
+<div class="example-solution">
+<p><strong>Step 1 (decision):</strong> $D = 36 - 16 = 20$ (not a perfect square). $b = 6$ is even. &nbsp;&rArr;&nbsp; <strong>COMPLETE THE SQUARE.</strong></p>
+<p><strong>Step 2 (Kenny's inside method):</strong> Magic number $= \left(\dfrac{6}{2}\right)^2 = 9$. Add &amp; subtract inside:
+$x^2 + 6x + 9 - 9 + 4 = 0$.</p>
+<p><strong>Step 3:</strong> Group: $(x + 3)^2 - 5 = 0$ &nbsp;&rArr;&nbsp; $(x + 3)^2 = 5$.</p>
+<p><strong>Step 4:</strong> $x + 3 = \pm\sqrt{5}$ &nbsp;&rArr;&nbsp; $\mathbf{x = -3 \pm \sqrt{5}}$.</p>
+<p><em>Cross-check with formula:</em> $x = \dfrac{-6 \pm \sqrt{20}}{2} = \dfrac{-6 \pm 2\sqrt{5}}{2} = -3 \pm \sqrt{5}$. &#10004; Same answer, but completing the square skipped the reducing step.</p>
+</div>
+</div>
+
+<div class="example">
+<div class="example-title">Example 3 &mdash; COMPLETE THE SQUARE with $a \neq 1$ (Kenny's "Inside" Style)</div>
+<p><strong>Solve:</strong> $3x^2 - 2x - 3 = 0$</p>
+<div class="example-solution">
+<p><strong>Step 1 (decision):</strong> $D = 4 + 36 = 40$ (not perfect square). $b = -2$ is even but $a = 3 \neq 1$. Try Kenny's inside method (or quadratic formula).</p>
+<p><strong>Step 2:</strong> Factor out $3$ from the first two terms: $3\!\left(x^2 - \dfrac{2}{3}x\right) - 3 = 0$.</p>
+<p><strong>Step 3:</strong> Magic number $= \left(\dfrac{1}{2}\cdot\dfrac{2}{3}\right)^2 = \dfrac{1}{9}$. Add &amp; subtract inside:
+$3\!\left(x^2 - \dfrac{2}{3}x + \dfrac{1}{9} - \dfrac{1}{9}\right) - 3 = 0$.</p>
+<p><strong>Step 4:</strong> Peel the $-\dfrac{1}{9}$ out (multiply by $3$): $3\!\left(x - \dfrac{1}{3}\right)^2 - \dfrac{1}{3} - 3 = 0$.</p>
+<p><strong>Step 5:</strong> $3\!\left(x - \dfrac{1}{3}\right)^2 = \dfrac{10}{3}$ &nbsp;&rArr;&nbsp; $\left(x - \dfrac{1}{3}\right)^2 = \dfrac{10}{9}$.</p>
+<p><strong>Step 6:</strong> $x - \dfrac{1}{3} = \pm\dfrac{\sqrt{10}}{3}$ &nbsp;&rArr;&nbsp; $\mathbf{x = \dfrac{1 \pm \sqrt{10}}{3}}$.</p>
+</div>
+</div>
+
+<div class="example">
+<div class="example-title">Example 4 &mdash; QUADRATIC FORMULA ($b$ odd)</div>
+<p><strong>Solve:</strong> $2x^2 + 3x - 1 = 0$</p>
+<div class="example-solution">
+<p><strong>Step 1 (decision):</strong> $D = 9 + 8 = 17$ (not perfect square). $b = 3$ is odd. &nbsp;&rArr;&nbsp; <strong>QUADRATIC FORMULA.</strong></p>
+<p><strong>Step 2:</strong> $x = \dfrac{-3 \pm \sqrt{17}}{2(2)} = \dfrac{-3 \pm \sqrt{17}}{4}$.</p>
+<p><strong>Answer:</strong> $\mathbf{x = \dfrac{-3 \pm \sqrt{17}}{4}}$.</p>
+</div>
+</div>
+
+<div class="example">
+<div class="example-title">Example 5 &mdash; The "Reduce at the End" Trap (when $b$ is even but you used the formula)</div>
+<p><strong>Solve:</strong> $x^2 + 4x - 1 = 0$ &mdash; using the formula, then verify by completing the square.</p>
+<div class="example-solution">
+<p><strong>Formula:</strong> $x = \dfrac{-4 \pm \sqrt{16 + 4}}{2} = \dfrac{-4 \pm \sqrt{20}}{2} = \dfrac{-4 \pm 2\sqrt{5}}{2} = -2 \pm \sqrt{5}$. <em>(Two reducing steps.)</em></p>
+<p><strong>Completing the square (cleaner):</strong> Magic $= 4$. $x^2 + 4x + 4 - 4 - 1 = 0$ &nbsp;&rArr;&nbsp; $(x + 2)^2 = 5$ &nbsp;&rArr;&nbsp; $x = -2 \pm \sqrt{5}$. &#10004;</p>
+<p><strong>Lesson:</strong> When $b$ is even, completing the square gives you the simplified answer in one shot. The formula gives the same answer but you must reduce.</p>
+</div>
+</div>
+
+<!-- ================= § 5 ================= -->
+<div class="part-header">&sect; 5. Quick Reference Card</div>
+
+<table class="cheat-table">
+<tr><th>Step</th><th>What to Check</th><th>Method</th></tr>
+<tr><td>1</td><td>Is the equation set $= 0$?</td><td>If not, move everything to one side first.</td></tr>
+<tr><td>2</td><td>Compute $D = b^2 - 4ac$.</td><td>&mdash;</td></tr>
+<tr><td>3</td><td>Is $D$ a perfect square?</td><td>YES &rarr; <strong>Factor</strong> (or split-the-middle).</td></tr>
+<tr><td>4</td><td>If no, is $b$ even?</td><td>YES &rarr; <strong>Complete the square</strong> (Kenny's inside method).</td></tr>
+<tr><td>5</td><td>Otherwise.</td><td><strong>Quadratic formula.</strong></td></tr>
+</table>
+
+<div class="callout-good">
+<strong>&#10004; Habit to build:</strong> Before you start solving, <strong>circle the discriminant</strong> on your paper and write the chosen method next to it. Two-second decision = no wasted minute on a method that will reduce at the end anyway.
+</div>
+
+<div class="footer">
+Created by Newton School &middot; Newton School Fort Lee &middot; Kenny Baek &middot; 2026-05-01 &middot; v1 &middot; &copy; Copyright
+</div>
+
+</div>
+</body>
+</html>
