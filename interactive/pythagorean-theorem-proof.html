@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Pythagorean Theorem — Live Proof (Evelyn Yoo · Geometry Prep)</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['$','$'], ['\\(','\\)']], displayMath: [['$$','$$'], ['\\[','\\]']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+
+<style>
+  :root {
+    --student:      #e6a817;
+    --student-soft: #fef8e7;
+    --student-deep: #a07000;
+    --ink:          #1a1a1a;
+    --ink-soft:     #555;
+    --bg:           #fffdf5;
+    --paper:        #fff;
+    --line:         #e8e8e8;
+    --leg-a:        #2e86de;
+    --leg-a-soft:   #d6eaf8;
+    --leg-b:        #27ae60;
+    --leg-b-soft:   #d4efdf;
+    --hyp:          #c0392b;
+    --hyp-soft:     #fadbd8;
+    --triangle:     #f39c12;
+    --ok:           #2e7d32;
+    --ok-soft:      #e8f5e9;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--ink); padding: 16px; line-height: 1.55; }
+  .wrap { max-width: 1180px; margin: 0 auto; }
+
+  header { padding: 20px 24px; background: var(--paper); border-radius: 10px; box-shadow: 0 1px 4px rgba(0,0,0,0.06); margin-bottom: 16px; border-top: 3px solid var(--student); }
+  header h1 { font-size: 24px; font-weight: 700; color: var(--student-deep); margin-bottom: 4px; }
+  header .meta { font-size: 12px; color: var(--ink-soft); letter-spacing: 0.04em; }
+  header .tagline { margin-top: 8px; font-size: 13px; color: var(--ink-soft); font-style: italic; }
+
+  .grid { display: grid; grid-template-columns: 320px 1fr; gap: 16px; }
+  @media (max-width: 900px) { .grid { grid-template-columns: 1fr; } }
+
+  .panel { background: var(--paper); border-radius: 10px; padding: 18px 20px; box-shadow: 0 1px 4px rgba(0,0,0,0.06); margin-bottom: 14px; }
+  .panel h2 { font-size: 12px; color: var(--student-deep); margin-bottom: 14px; letter-spacing: 0.09em; text-transform: uppercase; font-weight: 700; border-bottom: 1px solid var(--line); padding-bottom: 8px; }
+
+  /* Controls */
+  .field { margin-bottom: 16px; }
+  .field:last-child { margin-bottom: 0; }
+  .ctrl-label { display: flex; justify-content: space-between; align-items: baseline; font-size: 13px; font-weight: 600; margin-bottom: 5px; }
+  .ctrl-label .val { font-family: 'JetBrains Mono', monospace; color: var(--student-deep); font-size: 13px; font-weight: 700; }
+  input[type=range] { width: 100%; accent-color: var(--student); }
+  .help { font-size: 11px; color: var(--ink-soft); line-height: 1.4; margin-top: 2px; }
+
+  .preset-row, .mode-row { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 6px; }
+  .preset, .mode-btn {
+    padding: 6px 10px; font-size: 11px; font-weight: 600;
+    border: 1.5px solid var(--student); background: var(--paper);
+    color: var(--student-deep); border-radius: 5px; cursor: pointer;
+    transition: all 0.15s; font-family: 'JetBrains Mono', monospace;
+  }
+  .preset:hover, .mode-btn:hover { background: var(--student-soft); }
+  .mode-btn.active { background: var(--student); color: #fff; border-color: var(--student); }
+
+  /* Canvas */
+  .stage-wrap { background: var(--paper); border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+  canvas { display: block; width: 100%; background: #fffefb; }
+
+  .stage-foot { padding: 10px 14px; border-top: 1px solid var(--line); font-size: 12px; color: var(--ink-soft); display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .stage-foot .step { font-weight: 600; color: var(--student-deep); }
+  .stage-foot .anim-toggle { background: var(--student); color: #fff; border: none; padding: 6px 12px; font-size: 11px; font-weight: 600; border-radius: 4px; cursor: pointer; letter-spacing: 0.05em; }
+  .stage-foot .anim-toggle:hover { filter: brightness(0.95); }
+
+  /* Stats */
+  .stats-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; }
+  @media (max-width: 600px) { .stats-grid { grid-template-columns: 1fr; } }
+  .stat { background: var(--student-soft); border-left: 3px solid var(--student); padding: 10px 12px; border-radius: 4px; }
+  .stat .key { font-size: 10px; color: var(--student-deep); font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 3px; }
+  .stat .v   { font-family: 'JetBrains Mono', monospace; font-size: 14px; font-weight: 700; color: var(--ink); }
+  .stat.leg-a { background: var(--leg-a-soft); border-left-color: var(--leg-a); }
+  .stat.leg-a .key, .stat.leg-a .v { color: var(--leg-a); }
+  .stat.leg-b { background: var(--leg-b-soft); border-left-color: var(--leg-b); }
+  .stat.leg-b .key, .stat.leg-b .v { color: var(--leg-b); }
+  .stat.hyp { background: var(--hyp-soft); border-left-color: var(--hyp); }
+  .stat.hyp .key, .stat.hyp .v { color: var(--hyp); }
+  .stat.ok { background: var(--ok-soft); border-left-color: var(--ok); }
+  .stat.ok .key, .stat.ok .v { color: var(--ok); }
+
+  /* Formula */
+  .formula-box { background: #fffaf0; border: 1px solid var(--line); border-left: 4px solid var(--student); padding: 12px 14px; border-radius: 4px; margin-top: 12px; font-size: 13px; }
+  .formula-box .ftitle { font-weight: 700; color: var(--student-deep); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 6px; }
+  .formula-box .fnum { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--ink); margin-top: 6px; word-break: break-word; }
+
+  .proof-steps { margin-top: 14px; }
+  .proof-step { background: var(--paper); border: 1px solid var(--line); border-left: 3px solid var(--student); padding: 10px 14px; margin-bottom: 8px; border-radius: 4px; font-size: 13px; line-height: 1.6; }
+  .proof-step.active { background: var(--student-soft); border-left-color: var(--student-deep); }
+  .proof-step .pn { display: inline-block; background: var(--student); color: #fff; font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 3px; margin-right: 8px; vertical-align: middle; }
+
+  footer { text-align: center; padding: 20px; font-size: 11px; color: var(--ink-soft); margin-top: 8px; }
+  footer .heart { color: var(--hyp); }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <h1>📐 Pythagorean Theorem — Live Proof</h1>
+    <div class="meta">Evelyn Yoo &nbsp;&middot;&nbsp; Geometry Honors Prep &nbsp;&middot;&nbsp; Bhaskara's Visual Proof &nbsp;&middot;&nbsp; drag the sliders, watch <em>a² + b² = c²</em></div>
+    <div class="tagline">"The square on the hypotenuse equals the sum of the squares on the two legs." — Pythagoras, ~500 BC</div>
+  </header>
+
+  <div class="grid">
+
+    <!-- ==================== LEFT: Controls ==================== -->
+    <div>
+      <div class="panel">
+        <h2>Triangle Legs</h2>
+
+        <div class="field">
+          <div class="ctrl-label">leg $a$ <span class="val"><span id="aVal">3</span></span></div>
+          <input type="range" id="a" min="1" max="12" value="3" step="1">
+          <div class="help">Horizontal leg (blue).</div>
+        </div>
+
+        <div class="field">
+          <div class="ctrl-label">leg $b$ <span class="val"><span id="bVal">4</span></span></div>
+          <input type="range" id="b" min="1" max="12" value="4" step="1">
+          <div class="help">Vertical leg (green).</div>
+        </div>
+
+        <div class="field">
+          <div class="ctrl-label" style="margin-bottom:6px;">Famous Triples</div>
+          <div class="preset-row">
+            <button class="preset" data-a="3" data-b="4">3 · 4 · 5</button>
+            <button class="preset" data-a="5" data-b="12">5 · 12 · 13</button>
+            <button class="preset" data-a="8" data-b="15">8 · 15 · 17</button>
+            <button class="preset" data-a="7" data-b="24">7 · 24 · 25</button>
+            <button class="preset" data-a="6" data-b="8">6 · 8 · 10</button>
+          </div>
+          <div class="help" style="margin-top:8px;">These are <strong>Pythagorean triples</strong> — integer $a, b, c$ that satisfy the theorem exactly.</div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h2>View Mode</h2>
+        <div class="mode-row">
+          <button class="mode-btn active" data-mode="triangle">1. Triangle</button>
+          <button class="mode-btn" data-mode="squares">2. Squares</button>
+          <button class="mode-btn" data-mode="bhaskara">3. Proof ▶</button>
+        </div>
+        <div class="help" style="margin-top:10px;">
+          Step 1 — see the right triangle.<br>
+          Step 2 — three squares appear on each side.<br>
+          Step 3 — watch Bhaskara's rearrangement prove $a^2 + b^2 = c^2$.
+        </div>
+      </div>
+
+      <div class="panel" style="padding-top:14px;">
+        <h2>Live Numbers</h2>
+        <div class="stats-grid" style="grid-template-columns: 1fr;">
+          <div class="stat leg-a">
+            <div class="key">$a^2$ (blue square)</div>
+            <div class="v" id="aSq">9</div>
+          </div>
+          <div class="stat leg-b">
+            <div class="key">$b^2$ (green square)</div>
+            <div class="v" id="bSq">16</div>
+          </div>
+          <div class="stat hyp">
+            <div class="key">$c^2 = a^2 + b^2$ (red square)</div>
+            <div class="v" id="cSq">25</div>
+          </div>
+          <div class="stat ok">
+            <div class="key">Hypotenuse $c$</div>
+            <div class="v" id="cVal">5.0000</div>
+          </div>
+        </div>
+        <div class="formula-box">
+          <div class="ftitle">The theorem</div>
+          $$a^2 + b^2 = c^2$$
+          <div class="ftitle" style="margin-top:10px;">Your current numbers</div>
+          <div class="fnum" id="formulaNum">3² + 4² = 9 + 16 = 25 = 5²  ✓</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== RIGHT: Canvas + Proof ==================== -->
+    <div>
+
+      <div class="panel" style="padding-bottom:0;">
+        <h2 id="stageTitle">Right Triangle</h2>
+        <div class="stage-wrap">
+          <canvas id="stage" width="800" height="540"></canvas>
+        </div>
+        <div class="stage-foot">
+          <div class="step" id="stepText">Step 1 of 3 — A right triangle with legs $a$ and $b$, and hypotenuse $c$.</div>
+          <button class="anim-toggle" id="animBtn" style="display:none;">▶ Play Animation</button>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h2>Bhaskara's Proof — Step by Step</h2>
+        <div class="proof-steps">
+          <div class="proof-step" id="ps-1">
+            <span class="pn">1</span>
+            Start with a big square of side $(a + b)$. Its total area is $(a + b)^2$.
+          </div>
+          <div class="proof-step" id="ps-2">
+            <span class="pn">2</span>
+            Layout A — place 4 copies of our right triangle in the corners, all pointing inward, hypotenuse facing the center. The leftover space in the middle is a tilted square of side $c$, with area $c^2$. So $(a+b)^2 = c^2 + 4 \cdot \frac{ab}{2}$.
+          </div>
+          <div class="proof-step" id="ps-3">
+            <span class="pn">3</span>
+            Layout B — rearrange the same 4 triangles into two corners. The leftover space is now two squares: one of area $a^2$, one of area $b^2$. So $(a+b)^2 = a^2 + b^2 + 4 \cdot \frac{ab}{2}$.
+          </div>
+          <div class="proof-step" id="ps-4">
+            <span class="pn">4</span>
+            Both layouts fit inside the <em>same</em> $(a+b)^2$ square and use the <em>same</em> 4 triangles. So the leftover spaces are equal: $\;\;a^2 + b^2 = c^2$. ✓
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <footer>
+    Newton School &nbsp;&middot;&nbsp; Evelyn Yoo &nbsp;&middot;&nbsp; Geometry Honors Prep &nbsp;&middot;&nbsp; made with <span class="heart">♥</span> by Mr. Kenny
+  </footer>
+
+</div>
+
+<script>
+// =====================================================
+// State
+// =====================================================
+const S = {
+  a: 3, b: 4,
+  mode: 'triangle',        // 'triangle' | 'squares' | 'bhaskara'
+  animProgress: 0,         // 0..1 for bhaskara morph
+  animPlaying: false,
+  animDir: 1               // +1 forward, -1 back
+};
+
+const $ = id => document.getElementById(id);
+const canvas = $('stage');
+const ctx = canvas.getContext('2d');
+
+// =====================================================
+// Math helpers
+// =====================================================
+const sq = x => x * x;
+const c  = ()  => Math.sqrt(sq(S.a) + sq(S.b));
+
+// Smooth ease for animation
+const ease = t => t * t * (3 - 2 * t);
+
+// =====================================================
+// Update side panel
+// =====================================================
+function updateNumbers() {
+  $('aVal').textContent = S.a;
+  $('bVal').textContent = S.b;
+  $('aSq').textContent  = sq(S.a);
+  $('bSq').textContent  = sq(S.b);
+  $('cSq').textContent  = sq(S.a) + sq(S.b);
+  $('cVal').textContent = c().toFixed(4);
+
+  const cSquared = sq(S.a) + sq(S.b);
+  const cNum     = c();
+  const cClean   = Number.isInteger(cNum) ? cNum.toString() : cNum.toFixed(3);
+  $('formulaNum').textContent =
+    `${S.a}² + ${S.b}² = ${sq(S.a)} + ${sq(S.b)} = ${cSquared} = ${cClean}²` +
+    (Number.isInteger(cNum) ? '  ✓ Pythagorean triple!' : '');
+}
+
+// =====================================================
+// Drawing — pixel scale
+// =====================================================
+function pxScale() {
+  // Fit the largest object on screen comfortably.
+  // For bhaskara mode the big square has side (a+b). Triangle/squares mode max extent ≈ a+b too.
+  const maxUnits = (S.a + S.b) + 2; // a bit of margin
+  const W = canvas.width, H = canvas.height;
+  const usable = Math.min(W - 80, H - 80);
+  return usable / maxUnits;
+}
+
+function clear() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.fillStyle = '#fffefb';
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+}
+
+// Draw a filled+stroked polygon
+function poly(points, fill, stroke, lw=1.5) {
+  if (points.length < 2) return;
+  ctx.beginPath();
+  ctx.moveTo(points[0][0], points[0][1]);
+  for (let i = 1; i < points.length; i++) ctx.lineTo(points[i][0], points[i][1]);
+  ctx.closePath();
+  if (fill)   { ctx.fillStyle = fill; ctx.fill(); }
+  if (stroke) { ctx.strokeStyle = stroke; ctx.lineWidth = lw; ctx.stroke(); }
+}
+
+function label(txt, x, y, color='#1a1a1a', size=14, weight='600', align='center') {
+  ctx.fillStyle = color;
+  ctx.font = `${weight} ${size}px Inter, system-ui, sans-serif`;
+  ctx.textAlign = align;
+  ctx.textBaseline = 'middle';
+  ctx.fillText(txt, x, y);
+}
+
+// =====================================================
+// MODE 1: Just the right triangle
+// =====================================================
+function drawTriangleOnly() {
+  const k = pxScale();
+  const W = canvas.width, H = canvas.height;
+
+  // Center the triangle on canvas
+  const triW = S.a * k, triH = S.b * k;
+  const x0 = (W - triW) / 2;
+  const y0 = (H + triH) / 2;  // bottom of vertical leg
+
+  // Vertices:
+  // P0 = right-angle corner (bottom-left of triangle box)
+  // P1 = end of horizontal leg
+  // P2 = end of vertical leg
+  const P0 = [x0,         y0];
+  const P1 = [x0 + triW,  y0];
+  const P2 = [x0,         y0 - triH];
+
+  // Triangle fill
+  poly([P0, P1, P2], 'rgba(243, 156, 18, 0.18)', '#d68910', 2.5);
+
+  // Right-angle square marker
+  const ms = Math.min(triW, triH) * 0.08;
+  ctx.strokeStyle = '#d68910';
+  ctx.lineWidth = 1.5;
+  ctx.strokeRect(P0[0], P0[1] - ms, ms, ms);
+
+  // Side labels
+  // a (horizontal, bottom)
+  label(`a = ${S.a}`, (P0[0] + P1[0])/2, P0[1] + 22, '#2e86de', 16, '700');
+  // b (vertical, left)
+  ctx.save();
+  ctx.translate(P0[0] - 24, (P0[1] + P2[1])/2);
+  ctx.rotate(-Math.PI/2);
+  label(`b = ${S.b}`, 0, 0, '#27ae60', 16, '700');
+  ctx.restore();
+  // c (hypotenuse)
+  const midH = [(P1[0] + P2[0])/2, (P1[1] + P2[1])/2];
+  const nrm  = [(P2[1] - P1[1]), -(P2[0] - P1[0])];
+  const nlen = Math.hypot(nrm[0], nrm[1]);
+  const off  = 20;
+  label(`c = ${c().toFixed(2)}`,
+        midH[0] + (nrm[0]/nlen) * off,
+        midH[1] + (nrm[1]/nlen) * off,
+        '#c0392b', 16, '700');
+
+  // Vertices dots
+  [P0, P1, P2].forEach(p => {
+    ctx.fillStyle = '#d68910';
+    ctx.beginPath(); ctx.arc(p[0], p[1], 4, 0, Math.PI*2); ctx.fill();
+  });
+}
+
+// =====================================================
+// MODE 2: Squares on each side
+// =====================================================
+function drawSquares() {
+  const k = pxScale() * 0.85;  // a touch smaller to fit 3 squares
+  const W = canvas.width, H = canvas.height;
+
+  // Right-triangle reference vertices: P0 right angle, P1 along +x (a), P2 along -y (b)
+  const triW = S.a * k, triH = S.b * k;
+
+  // Center the whole composite (triangle + 3 squares) roughly
+  const cx = W / 2;
+  const cy = H / 2 + triH * 0.15;
+
+  const P0 = [cx - triW/2, cy + triH/2];
+  const P1 = [P0[0] + triW, P0[1]];
+  const P2 = [P0[0],        P0[1] - triH];
+
+  // --- square on leg a (below the triangle) ---
+  const aSqPoints = [
+    P0, P1,
+    [P1[0], P1[1] + triW],
+    [P0[0], P0[1] + triW]
+  ];
+  poly(aSqPoints, 'rgba(46,134,222,0.22)', '#2e86de', 2);
+  drawGrid(aSqPoints, S.a, '#2e86de');
+  label(`a² = ${sq(S.a)}`,
+        (P0[0] + P1[0]) / 2,
+        P0[1] + triW / 2,
+        '#1c5a9d', 18, '700');
+
+  // --- square on leg b (left of the triangle) ---
+  const bSqPoints = [
+    P0,
+    [P0[0] - triH, P0[1]],
+    [P0[0] - triH, P2[1]],
+    P2
+  ];
+  poly(bSqPoints, 'rgba(39,174,96,0.22)', '#27ae60', 2);
+  drawGrid(bSqPoints, S.b, '#27ae60');
+  label(`b² = ${sq(S.b)}`,
+        P0[0] - triH / 2,
+        (P0[1] + P2[1]) / 2,
+        '#1e7e3d', 18, '700');
+
+  // --- square on the hypotenuse (above-right, tilted) ---
+  // Hypotenuse goes P1 -> P2. We build the square on its outward side.
+  const hx = P2[0] - P1[0], hy = P2[1] - P1[1];
+  const hlen = Math.hypot(hx, hy);
+  // perpendicular outward (away from P0).
+  // Outward normal: rotate the hypotenuse vector +90° (so it points away from P0).
+  // (hy, -hx) is one perpendicular; check which one points away from P0.
+  const cand1 = [hy, -hx];
+  // midpoint of hypotenuse:
+  const mid = [(P1[0] + P2[0])/2, (P1[1] + P2[1])/2];
+  // vector from P0 to mid:
+  const fromP0 = [mid[0] - P0[0], mid[1] - P0[1]];
+  // dot product to pick the outward one
+  const dot = cand1[0]*fromP0[0] + cand1[1]*fromP0[1];
+  const out = dot > 0 ? cand1 : [-cand1[0], -cand1[1]];
+  // We want the perpendicular to have length = hlen (since it's a square of side c·k = hlen)
+  const outLen = Math.hypot(out[0], out[1]);
+  const ux = out[0] / outLen, uy = out[1] / outLen;
+  const cSqP = [
+    P1,
+    P2,
+    [P2[0] + ux * hlen, P2[1] + uy * hlen],
+    [P1[0] + ux * hlen, P1[1] + uy * hlen]
+  ];
+  poly(cSqP, 'rgba(192,57,43,0.22)', '#c0392b', 2);
+  // grid for c square — we won't grid because c may be non-integer; just diagonal stripes
+  drawHypGrid(cSqP, c(), '#c0392b');
+
+  // Label centered in the tilted square
+  const cCx = (cSqP[0][0] + cSqP[2][0]) / 2;
+  const cCy = (cSqP[0][1] + cSqP[2][1]) / 2;
+  label(`c² = ${sq(S.a) + sq(S.b)}`, cCx, cCy, '#7e1e1e', 18, '700');
+
+  // Triangle outline on top
+  poly([P0, P1, P2], 'rgba(243,156,18,0.35)', '#d68910', 2);
+  // Right-angle marker
+  const ms = Math.min(triW, triH) * 0.08;
+  ctx.strokeStyle = '#d68910';
+  ctx.lineWidth = 1.5;
+  ctx.strokeRect(P0[0], P0[1] - ms, ms, ms);
+
+  // Side annotations
+  label(`a=${S.a}`, (P0[0]+P1[0])/2, P0[1] - 12, '#2e86de', 12, '700');
+  label(`b=${S.b}`, P0[0] + 12, (P0[1]+P2[1])/2, '#27ae60', 12, '700', 'left');
+
+  // Summary banner under the canvas
+  label(`${sq(S.a)} + ${sq(S.b)} = ${sq(S.a)+sq(S.b)}`,
+        W/2, 30, '#a07000', 18, '700');
+}
+
+// Grid inside an axis-aligned square (4 corners, n divisions per side)
+function drawGrid(pts, n, color) {
+  if (n > 12) return;
+  ctx.save();
+  ctx.strokeStyle = color;
+  ctx.globalAlpha = 0.35;
+  ctx.lineWidth = 0.6;
+  // pts go counter-clockwise from P0
+  const [A, B, C, D] = pts;
+  for (let i = 1; i < n; i++) {
+    const t = i / n;
+    // horizontal lines (A→D and B→C)
+    const x1 = A[0] + (D[0] - A[0]) * t, y1 = A[1] + (D[1] - A[1]) * t;
+    const x2 = B[0] + (C[0] - B[0]) * t, y2 = B[1] + (C[1] - B[1]) * t;
+    ctx.beginPath(); ctx.moveTo(x1, y1); ctx.lineTo(x2, y2); ctx.stroke();
+    // vertical lines (A→B and D→C)
+    const u1 = A[0] + (B[0] - A[0]) * t, v1 = A[1] + (B[1] - A[1]) * t;
+    const u2 = D[0] + (C[0] - D[0]) * t, v2 = D[1] + (C[1] - D[1]) * t;
+    ctx.beginPath(); ctx.moveTo(u1, v1); ctx.lineTo(u2, v2); ctx.stroke();
+  }
+  ctx.restore();
+}
+
+// Diagonal stripes for non-integer c
+function drawHypGrid(pts, cLen, color) {
+  ctx.save();
+  ctx.strokeStyle = color;
+  ctx.globalAlpha = 0.25;
+  ctx.lineWidth = 0.6;
+  const n = Math.round(cLen);
+  for (let i = 1; i < n; i++) {
+    const t = i / n;
+    const [A, B, C, D] = pts;
+    const x1 = A[0] + (B[0] - A[0]) * t, y1 = A[1] + (B[1] - A[1]) * t;
+    const x2 = D[0] + (C[0] - D[0]) * t, y2 = D[1] + (C[1] - D[1]) * t;
+    ctx.beginPath(); ctx.moveTo(x1, y1); ctx.lineTo(x2, y2); ctx.stroke();
+    const u1 = A[0] + (D[0] - A[0]) * t, v1 = A[1] + (D[1] - A[1]) * t;
+    const u2 = B[0] + (C[0] - B[0]) * t, v2 = B[1] + (C[1] - B[1]) * t;
+    ctx.beginPath(); ctx.moveTo(u1, v1); ctx.lineTo(u2, v2); ctx.stroke();
+  }
+  ctx.restore();
+}
+
+// =====================================================
+// MODE 3: Bhaskara's rearrangement proof (animated)
+// =====================================================
+function drawBhaskara() {
+  const W = canvas.width, H = canvas.height;
+  const k = pxScale() * 0.95;
+  const side = (S.a + S.b) * k;
+
+  const x0 = (W - side) / 2;
+  const y0 = (H - side) / 2 + 10;
+  const x1 = x0 + side;
+  const y1 = y0 + side;
+
+  // Big (a+b) square outline
+  ctx.fillStyle = '#fff';
+  ctx.strokeStyle = '#aaa';
+  ctx.lineWidth = 2;
+  ctx.fillRect(x0, y0, side, side);
+  ctx.strokeRect(x0, y0, side, side);
+
+  const aPx = S.a * k, bPx = S.b * k;
+  const e = ease(S.animProgress);
+
+  // ----------------------------------------------------
+  // LAYOUT A (e = 0): 4 triangles rotated inside, hypotenuses form tilted c-square
+  // LAYOUT B (e = 1): 4 triangles in two corners, leaving a² and b² squares uncovered
+  // ----------------------------------------------------
+  //
+  // We define each triangle as a triple of vertices,
+  // for both layouts, then linearly interpolate.
+
+  // Layout A — 4 triangles, each right-angle in one corner of the big square,
+  // legs of length a (along one side) and b (along the other),
+  // hypotenuse facing the center.
+  //
+  // Going clockwise from top-left:
+  //   T1: corner top-left → legs going right (a) and down (b)
+  //   T2: corner top-right → legs going down (a) and left (b)
+  //   T3: corner bottom-right → legs going left (a) and up (b)
+  //   T4: corner bottom-left → legs going up (a) and right (b)
+
+  const A_T1 = [[x0, y0], [x0 + aPx, y0], [x0, y0 + bPx]];
+  const A_T2 = [[x1, y0], [x1, y0 + aPx], [x1 - bPx, y0]];
+  const A_T3 = [[x1, y1], [x1 - aPx, y1], [x1, y1 - bPx]];
+  const A_T4 = [[x0, y1], [x0, y1 - aPx], [x0 + bPx, y1]];
+
+  // Layout B — the same 4 triangles rearranged so the inner regions form an a-square and a b-square.
+  // Classic arrangement:
+  //   Top strip (height a):   two triangles in top-left and top-right corners, both legs along the top edge.
+  //   Bottom strip (height b): two triangles in bottom-left and bottom-right, with legs along the bottom and side.
+  //
+  // Specifically:
+  //   B_T1: top-left,     vertices: (x0, y0), (x0 + aPx, y0), (x0 + aPx, y0 + bPx)
+  //         → right-angle at (x0+aPx, y0), legs a (along top) and b (going down). hypotenuse from (x0,y0) to (x0+aPx, y0+bPx)
+  //   B_T2: top-right,    vertices: (x1, y0), (x1 - aPx, y0), (x1 - aPx, y0 + bPx)
+  //   B_T3: bottom-right, vertices: (x1, y1), (x1, y1 - bPx) doesn't quite fit. Use the standard:
+  //
+  // Simpler standard Bhaskara layout B:
+  // Place the 4 triangles so they form two rectangles a×b stacked, leaving an a×a square and a b×b square.
+  // ---
+  //   B_T1: top-left corner. Right-angle at (x0, y0), legs a (right) and b (down). Vertices: (x0,y0), (x0+aPx, y0), (x0, y0+bPx).
+  //   B_T2: top-right corner. Right-angle at (x1, y0), legs a (down) and b (left). Vertices: (x1, y0), (x1, y0+aPx), (x1-bPx, y0).
+  //   B_T3: same as B_T1 but moved: now sitting just below T2 to form full rectangle. Right-angle at (x1-bPx, y0+aPx).
+  //         Vertices: (x1-bPx, y0+aPx), (x1, y0+aPx), (x1-bPx, y0).  → fills the rectangle (x1-bPx ... x1) × (y0 ... y0+aPx) together with B_T2.
+  //   B_T4: same as B_T2 but moved: bottom-left. Right-angle at (x0+aPx, y0+bPx).
+  //         Vertices: (x0+aPx, y0+bPx), (x0+aPx, y0), (x0, y0+bPx). → fills (x0 ... x0+aPx) × (y0 ... y0+bPx) together with B_T1.
+  //
+  // After placing those 4 triangles, the uncovered area is exactly an a×a square (bottom-left b...) and a b×b square (bottom-right).
+  //
+  // Let me use a cleaner well-known layout:
+  // Place B_T1 + B_T4 to fill rectangle [x0..x0+aPx, y0..y0+(a+b)Px-bPx] ... actually best simple:
+  //
+  // Final clean layout:
+  //   B_T1: vertices (x0, y0),         (x0+aPx, y0),         (x0+aPx, y0+bPx)
+  //   B_T2: vertices (x0, y0),         (x0,       y0+bPx),   (x0+aPx, y0+bPx)
+  //     [Together these two fill the rectangle x0..x0+aPx by y0..y0+bPx]
+  //   B_T3: vertices (x0+aPx, y0+bPx), (x1,        y0+bPx),  (x1,       y1)
+  //   B_T4: vertices (x0+aPx, y0+bPx), (x0+aPx,    y1),      (x1,       y1)
+  //     [Together these two fill the rectangle x0+aPx..x1 by y0+bPx..y1]
+  //
+  // Uncovered:
+  //   Top-right: x0+aPx..x1 × y0..y0+bPx → b × b square = b²
+  //   Bottom-left: x0..x0+aPx × y0+bPx..y1 → a × a square = a²
+  //
+  // ✓
+
+  const B_T1 = [[x0, y0],         [x0 + aPx, y0],         [x0 + aPx, y0 + bPx]];
+  const B_T2 = [[x0, y0],         [x0,       y0 + bPx],   [x0 + aPx, y0 + bPx]];
+  const B_T3 = [[x0 + aPx, y0 + bPx], [x1, y0 + bPx],     [x1, y1]];
+  const B_T4 = [[x0 + aPx, y0 + bPx], [x0 + aPx, y1],     [x1, y1]];
+
+  // Match triangles A↔B by index for the morph.
+  // (We don't need a perfect "rigid motion" interpolation; linear interp is fine
+  //  for showing area conservation.)
+  const lerpPt  = (P, Q, t) => [P[0] + (Q[0]-P[0])*t, P[1] + (Q[1]-P[1])*t];
+  const lerpTri = (TA, TB, t) => [lerpPt(TA[0],TB[0],t), lerpPt(TA[1],TB[1],t), lerpPt(TA[2],TB[2],t)];
+
+  // Draw the "uncovered" regions FIRST so they sit underneath.
+  // At e=0: tilted c-square at the center. At e=1: a² + b² squares in corners.
+  drawBhaskaraInnerRegion(x0, y0, x1, y1, aPx, bPx, e);
+
+  // Now draw the 4 triangles with color
+  const triFill = 'rgba(243, 156, 18, 0.55)';
+  const triStroke = '#d68910';
+  const tris = [
+    lerpTri(A_T1, B_T1, e),
+    lerpTri(A_T2, B_T2, e),
+    lerpTri(A_T3, B_T3, e),
+    lerpTri(A_T4, B_T4, e)
+  ];
+  tris.forEach(T => poly(T, triFill, triStroke, 1.8));
+
+  // Top labels (state of proof)
+  const showA = e > 0.6;
+  const showC = e < 0.4;
+
+  if (showC) {
+    // c² label in center
+    label(`c² = ${sq(S.a)+sq(S.b)}`,
+          (x0+x1)/2, (y0+y1)/2, '#7e1e1e', 22*Math.min(1,(0.4-e)/0.4 + 0.4), '700');
+  }
+  if (showA) {
+    // a² label in bottom-left empty square
+    label(`a² = ${sq(S.a)}`,
+          x0 + aPx/2, y0 + bPx + aPx/2,
+          '#1c5a9d', 16, '700');
+    // b² label in top-right empty square
+    label(`b² = ${sq(S.b)}`,
+          x0 + aPx + bPx/2, y0 + bPx/2,
+          '#1e7e3d', 16, '700');
+  }
+
+  // Top banner: the (a+b)² equation
+  label(`(a + b)² = ${S.a + S.b}² = ${sq(S.a+S.b)}`,
+        W/2, y0 - 16, '#a07000', 16, '700');
+}
+
+function drawBhaskaraInnerRegion(x0, y0, x1, y1, aPx, bPx, e) {
+  // Smoothly fade between the c-square (e≈0) and the a²+b² squares (e≈1)
+  const k = pxScale() * 0.95;
+  const aSize = aPx, bSize = bPx;
+
+  // Layout A — tilted c-square
+  // Its 4 vertices are the inner corners of the 4 A-triangles:
+  //   from A_T1: hypotenuse endpoint (x0 + aPx, y0)? No — the hypotenuse of A_T1 goes from (x0+aPx, y0) to (x0, y0+bPx).
+  //   The 4 inner vertices of the c-square are the hypotenuse endpoints that touch the inside.
+  // Simpler: the 4 hypotenuses themselves form the c-square; each c-square vertex is the *meeting point* of two consecutive triangles.
+  //
+  // From the A definitions:
+  //   A_T1 hypotenuse: (x0+aPx, y0) → (x0, y0+bPx)
+  //   A_T2 hypotenuse: (x1, y0+aPx) → (x1-bPx, y0)
+  //   A_T3 hypotenuse: (x1-aPx, y1) → (x1, y1-bPx)
+  //   A_T4 hypotenuse: (x0, y1-aPx) → (x0+bPx, y1)
+  //
+  // The c-square vertices are:
+  //   v1 = (x0+aPx, y0) = end-of-leg-a of T1 along the top side
+  //   v2 = (x1, y0+aPx) = end-of-leg-a of T2 along the right side
+  //   v3 = (x1-aPx, y1) = end-of-leg-a of T3 along the bottom side
+  //   v4 = (x0, y1-aPx) = end-of-leg-a of T4 along the left side
+  //
+  // Going around (v1 → v2 → v3 → v4) traces the tilted c-square.
+
+  const cSquare = [
+    [x0 + aPx, y0],
+    [x1,       y0 + aPx],
+    [x1 - aPx, y1],
+    [x0,       y1 - aPx]
+  ];
+
+  // The a² and b² squares:
+  //   a² square: bottom-left x0..x0+aPx by y0+bPx..y1
+  //   b² square: top-right x0+aPx..x1 by y0..y0+bPx
+  const aSquareB = [
+    [x0,         y0 + bPx],
+    [x0 + aPx,   y0 + bPx],
+    [x0 + aPx,   y1],
+    [x0,         y1]
+  ];
+  const bSquareB = [
+    [x0 + aPx,   y0],
+    [x1,         y0],
+    [x1,         y0 + bPx],
+    [x0 + aPx,   y0 + bPx]
+  ];
+
+  // Fade c-square (visible when e small)
+  const cAlpha = Math.max(0, 1 - e * 1.3);
+  if (cAlpha > 0.02) {
+    ctx.save();
+    ctx.globalAlpha = cAlpha;
+    poly(cSquare, 'rgba(192,57,43,0.35)', '#c0392b', 2);
+    ctx.restore();
+  }
+
+  // Fade a²+b² squares (visible when e large)
+  const abAlpha = Math.max(0, (e - 0.2) / 0.8);
+  if (abAlpha > 0.02) {
+    ctx.save();
+    ctx.globalAlpha = abAlpha;
+    poly(aSquareB, 'rgba(46,134,222,0.35)', '#2e86de', 2);
+    poly(bSquareB, 'rgba(39,174,96,0.35)', '#27ae60', 2);
+    ctx.restore();
+  }
+}
+
+// =====================================================
+// Render
+// =====================================================
+function render() {
+  clear();
+  if      (S.mode === 'triangle') drawTriangleOnly();
+  else if (S.mode === 'squares')  drawSquares();
+  else                            drawBhaskara();
+  updateProofSteps();
+}
+
+function updateProofSteps() {
+  ['ps-1','ps-2','ps-3','ps-4'].forEach(id => $(id).classList.remove('active'));
+  let active = 'ps-1';
+  const stepLabels = {
+    triangle: { title: 'Right Triangle', text: 'Step 1 of 3 — A right triangle with legs $a$ and $b$, and hypotenuse $c$.' },
+    squares:  { title: 'Three Squares',  text: 'Step 2 of 3 — A square is drawn on each side. Their areas are $a^2$, $b^2$, and $c^2$.' },
+    bhaskara: { title: "Bhaskara's Proof", text: '' }
+  };
+
+  if (S.mode === 'triangle') active = 'ps-1';
+  else if (S.mode === 'squares') active = 'ps-1';
+  else {
+    if (S.animProgress < 0.05)      active = 'ps-2';
+    else if (S.animProgress < 0.55) active = 'ps-2';
+    else if (S.animProgress < 0.95) active = 'ps-3';
+    else                            active = 'ps-4';
+  }
+  $(active).classList.add('active');
+
+  $('stageTitle').textContent = stepLabels[S.mode].title;
+  let stepText = stepLabels[S.mode].text;
+  if (S.mode === 'bhaskara') {
+    if (S.animProgress < 0.05) {
+      stepText = "Step 3 of 3 — Layout A: 4 triangles in the corners. The space they leave in the middle is a tilted square of side <em>c</em>, so its area is <em>c²</em>.";
+    } else if (S.animProgress < 0.95) {
+      stepText = "Watch the 4 triangles slide into a new arrangement — same triangles, same big square, just moved.";
+    } else {
+      stepText = "Layout B: the same 4 triangles in two rectangles. The space they leave is now a <span style='color:var(--leg-a);font-weight:700'>a²</span> square and a <span style='color:var(--leg-b);font-weight:700'>b²</span> square. So <strong>a² + b² = c²</strong> ✓";
+    }
+  }
+  $('stepText').innerHTML = stepText;
+
+  $('animBtn').style.display = S.mode === 'bhaskara' ? 'inline-block' : 'none';
+  $('animBtn').textContent   = S.animPlaying ? '⏸ Pause' : '▶ Play Animation';
+}
+
+// =====================================================
+// Animation loop
+// =====================================================
+let lastTime = 0;
+function animate(t) {
+  if (S.animPlaying) {
+    const dt = lastTime ? (t - lastTime) / 1000 : 0;
+    S.animProgress += S.animDir * dt * 0.4;  // ~2.5s per direction
+    if (S.animProgress >= 1) { S.animProgress = 1; S.animDir = -1; }
+    if (S.animProgress <= 0) { S.animProgress = 0; S.animDir =  1; }
+    render();
+  }
+  lastTime = t;
+  requestAnimationFrame(animate);
+}
+requestAnimationFrame(animate);
+
+// =====================================================
+// Wire up controls
+// =====================================================
+$('a').addEventListener('input', e => { S.a = +e.target.value; updateNumbers(); render(); typesetMath(); });
+$('b').addEventListener('input', e => { S.b = +e.target.value; updateNumbers(); render(); typesetMath(); });
+
+document.querySelectorAll('.preset').forEach(btn => {
+  btn.addEventListener('click', () => {
+    S.a = +btn.dataset.a;
+    S.b = +btn.dataset.b;
+    $('a').value = S.a;
+    $('b').value = S.b;
+    updateNumbers(); render(); typesetMath();
+  });
+});
+
+document.querySelectorAll('.mode-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    S.mode = btn.dataset.mode;
+    if (S.mode === 'bhaskara') {
+      S.animProgress = 0;
+      S.animPlaying  = true;
+      S.animDir = 1;
+    } else {
+      S.animPlaying = false;
+    }
+    render();
+  });
+});
+
+$('animBtn').addEventListener('click', () => {
+  S.animPlaying = !S.animPlaying;
+  render();
+});
+
+// Resize canvas to fit container
+function fitCanvas() {
+  const wrap = canvas.parentElement;
+  const rect = wrap.getBoundingClientRect();
+  const W = Math.max(360, Math.floor(rect.width));
+  const H = Math.floor(W * 0.625);
+  canvas.width  = W;
+  canvas.height = H;
+  render();
+}
+window.addEventListener('resize', fitCanvas);
+
+function typesetMath() {
+  if (window.MathJax && window.MathJax.typesetPromise) {
+    window.MathJax.typesetPromise([document.querySelector('.formula-box')]);
+  }
+}
+
+// Boot
+updateNumbers();
+fitCanvas();
+</script>
+</body>
+</html>

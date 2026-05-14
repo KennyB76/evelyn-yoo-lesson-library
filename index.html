@@ -58,6 +58,18 @@
   .modal-close { background: transparent; border: none; font-size: 22px; cursor: pointer; color: var(--ink-soft); padding: 0 6px; flex-shrink: 0; line-height: 1; }
   .modal-close:hover { color: var(--student); }
   .modal-iframe { flex: 1; border: none; width: 100%; }
+
+  /* Play With It — interactive activity cards */
+  .kenny-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 6px; }
+  @media (max-width: 600px) { .kenny-cards { grid-template-columns: 1fr; } }
+  .kenny-card { display: block; padding: 16px 18px; background: var(--student-soft); border: 1px solid transparent; border-left: 3px solid var(--student); border-radius: 8px; text-decoration: none; color: var(--ink); transition: all 0.15s; cursor: pointer; position: relative; }
+  .kenny-card:hover { background: var(--paper); border-color: var(--student); box-shadow: 0 4px 14px rgba(230,168,23,0.22); transform: translateY(-1px); }
+  .kc-icon { font-size: 26px; margin-bottom: 6px; line-height: 1; }
+  .kc-title { font-family: var(--serif); font-size: 19px; font-weight: 700; color: var(--student-deep); margin-bottom: 4px; }
+  .kc-desc { font-size: 12.5px; color: var(--ink-soft); line-height: 1.5; padding-right: 24px; }
+  .kc-arrow { position: absolute; top: 18px; right: 18px; color: var(--student); font-size: 18px; font-weight: 700; transition: transform 0.15s; }
+  .kenny-card:hover .kc-arrow { transform: translateX(3px); }
+  .today-badge { display: inline-block; margin-left: 6px; font-size: 9px; font-weight: 700; letter-spacing: 0.08em; background: var(--hyp, #c0392b); color: #fff; border-radius: 3px; padding: 2px 6px; vertical-align: middle; text-transform: uppercase; }
 </style>
 </head>
 <body>
@@ -135,6 +147,22 @@
         <span class="pdf-badge">PDF</span>
       </li>
     </ul>
+  </section>
+
+  <section>
+    <div class="label">Play With It</div>
+    <h2>Interactive Activities <span class="today-badge">New 5/14</span></h2>
+    <p>Drag the sliders, watch the math move. The Pythagorean Theorem isn't just a formula &mdash; it's a picture you can <em>see</em> proving itself.</p>
+    <div class="kenny-cards">
+      <a class="kenny-card popup-link"
+         data-src="interactive/pythagorean-theorem-proof.html"
+         data-label="Pythagorean Theorem — Live Proof">
+        <div class="kc-icon">&#128208;</div>
+        <div class="kc-title">Pythagorean Theorem</div>
+        <div class="kc-desc">Move the legs <strong>a</strong> and <strong>b</strong>, watch the three squares grow, then press play to see Bhaskara's 4-triangle proof animate in front of your eyes. Try 3-4-5 and 5-12-13.</div>
+        <div class="kc-arrow">&rarr;</div>
+      </a>
+    </div>
   </section>
 
   <section>
