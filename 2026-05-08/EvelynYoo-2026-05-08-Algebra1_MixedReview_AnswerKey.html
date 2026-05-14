@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Answer Key — Algebra 1 Homework: Percent Mixture, Percent Change & Graphing Lines</title>
+<style>
+@page { size: letter; margin: 0.5in; }
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; background: #fafafa; }
+body { font-family: 'Times New Roman', serif; color: #000; font-size: 10pt; line-height: 1.5; }
+.page { max-width: 720px; margin: 0 auto; padding: 70px 50px 40px 50px; background: #fff; }
+.page-break { page-break-before: always; break-before: page; }
+@media print {
+  html, body { background: #fff; }
+  .page { max-width: none; padding: 0.7in 0.6in 0.5in 0.6in; margin: 0; box-shadow: none; }
+  .answer-block, .reminder { page-break-inside: avoid; break-inside: avoid; }
+  .part-header, .problem-header, h1, h2, h3 { page-break-after: avoid; break-after: avoid; }
+  .page-break { page-break-before: always; break-before: page; }
+}
+
+:root {
+  --color-primary: #c2185b;
+  --color-primary-dark: #880e4f;
+  --color-final-answer: #2e7d32;
+  --color-warning: #d84315;
+  --color-tag-border: #c2185b;
+  --color-tag-text: #c2185b;
+  --color-muted: #555;
+  --color-rule: #ccc;
+}
+
+.header { text-align: center; padding-bottom: 12px; margin-bottom: 18px; border-bottom: 2px solid var(--color-primary); }
+.school-name { font-size: 9pt; letter-spacing: 4px; color: var(--color-primary); font-weight: bold; }
+.subject-tag, .key-tag { display: inline-block; padding: 2px 10px; font-size: 8pt; letter-spacing: 2px; margin: 5px 3px 8px 3px; font-weight: bold; }
+.subject-tag { border: 1.5px solid var(--color-primary); color: var(--color-primary); }
+.key-tag { border: 1.5px solid var(--color-warning); color: var(--color-warning); }
+h1 { font-size: 14pt; margin: 6px 0 10px 0; font-weight: bold; line-height: 1.3; }
+.info { display: flex; justify-content: space-between; font-size: 10pt; margin-top: 6px; }
+.standard { font-size: 8pt; font-style: italic; margin-top: 5px; color: var(--color-muted); }
+
+.part-header { font-size: 12pt; font-weight: bold; color: var(--color-primary); margin: 22px 0 6px 0; padding-bottom: 3px; border-bottom: 2px solid var(--color-primary); }
+
+.answer-block { margin: 12px 0; padding: 10px 14px; border: 1px solid #ddd; border-radius: 4px; }
+.problem-header { font-weight: bold; color: var(--color-primary); font-size: 11pt; margin-bottom: 5px; }
+.problem-text { font-size: 9.5pt; padding: 6px 10px; background: #f7f7f7; border-left: 3px solid #bbb; margin-bottom: 8px; line-height: 1.5; }
+.concept-tag { display: inline-block; font-size: 8pt; padding: 2px 8px; margin: 2px 3px 5px 0; border: 1px solid var(--color-tag-border); color: var(--color-tag-text); border-radius: 10px; }
+.solution { margin: 6px 0; padding-left: 8px; border-left: 3px solid var(--color-final-answer); }
+.solution-step { margin: 4px 0; font-size: 10pt; line-height: 1.6; }
+.final-answer { display: inline-block; border: 2px solid var(--color-final-answer); color: var(--color-final-answer); font-weight: bold; padding: 4px 12px; border-radius: 4px; margin-top: 6px; font-size: 11pt; }
+.gotcha { background: #fff3e0; border-left: 3px solid var(--color-warning); padding: 6px 10px; margin: 6px 0; font-size: 9.5pt; color: #6d3000; }
+.gotcha strong { color: var(--color-warning); }
+
+.footer { text-align: center; font-size: 8pt; color: #666; border-top: 1px solid var(--color-rule); margin-top: 22px; padding-top: 6px; }
+
+/* Graph cells */
+.graph-row { display: flex; flex-wrap: wrap; gap: 14px; justify-content: flex-start; margin-top: 6px; }
+.graph-cell { flex: 0 0 auto; }
+.graph-cell .gp-num { font-size: 10pt; font-weight: bold; color: var(--color-primary); margin-bottom: 4px; }
+.graph-cell .gp-eq { font-size: 11pt; margin-bottom: 4px; }
+.graph-cell .gp-pts { font-size: 9pt; color: var(--color-final-answer); margin-top: 4px; font-weight: bold; }
+svg.grid { background: #fff; border: 1px solid #999; }
+</style>
+
+<script>
+window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] } };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body>
+
+<div class="page">
+
+  <div class="header">
+    <div class="school-name">NEWTON SCHOOL</div>
+    <div class="subject-tag">ALGEBRA 1</div>
+    <div class="key-tag">ANSWER KEY</div>
+    <h1>Percent Mixture, Percent Change &amp; Graphing Lines</h1>
+    <div class="info">
+      <span><strong>Student:</strong> Evelyn Yoo</span>
+      <span><strong>Date:</strong> 2026-05-08</span>
+    </div>
+    <div class="standard">CCSS.MATH.CONTENT.HSA-CED.A.2 / HSA-REI.D.10</div>
+  </div>
+
+  <!-- ===================== PART A ===================== -->
+  <div class="part-header">Part A &middot; Percent Mixture</div>
+
+  <div class="answer-block">
+    <div class="problem-header">Problem 1</div>
+    <div class="problem-text">6 L of 25% saline + 4 L of 50% saline. New %?</div>
+    <span class="concept-tag">Weighted average</span><span class="concept-tag">Percent</span>
+    <div class="solution">
+      <div class="solution-step">Salt content: $6 \cdot 0.25 + 4 \cdot 0.50 = 1.5 + 2.0 = 3.5$ L</div>
+      <div class="solution-step">Total volume: $6 + 4 = 10$ L</div>
+      <div class="solution-step">Percent: $\dfrac{3.5}{10} = 0.35 = 35\%$</div>
+    </div>
+    <div class="final-answer">35%</div>
+    <div class="gotcha"><strong>Watch:</strong> The answer is between 25% and 50% — sanity check.</div>
+  </div>
+
+  <div class="answer-block">
+    <div class="problem-header">Problem 2</div>
+    <div class="problem-text">12 lbs of 80% Arabica + 8 lbs of 60% Arabica. New %?</div>
+    <span class="concept-tag">Weighted average</span><span class="concept-tag">Percent</span>
+    <div class="solution">
+      <div class="solution-step">Arabica: $12 \cdot 0.80 + 8 \cdot 0.60 = 9.6 + 4.8 = 14.4$ lbs</div>
+      <div class="solution-step">Total: $12 + 8 = 20$ lbs</div>
+      <div class="solution-step">Percent: $\dfrac{14.4}{20} = 0.72 = 72\%$</div>
+    </div>
+    <div class="final-answer">72%</div>
+  </div>
+
+  <div class="answer-block">
+    <div class="problem-header">Problem 3</div>
+    <div class="problem-text">5 mL of 40% acid + 15 mL of 8% acid. New %?</div>
+    <span class="concept-tag">Weighted average</span><span class="concept-tag">Percent</span>
+    <div class="solution">
+      <div class="solution-step">Acid: $5 \cdot 0.40 + 15 \cdot 0.08 = 2.0 + 1.2 = 3.2$ mL</div>
+      <div class="solution-step">Total: $5 + 15 = 20$ mL</div>
+      <div class="solution-step">Percent: $\dfrac{3.2}{20} = 0.16 = 16\%$</div>
+    </div>
+    <div class="final-answer">16%</div>
+    <div class="gotcha"><strong>Watch:</strong> Larger volume of weaker solution pulls the answer toward 8%, not 40%.</div>
+  </div>
+
+  <div class="answer-block">
+    <div class="problem-header">Problem 4</div>
+    <div class="problem-text">3 L of 45% real fruit juice + 7 L of 15% real fruit juice. New %?</div>
+    <span class="concept-tag">Weighted average</span><span class="concept-tag">Percent</span>
+    <div class="solution">
+      <div class="solution-step">Fruit: $3 \cdot 0.45 + 7 \cdot 0.15 = 1.35 + 1.05 = 2.4$ L</div>
+      <div class="solution-step">Total: $3 + 7 = 10$ L</div>
+      <div class="solution-step">Percent: $\dfrac{2.4}{10} = 0.24 = 24\%$</div>
+    </div>
+    <div class="final-answer">24%</div>
+  </div>
+
+  <div class="answer-block">
+    <div class="problem-header">Problem 5</div>
+    <div class="problem-text">20 g of 75% gold + 30 g of 25% gold. New %?</div>
+    <span class="concept-tag">Weighted average</span><span class="concept-tag">Percent</span>
+    <div class="solution">
+      <div class="solution-step">Gold: $20 \cdot 0.75 + 30 \cdot 0.25 = 15 + 7.5 = 22.5$ g</div>
+      <div class="solution-step">Total: $20 + 30 = 50$ g</div>
+      <div class="solution-step">Percent: $\dfrac{22.5}{50} = 0.45 = 45\%$</div>
+    </div>
+    <div class="final-answer">45%</div>
+  </div>
+
+  <!-- ===================== PART B ===================== -->
+  <div class="part-header page-break">Part B &middot; Percent Change</div>
+
+  <div class="answer-block">
+    <div class="problem-header">Problem 6 &middot; From 50 to 65</div>
+    <span class="concept-tag">Percent change</span><span class="concept-tag">Increase</span>
+    <div class="solution">
+      <div class="solution-step">Change: $65 - 50 = 15$</div>
+      <div class="solution-step">$\dfrac{15}{50} = 0.30 = 30\%$</div>
+    </div>
+    <div class="final-answer">30% Increase</div>
+  </div>
+
+  <div class="answer-block">
+    <div class="problem-header">Problem 7 &middot; From 120 to 90</div>
+    <span class="concept-tag">Percent change</span><span class="concept-tag">Decrease</span>
+    <div class="solution">
+      <div class="solution-step">Change: $90 - 120 = -30$</div>
+      <div class="solution-step">$\dfrac{|-30|}{120} = \dfrac{30}{120} = 0.25 = 25\%$</div>
+    </div>
+    <div class="final-answer">25% Decrease</div>
+  </div>
+
+  <div class="answer-block">
+    <div class="problem-header">Problem 8 &middot; From 25 to 40</div>
+    <span class="concept-tag">Percent change</span><span class="concept-tag">Increase</span>
+    <div class="solution">
+      <div class="solution-step">Change: $40 - 25 = 15$</div>
+      <div class="solution-step">$\dfrac{15}{25} = 0.60 = 60\%$</div>
+    </div>
+    <div class="final-answer">60% Increase</div>
+  </div>
+
+  <div class="answer-block">
+    <div class="problem-header">Problem 9 &middot; From 200 to 170</div>
+    <span class="concept-tag">Percent change</span><span class="concept-tag">Decrease</span>
+    <div class="solution">
+      <div class="solution-step">Change: $170 - 200 = -30$</div>
+      <div class="solution-step">$\dfrac{30}{200} = 0.15 = 15\%$</div>
+    </div>
+    <div class="final-answer">15% Decrease</div>
+  </div>
+
+  <div class="answer-block">
+    <div class="problem-header">Problem 10 &middot; From 18 to 9</div>
+    <span class="concept-tag">Percent change</span><span class="concept-tag">Decrease</span>
+    <div class="solution">
+      <div class="solution-step">Change: $9 - 18 = -9$</div>
+      <div class="solution-step">$\dfrac{9}{18} = 0.50 = 50\%$</div>
+    </div>
+    <div class="final-answer">50% Decrease</div>
+    <div class="gotcha"><strong>Watch:</strong> Always divide by the <em>original</em> value (18), not the new value.</div>
+  </div>
+
+  <!-- ===================== PART C ===================== -->
+  <div class="part-header page-break">Part C &middot; Sketch the Graph</div>
+
+  <div class="answer-block">
+    <div class="problem-header">Problem 11 &middot; $2x + 3y = 6$</div>
+    <span class="concept-tag">Intercepts method</span>
+    <div class="solution">
+      <div class="solution-step">x-intercept (y=0): $2x = 6 \Rightarrow x = 3$ &rarr; (3, 0)</div>
+      <div class="solution-step">y-intercept (x=0): $3y = 6 \Rightarrow y = 2$ &rarr; (0, 2)</div>
+      <div class="solution-step">Slope: $-\tfrac{2}{3}$</div>
+    </div>
+    <svg class="grid" width="220" height="220" viewBox="-7 -7 14 14" data-line='{"type":"intercepts","x1":3,"y1":0,"x2":0,"y2":2}'></svg>
+    <div class="gp-pts">Points plotted: (3, 0) and (0, 2)</div>
+  </div>
+
+  <div class="answer-block">
+    <div class="problem-header">Problem 12 &middot; $x - 4y = 4$</div>
+    <span class="concept-tag">Intercepts method</span>
+    <div class="solution">
+      <div class="solution-step">x-intercept (y=0): $x = 4$ &rarr; (4, 0)</div>
+      <div class="solution-step">y-intercept (x=0): $-4y = 4 \Rightarrow y = -1$ &rarr; (0, &minus;1)</div>
+      <div class="solution-step">Slope: $\tfrac{1}{4}$</div>
+    </div>
+    <svg class="grid" width="220" height="220" viewBox="-7 -7 14 14" data-line='{"type":"intercepts","x1":4,"y1":0,"x2":0,"y2":-1}'></svg>
+    <div class="gp-pts">Points plotted: (4, 0) and (0, &minus;1)</div>
+  </div>
+
+  <div class="answer-block">
+    <div class="problem-header">Problem 13 &middot; $5x + 2y = 10$</div>
+    <span class="concept-tag">Intercepts method</span>
+    <div class="solution">
+      <div class="solution-step">x-intercept (y=0): $5x = 10 \Rightarrow x = 2$ &rarr; (2, 0)</div>
+      <div class="solution-step">y-intercept (x=0): $2y = 10 \Rightarrow y = 5$ &rarr; (0, 5)</div>
+      <div class="solution-step">Slope: $-\tfrac{5}{2}$</div>
+    </div>
+    <svg class="grid" width="220" height="220" viewBox="-7 -7 14 14" data-line='{"type":"intercepts","x1":2,"y1":0,"x2":0,"y2":5}'></svg>
+    <div class="gp-pts">Points plotted: (2, 0) and (0, 5)</div>
+  </div>
+
+  <div class="answer-block">
+    <div class="problem-header">Problem 14 &middot; $6x - 3y = 0$</div>
+    <span class="concept-tag">Through origin</span>
+    <div class="solution">
+      <div class="solution-step">Both intercepts are (0, 0). Need a second point — solve for y: $y = 2x$</div>
+      <div class="solution-step">Pick $x = 1$: $y = 2$ &rarr; (1, 2). Pick $x = -1$: $y = -2$ &rarr; (&minus;1, &minus;2)</div>
+      <div class="solution-step">Slope: $2$</div>
+    </div>
+    <svg class="grid" width="220" height="220" viewBox="-7 -7 14 14" data-line='{"type":"twopoints","x1":-3,"y1":-6,"x2":3,"y2":6}'></svg>
+    <div class="gp-pts">Line through origin with slope 2: passes through (1, 2), (2, 4), (&minus;1, &minus;2)</div>
+    <div class="gotcha"><strong>Watch:</strong> Lines through the origin can&rsquo;t use the intercepts method alone — you must pick another point.</div>
+  </div>
+
+  <div class="answer-block">
+    <div class="problem-header">Problem 15 &middot; $y = \tfrac{1}{2}x - 3$</div>
+    <span class="concept-tag">Slope-intercept form</span>
+    <div class="solution">
+      <div class="solution-step">y-intercept: $-3$ &rarr; (0, &minus;3)</div>
+      <div class="solution-step">Slope: $\tfrac{1}{2}$ — rise 1, run 2</div>
+      <div class="solution-step">From (0, &minus;3): right 2, up 1 &rarr; (2, &minus;2). Right 2, up 1 &rarr; (4, &minus;1). Right 2, up 1 &rarr; (6, 0).</div>
+    </div>
+    <svg class="grid" width="220" height="220" viewBox="-7 -7 14 14" data-line='{"type":"twopoints","x1":-6,"y1":-6,"x2":6,"y2":0}'></svg>
+    <div class="gp-pts">Points plotted: (0, &minus;3), (2, &minus;2), (4, &minus;1), (6, 0)</div>
+  </div>
+
+  <div class="footer">Created by Newton School &middot; 2026-05-08 &copy; Copyright</div>
+</div>
+
+<script>
+// Render grids + lines
+document.querySelectorAll('svg.grid').forEach(svg => {
+  const ns = 'http://www.w3.org/2000/svg';
+
+  // grid lines
+  for (let i = -6; i <= 6; i++) {
+    if (i === 0) continue;
+    const lv = document.createElementNS(ns, 'line');
+    lv.setAttribute('x1', i); lv.setAttribute('y1', -6.5); lv.setAttribute('x2', i); lv.setAttribute('y2', 6.5);
+    lv.setAttribute('stroke', '#dcdcdc'); lv.setAttribute('stroke-width', '0.04');
+    svg.appendChild(lv);
+    const lh = document.createElementNS(ns, 'line');
+    lh.setAttribute('x1', -6.5); lh.setAttribute('y1', i); lh.setAttribute('x2', 6.5); lh.setAttribute('y2', i);
+    lh.setAttribute('stroke', '#dcdcdc'); lh.setAttribute('stroke-width', '0.04');
+    svg.appendChild(lh);
+  }
+  // axes
+  const ax = document.createElementNS(ns, 'line');
+  ax.setAttribute('x1', -6.5); ax.setAttribute('y1', 0); ax.setAttribute('x2', 6.5); ax.setAttribute('y2', 0);
+  ax.setAttribute('stroke', '#000'); ax.setAttribute('stroke-width', '0.08');
+  svg.appendChild(ax);
+  const ay = document.createElementNS(ns, 'line');
+  ay.setAttribute('x1', 0); ay.setAttribute('y1', -6.5); ay.setAttribute('x2', 0); ay.setAttribute('y2', 6.5);
+  ay.setAttribute('stroke', '#000'); ay.setAttribute('stroke-width', '0.08');
+  svg.appendChild(ay);
+  // labels (mathematical y → svg y is flipped: svg_y = -math_y)
+  for (let i = -6; i <= 6; i += 2) {
+    if (i === 0) continue;
+    const tx = document.createElementNS(ns, 'text');
+    tx.setAttribute('x', i); tx.setAttribute('y', 0.55);
+    tx.setAttribute('font-size', '0.5'); tx.setAttribute('text-anchor', 'middle'); tx.setAttribute('fill', '#444');
+    tx.textContent = i;
+    svg.appendChild(tx);
+    const ty = document.createElementNS(ns, 'text');
+    ty.setAttribute('x', -0.4); ty.setAttribute('y', -i + 0.18);
+    ty.setAttribute('font-size', '0.5'); ty.setAttribute('text-anchor', 'end'); ty.setAttribute('fill', '#444');
+    ty.textContent = i;
+    svg.appendChild(ty);
+  }
+  // origin label
+  const o = document.createElementNS(ns, 'text');
+  o.setAttribute('x', -0.35); o.setAttribute('y', 0.55);
+  o.setAttribute('font-size', '0.5'); o.setAttribute('text-anchor', 'end'); o.setAttribute('fill', '#444');
+  o.textContent = '0';
+  svg.appendChild(o);
+
+  // Draw line if data-line attr present
+  const dataAttr = svg.getAttribute('data-line');
+  if (dataAttr) {
+    const data = JSON.parse(dataAttr);
+    // Convert mathematical y to svg y (flip)
+    const sx1 = data.x1, sy1 = -data.y1;
+    const sx2 = data.x2, sy2 = -data.y2;
+    // Extend the line across the grid by computing slope and extending to viewBox edges
+    const dx = sx2 - sx1, dy = sy2 - sy1;
+    let extX1, extY1, extX2, extY2;
+    if (Math.abs(dx) < 0.001) {
+      // vertical
+      extX1 = sx1; extY1 = -6.5; extX2 = sx1; extY2 = 6.5;
+    } else {
+      const m = dy / dx;
+      const b = sy1 - m * sx1;
+      extX1 = -6.5; extY1 = m * (-6.5) + b;
+      extX2 = 6.5; extY2 = m * 6.5 + b;
+    }
+    const line = document.createElementNS(ns, 'line');
+    line.setAttribute('x1', extX1); line.setAttribute('y1', extY1);
+    line.setAttribute('x2', extX2); line.setAttribute('y2', extY2);
+    line.setAttribute('stroke', '#c2185b'); line.setAttribute('stroke-width', '0.12');
+    svg.appendChild(line);
+
+    // Plot the original points as dots (with svg y flip)
+    [[data.x1, data.y1], [data.x2, data.y2]].forEach(([px, py]) => {
+      const c = document.createElementNS(ns, 'circle');
+      c.setAttribute('cx', px); c.setAttribute('cy', -py);
+      c.setAttribute('r', '0.18'); c.setAttribute('fill', '#c2185b');
+      svg.appendChild(c);
+    });
+  }
+});
+</script>
+
+</body>
+</html>
