@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Distance Formula &amp; Simplifying Radicals — Homework (Evelyn Yoo · 5/15)</title>
+
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['$','$'], ['\\(','\\)']], displayMath: [['$$','$$'], ['\\[','\\]']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+
+<style>
+@page { size: letter; margin: 0.5in; }
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; background: #fafafa; }
+body { font-family: 'Source Serif Pro', 'Georgia', 'Times New Roman', serif; font-size: 11pt; line-height: 1.55; color: #000; }
+.page { max-width: 720px; margin: 0 auto; padding: 60px 50px 40px 50px; background: #fff; }
+.page-break { page-break-before: always; break-before: page; }
+@media print {
+  html, body { background: #fff; }
+  .page { max-width: none; padding: 0.5in 0.55in 0.45in 0.55in; margin: 0; box-shadow: none; }
+  .q { page-break-inside: avoid; break-inside: avoid; }
+  .header { page-break-after: avoid; break-after: avoid; }
+  .page-break { page-break-before: always; break-before: page; }
+}
+
+:root {
+  --primary: #1565c0;
+  --primary-dark: #0d47a1;
+  --accent: #00838f;
+  --muted: #555;
+  --rule: #cfd8dc;
+}
+
+.header { text-align: center; padding-bottom: 8px; margin-bottom: 18px; border-bottom: 2px solid var(--primary); }
+.school-name { font-size: 9pt; letter-spacing: 4px; color: var(--primary); font-weight: bold; }
+.tag {
+  display: inline-block; padding: 1px 9px;
+  font-size: 8.5pt; letter-spacing: 2px;
+  margin: 4px 3px; font-weight: bold;
+  color: var(--primary); border-bottom: 1px solid var(--primary);
+}
+h1 { font-family: 'Libre Baskerville', 'Georgia', serif; font-size: 17pt; margin: 4px 0 6px 0; font-weight: bold; line-height: 1.25; }
+.info { display: flex; justify-content: space-between; font-size: 9.5pt; margin-top: 4px; color: var(--muted); }
+.note-line { font-size: 8.5pt; font-style: italic; margin-top: 4px; color: var(--muted); }
+
+.intro { font-size: 9.5pt; margin-bottom: 14px; color: var(--muted); line-height: 1.55; }
+.intro b { color: var(--primary-dark); }
+
+.section {
+  font-family: 'Libre Baskerville', 'Georgia', serif;
+  font-size: 13pt;
+  font-weight: bold;
+  color: var(--primary-dark);
+  margin: 20px 0 8px 0;
+  padding-bottom: 3px;
+  border-bottom: 1.5px solid var(--primary);
+}
+.section .lead {
+  display: block;
+  font-family: 'Source Serif Pro', serif;
+  font-weight: normal;
+  font-style: italic;
+  font-size: 10pt;
+  color: var(--muted);
+  margin-top: 2px;
+}
+
+.q { margin: 0 0 18px 0; position: relative; page-break-inside: avoid; break-inside: avoid; }
+.q-head { display: flex; align-items: baseline; gap: 8px; }
+.q-num { font-weight: bold; color: var(--primary-dark); font-size: 11.5pt; min-width: 32px; }
+.q-body { flex: 1; font-size: 11pt; line-height: 1.55; }
+
+.answer-line {
+  margin-top: 6px; margin-left: 40px;
+  font-size: 10pt; color: var(--muted);
+}
+.answer-line .blank {
+  display: inline-block;
+  border-bottom: 1.5px solid #000;
+  min-width: 120px; height: 18px;
+  margin-left: 6px; vertical-align: bottom;
+}
+
+.work { margin-top: 8px; margin-left: 40px; min-height: 130px; }
+.work.tall { min-height: 180px; }
+.work.short { min-height: 90px; }
+
+.reminder {
+  border-left: 4px solid #e65100;
+  background: #fff8e1;
+  padding: 8px 12px;
+  margin: 12px 0;
+  font-size: 9.5pt;
+  line-height: 1.55;
+}
+.reminder b { color: #e65100; }
+
+.footer { text-align: center; font-size: 8pt; color: var(--muted); border-top: 1px solid var(--rule); margin-top: 24px; padding-top: 8px; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="header">
+    <div class="school-name">NEWTON SCHOOL</div>
+    <div>
+      <span class="tag">ALGEBRA 1</span>
+      <span class="tag">GEOMETRY PREP</span>
+    </div>
+    <h1>Distance Formula &amp; Simplifying Radicals</h1>
+    <div class="info">
+      <span><strong>Student:</strong> Evelyn Yoo</span>
+      <span><strong>Date:</strong> May 15, 2026</span>
+    </div>
+    <div class="note-line">Today's class topics — homework set. Show your work clearly.</div>
+  </div>
+
+  <div class="intro">
+    <b>Today we learned.</b> The distance formula is nothing but the Pythagorean theorem in disguise.
+    Visualize a right triangle between the two points — the horizontal leg is the $x$-difference,
+    the vertical leg is the $y$-difference, and the hypotenuse is the distance.
+    <br><br>
+    <b>Goal of this homework.</b> Build the visual habit (Part A) and tighten radical simplification (Part B) —
+    these two skills meet in every distance answer.
+  </div>
+
+  <div class="reminder">
+    <b>⚠ Watch your habits (Kenny's note from class).</b>
+    (1) <em>Simplify</em> ≠ <em>Solve</em> — Part B asks you to <strong>simplify</strong>, not to set things equal.
+    (2) Don't invent steps that aren't there. Write what the problem actually says, then reduce.
+  </div>
+
+  <!-- ====================================================================
+       PART A — Distance Formula
+       ==================================================================== -->
+  <div class="section">Part A — Distance Formula
+    <span class="lead">Find the distance between each pair of points. Leave answers in simplest radical form when needed.</span>
+  </div>
+
+  <div class="q">
+    <div class="q-head"><span class="q-num">1.</span><span class="q-body">$(1, 2)$ and $(6, 3)$</span></div>
+    <div class="answer-line">Distance = <span class="blank"></span></div>
+    <div class="work"></div>
+  </div>
+
+  <div class="q">
+    <div class="q-head"><span class="q-num">2.</span><span class="q-body">$(0, -6)$ and $(7, 1)$</span></div>
+    <div class="answer-line">Distance = <span class="blank"></span></div>
+    <div class="work"></div>
+  </div>
+
+  <div class="q">
+    <div class="q-head"><span class="q-num">3.</span><span class="q-body">$(-3, 4)$ and $(5, -2)$</span></div>
+    <div class="answer-line">Distance = <span class="blank"></span></div>
+    <div class="work"></div>
+  </div>
+
+  <div class="q">
+    <div class="q-head"><span class="q-num">4.</span><span class="q-body">$(-5, 7)$ and $(-7, 8)$</span></div>
+    <div class="answer-line">Distance = <span class="blank"></span></div>
+    <div class="work"></div>
+  </div>
+
+  <div class="q">
+    <div class="q-head"><span class="q-num">5.</span><span class="q-body">$(0, 0)$ and $(3, 4)$ &nbsp; <em>(classic — sketch the triangle!)</em></span></div>
+    <div class="answer-line">Distance = <span class="blank"></span></div>
+    <div class="work tall"></div>
+  </div>
+
+  <div class="q">
+    <div class="q-head"><span class="q-num">6.</span><span class="q-body">$(2, -1)$ and $(2, 6)$</span></div>
+    <div class="answer-line">Distance = <span class="blank"></span></div>
+    <div class="work short"></div>
+  </div>
+
+  <div class="q">
+    <div class="q-head"><span class="q-num">7.</span><span class="q-body">$(-4, 3)$ and $(8, 3)$</span></div>
+    <div class="answer-line">Distance = <span class="blank"></span></div>
+    <div class="work short"></div>
+  </div>
+
+  <div class="q">
+    <div class="q-head"><span class="q-num">8.</span><span class="q-body">A triangle has vertices $(0, 0)$, $(3, 0)$, $(0, 4)$. Find its perimeter.</span></div>
+    <div class="answer-line">Perimeter = <span class="blank"></span></div>
+    <div class="work tall"></div>
+  </div>
+
+  <div class="q">
+    <div class="q-head"><span class="q-num">9.</span><span class="q-body">The points $(2, 5)$ and $(x, 5)$ are $6$ units apart. Find both possible values of $x$.</span></div>
+    <div class="answer-line">$x$ = <span class="blank"></span></div>
+    <div class="work"></div>
+  </div>
+
+  <div class="q">
+    <div class="q-head"><span class="q-num">10.</span><span class="q-body">The points $A(-1, 2)$, $B(4, 2)$, $C(4, 6)$ form a right triangle. Find the length of $AC$ (the hypotenuse).</span></div>
+    <div class="answer-line">$AC$ = <span class="blank"></span></div>
+    <div class="work tall"></div>
+  </div>
+
+  <!-- ====================================================================
+       PART B — Simplifying Radicals
+       ==================================================================== -->
+  <div class="section page-break">Part B — Simplifying Radicals
+    <span class="lead">Simplify completely. Pull out perfect squares; leave only what cannot be reduced inside the radical.</span>
+  </div>
+
+  <div class="reminder">
+    <b>Quick check.</b> For variables under the radical:
+    even exponent = pulls out fully ($\sqrt{x^{6}} = x^{3}$);
+    odd exponent = pull out the even part, leave one $x$ inside ($\sqrt{x^{9}} = x^{4}\sqrt{x}$).
+  </div>
+
+  <div class="q">
+    <div class="q-head"><span class="q-num">1.</span><span class="q-body">$\sqrt{196x^{6}}$</span></div>
+    <div class="answer-line">= <span class="blank"></span></div>
+    <div class="work"></div>
+  </div>
+
+  <div class="q">
+    <div class="q-head"><span class="q-num">2.</span><span class="q-body">$\sqrt{24x^{9}}$</span></div>
+    <div class="answer-line">= <span class="blank"></span></div>
+    <div class="work"></div>
+  </div>
+
+  <div class="q">
+    <div class="q-head"><span class="q-num">3.</span><span class="q-body">$\sqrt{180x^{36}y^{25}}$</span></div>
+    <div class="answer-line">= <span class="blank"></span></div>
+    <div class="work tall"></div>
+  </div>
+
+  <div class="q">
+    <div class="q-head"><span class="q-num">4.</span><span class="q-body">$2x\,\sqrt{12x^{35}y^{16}}$</span></div>
+    <div class="answer-line">= <span class="blank"></span></div>
+    <div class="work tall"></div>
+  </div>
+
+  <div class="q">
+    <div class="q-head"><span class="q-num">5.</span><span class="q-body">$\sqrt{50}$</span></div>
+    <div class="answer-line">= <span class="blank"></span></div>
+    <div class="work short"></div>
+  </div>
+
+  <div class="q">
+    <div class="q-head"><span class="q-num">6.</span><span class="q-body">$\sqrt{72x^{4}}$</span></div>
+    <div class="answer-line">= <span class="blank"></span></div>
+    <div class="work"></div>
+  </div>
+
+  <div class="q">
+    <div class="q-head"><span class="q-num">7.</span><span class="q-body">$\sqrt{8x^{3}} \cdot 3\sqrt{12x}$</span></div>
+    <div class="answer-line">= <span class="blank"></span></div>
+    <div class="work tall"></div>
+  </div>
+
+  <div class="q">
+    <div class="q-head"><span class="q-num">8.</span><span class="q-body">$\sqrt{45x^{5}y^{3}}$</span></div>
+    <div class="answer-line">= <span class="blank"></span></div>
+    <div class="work"></div>
+  </div>
+
+  <div class="q">
+    <div class="q-head"><span class="q-num">9.</span><span class="q-body">$\sqrt{98x^{7}y^{10}}$</span></div>
+    <div class="answer-line">= <span class="blank"></span></div>
+    <div class="work"></div>
+  </div>
+
+  <div class="q">
+    <div class="q-head"><span class="q-num">10.</span><span class="q-body">$\sqrt{8x^{3}}\Big(\,3\sqrt{12x} \;-\; 4x\sqrt{18x^{9}}\,\Big)$ &nbsp; <em>(distribute, then simplify each piece)</em></span></div>
+    <div class="answer-line">= <span class="blank"></span></div>
+    <div class="work tall"></div>
+  </div>
+
+  <div class="footer">
+    Newton School &middot; Evelyn Yoo &middot; Algebra 1 &middot; 2026-05-15 &middot; Homework
+  </div>
+
+</div>
+</body>
+</html>

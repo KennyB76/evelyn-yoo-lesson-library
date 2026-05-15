@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Distance Formula &amp; Simplifying Radicals — Answer Key (Evelyn Yoo · 5/15)</title>
+
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['$','$'], ['\\(','\\)']], displayMath: [['$$','$$'], ['\\[','\\]']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+
+<style>
+@page { size: letter; margin: 0.5in; }
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; background: #fafafa; }
+body { font-family: 'Source Serif Pro', 'Georgia', 'Times New Roman', serif; font-size: 11pt; line-height: 1.55; color: #000; }
+.page { max-width: 720px; margin: 0 auto; padding: 60px 50px 40px 50px; background: #fff; }
+.page-break { page-break-before: always; break-before: page; }
+@media print {
+  html, body { background: #fff; }
+  .page { max-width: none; padding: 0.5in 0.55in 0.45in 0.55in; margin: 0; box-shadow: none; }
+  .q { page-break-inside: avoid; break-inside: avoid; }
+  .header { page-break-after: avoid; break-after: avoid; }
+  .page-break { page-break-before: always; break-before: page; }
+}
+
+:root {
+  --primary: #1565c0;
+  --primary-dark: #0d47a1;
+  --green: #2e7d32;
+  --muted: #555;
+  --rule: #cfd8dc;
+}
+
+.header { text-align: center; padding-bottom: 8px; margin-bottom: 18px; border-bottom: 2px solid var(--primary); }
+.school-name { font-size: 9pt; letter-spacing: 4px; color: var(--primary); font-weight: bold; }
+.tag {
+  display: inline-block; padding: 1px 9px;
+  font-size: 8.5pt; letter-spacing: 2px;
+  margin: 4px 3px; font-weight: bold;
+  color: var(--primary); border-bottom: 1px solid var(--primary);
+}
+.tag.key { color: var(--green); border-bottom-color: var(--green); }
+h1 { font-family: 'Libre Baskerville', 'Georgia', serif; font-size: 17pt; margin: 4px 0 6px 0; font-weight: bold; line-height: 1.25; }
+.info { display: flex; justify-content: space-between; font-size: 9.5pt; margin-top: 4px; color: var(--muted); }
+.note-line { font-size: 8.5pt; font-style: italic; margin-top: 4px; color: var(--muted); }
+.intro { font-size: 9.5pt; margin-bottom: 16px; color: var(--muted); line-height: 1.55; }
+
+.section {
+  font-family: 'Libre Baskerville', 'Georgia', serif;
+  font-size: 13pt; font-weight: bold; color: var(--primary-dark);
+  margin: 20px 0 8px 0; padding-bottom: 3px;
+  border-bottom: 1.5px solid var(--primary);
+}
+
+.q { margin: 0 0 16px 0; position: relative; page-break-inside: avoid; break-inside: avoid; }
+.q-head { display: flex; align-items: baseline; gap: 8px; }
+.q-num { font-weight: bold; color: var(--primary-dark); font-size: 11.5pt; min-width: 32px; }
+.q-body { flex: 1; font-size: 11pt; line-height: 1.55; }
+
+.answer-line {
+  margin-top: 6px; margin-left: 40px;
+  font-size: 10.5pt; display: flex; align-items: center; gap: 8px;
+}
+.answer-line .label {
+  font-weight: bold; font-size: 9pt;
+  letter-spacing: 0.08em; color: var(--green); text-transform: uppercase;
+}
+.answer-line .ans { color: var(--green); font-weight: bold; font-size: 12pt; }
+
+.sol {
+  margin-top: 4px; margin-left: 40px;
+  font-size: 10.5pt; line-height: 1.55;
+}
+.sol .label {
+  font-weight: bold; font-size: 9pt;
+  letter-spacing: 0.08em; color: var(--primary-dark);
+  text-transform: uppercase; margin-right: 6px;
+}
+
+.footer { text-align: center; font-size: 8pt; color: var(--muted); border-top: 1px solid var(--rule); margin-top: 24px; padding-top: 8px; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="header">
+    <div class="school-name">NEWTON SCHOOL</div>
+    <div>
+      <span class="tag">ALGEBRA 1</span>
+      <span class="tag">GEOMETRY PREP</span>
+      <span class="tag key">ANSWER KEY</span>
+    </div>
+    <h1>Distance Formula &amp; Simplifying Radicals — Answer Key</h1>
+    <div class="info">
+      <span><strong>Student:</strong> Evelyn Yoo</span>
+      <span><strong>Date:</strong> May 15, 2026</span>
+    </div>
+    <div class="note-line">Each problem shows the Answer (green) and a short Solution.</div>
+  </div>
+
+  <div class="intro">
+    <strong>Self-check rule.</strong> Try the worksheet first. Only after you've written your answer should you flip here.
+    For each one you missed, identify <em>where</em> the error happened — arithmetic, sign, or the wrong rule applied.
+  </div>
+
+  <!-- ===================== PART A — DISTANCE ===================== -->
+  <div class="section">Part A — Distance Formula</div>
+
+  <div class="q">
+    <div class="q-head"><span class="q-num">1.</span><span class="q-body">$(1, 2)$ and $(6, 3)$</span></div>
+    <div class="answer-line"><span class="label">Answer</span><span class="ans">$\sqrt{26}$</span></div>
+    <div class="sol"><span class="label">Solution</span>$d = \sqrt{(6-1)^{2}+(3-2)^{2}} = \sqrt{25+1} = \sqrt{26}.$</div>
+  </div>
+
+  <div class="q">
+    <div class="q-head"><span class="q-num">2.</span><span class="q-body">$(0, -6)$ and $(7, 1)$</span></div>
+    <div class="answer-line"><span class="label">Answer</span><span class="ans">$7\sqrt{2}$</span></div>
+    <div class="sol"><span class="label">Solution</span>$d = \sqrt{(7-0)^{2}+(1-(-6))^{2}} = \sqrt{49+49} = \sqrt{98} = 7\sqrt{2}.$</div>
+  </div>
+
+  <div class="q">
+    <div class="q-head"><span class="q-num">3.</span><span class="q-body">$(-3, 4)$ and $(5, -2)$</span></div>
+    <div class="answer-line"><span class="label">Answer</span><span class="ans">$10$</span></div>
+    <div class="sol"><span class="label">Solution</span>$d = \sqrt{(5-(-3))^{2}+(-2-4)^{2}} = \sqrt{64+36} = \sqrt{100} = 10.$  (Classic 6-8-10 right triangle.)</div>
+  </div>
+
+  <div class="q">
+    <div class="q-head"><span class="q-num">4.</span><span class="q-body">$(-5, 7)$ and $(-7, 8)$</span></div>
+    <div class="answer-line"><span class="label">Answer</span><span class="ans">$\sqrt{5}$</span></div>
+    <div class="sol"><span class="label">Solution</span>$d = \sqrt{(-7-(-5))^{2}+(8-7)^{2}} = \sqrt{4+1} = \sqrt{5}.$</div>
+  </div>
+
+  <div class="q">
+    <div class="q-head"><span class="q-num">5.</span><span class="q-body">$(0, 0)$ and $(3, 4)$</span></div>
+    <div class="answer-line"><span class="label">Answer</span><span class="ans">$5$</span></div>
+    <div class="sol"><span class="label">Solution</span>$d = \sqrt{3^{2}+4^{2}} = \sqrt{9+16} = \sqrt{25} = 5.$  (The classic 3-4-5 right triangle.)</div>
+  </div>
+
+  <div class="q">
+    <div class="q-head"><span class="q-num">6.</span><span class="q-body">$(2, -1)$ and $(2, 6)$</span></div>
+    <div class="answer-line"><span class="label">Answer</span><span class="ans">$7$</span></div>
+    <div class="sol"><span class="label">Solution</span>Same $x$ — purely vertical: $d = |6 - (-1)| = 7.$</div>
+  </div>
+
+  <div class="q">
+    <div class="q-head"><span class="q-num">7.</span><span class="q-body">$(-4, 3)$ and $(8, 3)$</span></div>
+    <div class="answer-line"><span class="label">Answer</span><span class="ans">$12$</span></div>
+    <div class="sol"><span class="label">Solution</span>Same $y$ — purely horizontal: $d = |8 - (-4)| = 12.$</div>
+  </div>
+
+  <div class="q">
+    <div class="q-head"><span class="q-num">8.</span><span class="q-body">Perimeter of triangle with vertices $(0,0), (3,0), (0,4)$.</span></div>
+    <div class="answer-line"><span class="label">Answer</span><span class="ans">$12$</span></div>
+    <div class="sol"><span class="label">Solution</span>Sides: $3$ (horizontal), $4$ (vertical), $\sqrt{9+16}=5$ (hypotenuse). Perimeter = $3+4+5 = 12.$</div>
+  </div>
+
+  <div class="q">
+    <div class="q-head"><span class="q-num">9.</span><span class="q-body">$(2, 5)$ and $(x, 5)$ are $6$ units apart. Find $x$.</span></div>
+    <div class="answer-line"><span class="label">Answer</span><span class="ans">$x = -4 \text{ or } x = 8$</span></div>
+    <div class="sol"><span class="label">Solution</span>Same $y$ → $|x-2| = 6 \Rightarrow x - 2 = \pm 6 \Rightarrow x = 8$ or $x = -4.$</div>
+  </div>
+
+  <div class="q">
+    <div class="q-head"><span class="q-num">10.</span><span class="q-body">$A(-1,2), B(4,2), C(4,6)$ — find $AC$.</span></div>
+    <div class="answer-line"><span class="label">Answer</span><span class="ans">$\sqrt{41}$</span></div>
+    <div class="sol"><span class="label">Solution</span>$AC = \sqrt{(4-(-1))^{2}+(6-2)^{2}} = \sqrt{25+16} = \sqrt{41}.$  (Hypotenuse of right triangle with legs $5$ and $4$.)</div>
+  </div>
+
+  <!-- ===================== PART B — RADICALS ===================== -->
+  <div class="section page-break">Part B — Simplifying Radicals</div>
+
+  <div class="q">
+    <div class="q-head"><span class="q-num">1.</span><span class="q-body">$\sqrt{196x^{6}}$</span></div>
+    <div class="answer-line"><span class="label">Answer</span><span class="ans">$14x^{3}$</span></div>
+    <div class="sol"><span class="label">Solution</span>$\sqrt{196}=14$ (since $14^{2}=196$); $\sqrt{x^{6}}=x^{3}.$</div>
+  </div>
+
+  <div class="q">
+    <div class="q-head"><span class="q-num">2.</span><span class="q-body">$\sqrt{24x^{9}}$</span></div>
+    <div class="answer-line"><span class="label">Answer</span><span class="ans">$2x^{4}\sqrt{6x}$</span></div>
+    <div class="sol"><span class="label">Solution</span>$24 = 4\cdot 6,\;\; x^{9} = x^{8}\cdot x.$ So $\sqrt{4\cdot 6 \cdot x^{8} \cdot x} = 2x^{4}\sqrt{6x}.$</div>
+  </div>
+
+  <div class="q">
+    <div class="q-head"><span class="q-num">3.</span><span class="q-body">$\sqrt{180x^{36}y^{25}}$</span></div>
+    <div class="answer-line"><span class="label">Answer</span><span class="ans">$6x^{18}y^{12}\sqrt{5y}$</span></div>
+    <div class="sol"><span class="label">Solution</span>$180 = 36 \cdot 5$; $x^{36}$ has even exponent → fully out; $y^{25} = y^{24}\cdot y.$ So $\sqrt{36\cdot 5 \cdot x^{36} \cdot y^{24}\cdot y} = 6x^{18}y^{12}\sqrt{5y}.$</div>
+  </div>
+
+  <div class="q">
+    <div class="q-head"><span class="q-num">4.</span><span class="q-body">$2x\,\sqrt{12x^{35}y^{16}}$</span></div>
+    <div class="answer-line"><span class="label">Answer</span><span class="ans">$4x^{18}y^{8}\sqrt{3x}$</span></div>
+    <div class="sol"><span class="label">Solution</span>$12 = 4\cdot 3$; $x^{35} = x^{34}\cdot x$; $y^{16}$ even. So $\sqrt{12x^{35}y^{16}} = 2x^{17}y^{8}\sqrt{3x}.$ Multiply by $2x$: $\;2x \cdot 2x^{17}y^{8}\sqrt{3x} = 4x^{18}y^{8}\sqrt{3x}.$</div>
+  </div>
+
+  <div class="q">
+    <div class="q-head"><span class="q-num">5.</span><span class="q-body">$\sqrt{50}$</span></div>
+    <div class="answer-line"><span class="label">Answer</span><span class="ans">$5\sqrt{2}$</span></div>
+    <div class="sol"><span class="label">Solution</span>$50 = 25 \cdot 2 \Rightarrow \sqrt{50} = 5\sqrt{2}.$</div>
+  </div>
+
+  <div class="q">
+    <div class="q-head"><span class="q-num">6.</span><span class="q-body">$\sqrt{72x^{4}}$</span></div>
+    <div class="answer-line"><span class="label">Answer</span><span class="ans">$6x^{2}\sqrt{2}$</span></div>
+    <div class="sol"><span class="label">Solution</span>$72 = 36\cdot 2;\;\sqrt{x^{4}}=x^{2}.$ So $\sqrt{72x^{4}} = 6x^{2}\sqrt{2}.$</div>
+  </div>
+
+  <div class="q">
+    <div class="q-head"><span class="q-num">7.</span><span class="q-body">$\sqrt{8x^{3}}\cdot 3\sqrt{12x}$</span></div>
+    <div class="answer-line"><span class="label">Answer</span><span class="ans">$12x^{2}\sqrt{6}$</span></div>
+    <div class="sol"><span class="label">Solution</span>Combine inside one radical: $3\sqrt{8x^{3}\cdot 12x} = 3\sqrt{96x^{4}}.$  $96 = 16\cdot 6,\;\sqrt{x^{4}}=x^{2}.$ So $= 3\cdot 4x^{2}\sqrt{6} = 12x^{2}\sqrt{6}.$</div>
+  </div>
+
+  <div class="q">
+    <div class="q-head"><span class="q-num">8.</span><span class="q-body">$\sqrt{45x^{5}y^{3}}$</span></div>
+    <div class="answer-line"><span class="label">Answer</span><span class="ans">$3x^{2}y\sqrt{5xy}$</span></div>
+    <div class="sol"><span class="label">Solution</span>$45 = 9\cdot 5$; $x^{5} = x^{4}\cdot x$; $y^{3}=y^{2}\cdot y.$ So $\sqrt{9\cdot 5\cdot x^{4}\cdot x\cdot y^{2}\cdot y} = 3x^{2}y\sqrt{5xy}.$</div>
+  </div>
+
+  <div class="q">
+    <div class="q-head"><span class="q-num">9.</span><span class="q-body">$\sqrt{98x^{7}y^{10}}$</span></div>
+    <div class="answer-line"><span class="label">Answer</span><span class="ans">$7x^{3}y^{5}\sqrt{2x}$</span></div>
+    <div class="sol"><span class="label">Solution</span>$98 = 49\cdot 2$; $x^{7}=x^{6}\cdot x$; $y^{10}$ even. So $\sqrt{49\cdot 2 \cdot x^{6}\cdot x \cdot y^{10}} = 7x^{3}y^{5}\sqrt{2x}.$</div>
+  </div>
+
+  <div class="q">
+    <div class="q-head"><span class="q-num">10.</span><span class="q-body">$\sqrt{8x^{3}}\big(3\sqrt{12x} - 4x\sqrt{18x^{9}}\big)$</span></div>
+    <div class="answer-line"><span class="label">Answer</span><span class="ans">$12x^{2}\sqrt{6} \;-\; 48x^{7}$</span></div>
+    <div class="sol"><span class="label">Solution</span>Distribute first.
+      <br>• First piece: $\sqrt{8x^{3}}\cdot 3\sqrt{12x} = 3\sqrt{96x^{4}} = 3\cdot 4x^{2}\sqrt{6} = 12x^{2}\sqrt{6}.$
+      <br>• Second piece: $\sqrt{8x^{3}}\cdot 4x\sqrt{18x^{9}} = 4x\sqrt{8\cdot 18\cdot x^{12}} = 4x\sqrt{144x^{12}} = 4x\cdot 12x^{6} = 48x^{7}.$
+      <br>• Combine: $12x^{2}\sqrt{6} - 48x^{7}.$
+    </div>
+  </div>
+
+  <div class="footer">
+    Newton School &middot; Evelyn Yoo &middot; Algebra 1 &middot; 2026-05-15 &middot; Answer Key
+  </div>
+
+</div>
+</body>
+</html>

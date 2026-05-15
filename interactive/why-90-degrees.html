@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Why 90°? — Pythagorean Proof + Right Triangle Similarity (Evelyn Yoo)</title>
+
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['$','$'], ['\\(','\\)']], displayMath: [['$$','$$'], ['\\[','\\]']] },
+  svg: { fontCache: 'global' },
+  startup: { typeset: false }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+
+<style>
+/* ── Theme: girl (pink) ── */
+:root {
+  --P:      #ec407a;   /* primary pink */
+  --P-soft: #fce4ec;   /* light pink bg */
+  --P-deep: #880e4f;   /* deep rose */
+  --P-mid:  #c2185b;   /* mid pink */
+
+  --Q:      #7c4dff;   /* secondary purple (Module B accent) */
+  --Q-soft: #ede7f6;
+  --Q-deep: #4a148c;
+
+  --H1:     #ec407a;   /* heart-1 color (pink angle) */
+  --H2:     #7c4dff;   /* heart-2 color (purple angle) */
+
+  --ink:     #1a1a1a;
+  --ink-soft:#666;
+  --bg:      #fff8fb;
+  --paper:   #ffffff;
+  --line:    #f0dce7;
+
+  --a-col: #1565c0;
+  --b-col: #2e7d32;
+  --c-col: #c62828;
+  --tri-fill: rgba(236,64,122,0.11);
+  --tri-stroke: #c2185b;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  line-height: 1.6;
+  padding: 16px 12px 40px;
+}
+.wrap { max-width: 1160px; margin: 0 auto; }
+
+/* ── Masthead ── */
+.masthead {
+  background: var(--paper);
+  border-top: 4px solid var(--P);
+  border-radius: 12px;
+  padding: 28px 32px 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 10px rgba(236,64,122,0.08);
+}
+.masthead .school { font-size: 11px; letter-spacing: 0.4em; text-transform: uppercase; color: var(--P); font-weight: 700; margin-bottom: 8px; }
+.masthead h1 { font-family: 'Playfair Display', Georgia, serif; font-size: 30px; color: var(--P-deep); margin-bottom: 6px; }
+.masthead .sub { font-size: 14px; color: var(--ink-soft); font-style: italic; }
+.masthead .hearts-intro { margin-top: 12px; background: var(--P-soft); border-left: 3px solid var(--P); border-radius: 6px; padding: 10px 14px; font-size: 13px; line-height: 1.7; }
+.masthead .hearts-intro strong { color: var(--P-deep); }
+
+/* ── Nav tabs ── */
+.tab-row { display: flex; gap: 6px; margin-bottom: 18px; flex-wrap: wrap; }
+.tab {
+  padding: 8px 18px; border-radius: 20px; font-size: 13px; font-weight: 600;
+  border: 2px solid var(--P); background: var(--paper); color: var(--P-deep);
+  cursor: pointer; transition: all 0.15s;
+}
+.tab:hover { background: var(--P-soft); }
+.tab.active { background: var(--P); color: #fff; border-color: var(--P); }
+.tab.mod-b { border-color: var(--Q); color: var(--Q-deep); }
+.tab.mod-b:hover { background: var(--Q-soft); }
+.tab.mod-b.active { background: var(--Q); color: #fff; border-color: var(--Q); }
+
+/* ── Modules ── */
+.module { display: none; }
+.module.visible { display: block; }
+
+/* ── Panel system ── */
+.grid-2 { display: grid; grid-template-columns: 300px 1fr; gap: 16px; }
+@media (max-width: 860px) { .grid-2 { grid-template-columns: 1fr; } }
+
+.panel {
+  background: var(--paper);
+  border-radius: 10px;
+  padding: 18px 20px;
+  box-shadow: 0 1px 6px rgba(236,64,122,0.07);
+  margin-bottom: 14px;
+}
+.panel-title {
+  font-size: 10px; letter-spacing: 0.32em; text-transform: uppercase;
+  font-weight: 700; color: var(--P); margin-bottom: 12px;
+  border-bottom: 1px solid var(--line); padding-bottom: 8px;
+}
+.panel-title.purple { color: var(--Q-deep); border-bottom-color: var(--Q-soft); }
+
+/* ── Controls ── */
+.field { margin-bottom: 16px; }
+.field:last-child { margin-bottom: 0; }
+.ctrl-row { display: flex; justify-content: space-between; align-items: baseline; font-size: 13px; font-weight: 600; margin-bottom: 5px; }
+.ctrl-row .val { font-family: 'JetBrains Mono', monospace; color: var(--P-mid); font-size: 14px; font-weight: 700; }
+.ctrl-row .val.purple-v { color: var(--Q-deep); }
+input[type=range] { width: 100%; accent-color: var(--P); }
+input[type=range].purple { accent-color: var(--Q); }
+.help { font-size: 11px; color: var(--ink-soft); margin-top: 3px; line-height: 1.4; }
+
+/* Preset buttons */
+.preset-row { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 6px; }
+.preset {
+  padding: 5px 10px; font-size: 11px; font-weight: 600;
+  border: 1.5px solid var(--P); background: var(--paper);
+  color: var(--P-deep); border-radius: 5px; cursor: pointer;
+  transition: all 0.15s; font-family: 'JetBrains Mono', monospace;
+}
+.preset:hover { background: var(--P-soft); }
+
+/* Canvas stage */
+.stage-wrap { border: 1px solid var(--line); border-radius: 8px; overflow: hidden; background: #fff; }
+canvas { display: block; width: 100%; }
+
+/* Live formula box */
+.formula-box {
+  background: var(--P-soft); border-left: 4px solid var(--P);
+  border-radius: 6px; padding: 12px 16px; margin-top: 10px; font-size: 13px;
+}
+.formula-box.purple-box { background: var(--Q-soft); border-left-color: var(--Q); }
+.f-title { font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 700; color: var(--P-deep); margin-bottom: 6px; }
+.f-title.purple-ft { color: var(--Q-deep); }
+.f-line { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--ink); margin-top: 4px; word-break: break-word; }
+.f-check { display: inline-block; background: #2e7d32; color: #fff; border-radius: 4px; padding: 2px 8px; font-size: 11px; font-weight: 700; margin-top: 6px; }
+
+/* Heart legend */
+.heart-legend { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 10px; }
+.hl-item { display: flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600; }
+.hl-heart { font-size: 18px; }
+.hl-heart.h1 { color: var(--H1); }
+.hl-heart.h2 { color: var(--H2); }
+
+/* Similarity table */
+.sim-table { width: 100%; border-collapse: collapse; font-size: 12px; margin-top: 10px; }
+.sim-table th, .sim-table td { border: 1px solid var(--line); padding: 6px 10px; text-align: center; }
+.sim-table th { background: var(--Q-soft); color: var(--Q-deep); font-weight: 700; }
+.sim-table td { font-family: 'JetBrains Mono', monospace; }
+.sim-table tr.highlight-row td { background: var(--P-soft); font-weight: 600; }
+
+/* Key insight callout */
+.insight {
+  background: linear-gradient(135deg, var(--P-soft) 0%, var(--Q-soft) 100%);
+  border-radius: 10px; padding: 14px 18px; margin-top: 14px;
+  font-size: 13px; line-height: 1.7;
+}
+.insight .big { font-size: 16px; font-weight: 700; color: var(--P-deep); display: block; margin-bottom: 4px; }
+
+footer { text-align: center; padding: 24px; font-size: 11px; color: var(--ink-soft); margin-top: 8px; }
+footer .heart { color: var(--P); }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<!-- ── MASTHEAD ── -->
+<div class="masthead">
+  <div class="school">Newton School · Evelyn Yoo · 5/15/2026</div>
+  <h1>Why 90°? Two Big Ideas</h1>
+  <div class="sub">Today's class: Distance Formula hides Pythagorean Theorem — but <em>why</em> does the theorem work?</div>
+  <div class="hearts-intro">
+    <strong>How to read the hearts:</strong>
+    <span style="color:var(--H1);font-weight:700"> ♥ Pink heart</span> = one acute angle &nbsp;|&nbsp;
+    <span style="color:var(--H2);font-weight:700"> ♥ Purple heart</span> = the <em>other</em> acute angle.<br>
+    In any right triangle: <strong>pink ♥ + purple ♥ = 90°</strong> (because the three angles must add to 180°, and one is already 90°). That one fact powers <em>both</em> modules below.
+  </div>
+</div>
+
+<!-- ── TAB ROW ── -->
+<div class="tab-row">
+  <button class="tab active" data-mod="modA">Module A — Why c² = a² + b²</button>
+  <button class="tab mod-b" data-mod="modB">Module B — Why 3 Similar Triangles</button>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     MODULE A: Bhaskara — Why c² = a² + b²
+════════════════════════════════════════════════════════ -->
+<div id="modA" class="module visible">
+
+  <div class="grid-2">
+
+    <!-- Left: controls -->
+    <div>
+      <div class="panel">
+        <div class="panel-title">Triangle Legs</div>
+        <div class="field">
+          <div class="ctrl-row">leg $a$ <span class="val"><span id="aVal">3</span></span></div>
+          <input type="range" id="aSlider" min="1" max="10" value="3" step="1">
+          <div class="help">Blue leg (horizontal).</div>
+        </div>
+        <div class="field">
+          <div class="ctrl-row">leg $b$ <span class="val"><span id="bVal">4</span></span></div>
+          <input type="range" id="bSlider" min="1" max="10" value="4" step="1">
+          <div class="help">Green leg (vertical).</div>
+        </div>
+        <div class="field">
+          <div class="ctrl-row" style="margin-bottom:6px;">Famous Triples</div>
+          <div class="preset-row">
+            <button class="preset" data-a="3" data-b="4">3·4·5</button>
+            <button class="preset" data-a="5" data-b="12">5·12·13</button>
+            <button class="preset" data-a="8" data-b="15">8·15·17</button>
+            <button class="preset" data-a="7" data-b="24">7·24·25</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Heart legend -->
+      <div class="panel">
+        <div class="panel-title">Heart Key</div>
+        <div class="heart-legend">
+          <div class="hl-item"><span class="hl-heart h1">♥</span> angle α (pink)</div>
+          <div class="hl-item"><span class="hl-heart h2">♥</span> angle β (purple)</div>
+        </div>
+        <div style="font-size:13px; color:var(--ink-soft); line-height:1.7;">
+          Each right triangle has <em>two</em> acute angles. They always add to 90°.<br>
+          Notice: the pink ♥ angle <strong>and</strong> the purple ♥ angle together fill the corner of the big square perfectly — making the tilted inner square a <em>real</em> square (all 90° corners).
+        </div>
+        <div class="formula-box" style="margin-top:10px;">
+          <div class="f-title">Why the inner region is a square</div>
+          <div class="f-line" id="angleProof">
+            α + β = 90°<br>
+            Corner angle = 180° − α − β = 90° ✓
+          </div>
+        </div>
+      </div>
+
+      <!-- Live numbers -->
+      <div class="panel">
+        <div class="panel-title">Live Formula Check</div>
+        <div class="formula-box">
+          <div class="f-title">Bhaskara's Area Equation</div>
+          <div class="f-line" id="areaEq">Loading…</div>
+          <div class="f-line" id="simplifyEq" style="margin-top:4px;"></div>
+          <div id="checkBadge" class="f-check" style="display:none;">✓ c² = a² + b²</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right: canvas -->
+    <div>
+      <div class="panel" style="padding-bottom:0;">
+        <div class="panel-title">Bhaskara's Proof — Move the Sliders</div>
+        <div class="stage-wrap">
+          <canvas id="canvasA"></canvas>
+        </div>
+        <div style="padding:10px 14px 14px; font-size:12px; color:var(--ink-soft);">
+          The big square (side = <em>a + b</em>) contains 4 identical right triangles + the tilted inner square (side = <em>c</em>).<br>
+          Area equation: $(a+b)^2 = c^2 + 4 \cdot \tfrac{1}{2}ab$ &nbsp;→&nbsp; cancel $2ab$ both sides &nbsp;→&nbsp; $a^2 + b^2 = c^2$
+        </div>
+      </div>
+
+      <div class="insight">
+        <span class="big">💡 The 90° Trick</span>
+        Each triangle has ♥ pink + ♥ purple = 90°. When two triangles meet at a corner of the inner square, you get pink + purple = 90° there too. So the inner square really is a square — not a parallelogram, a real square. That's why the area math works out perfectly.
+      </div>
+    </div>
+
+  </div>
+</div><!-- /modA -->
+
+<!-- ══════════════════════════════════════════════════════
+     MODULE B: Right Triangle Similarity (altitude on hypotenuse)
+════════════════════════════════════════════════════════ -->
+<div id="modB" class="module">
+
+  <div class="grid-2">
+
+    <!-- Left: controls + explanation -->
+    <div>
+      <div class="panel">
+        <div class="panel-title purple">Angle α (Big Triangle)</div>
+        <div class="field">
+          <div class="ctrl-row">angle $\alpha$ <span class="val purple-v"><span id="alphaVal">35</span>°</span></div>
+          <input type="range" class="purple" id="alphaSlider" min="10" max="80" value="35" step="1">
+          <div class="help">Drag to change — watch how all three triangles change together but the ♥ pattern stays the same.</div>
+        </div>
+        <div class="preset-row" style="margin-top:4px;">
+          <button class="preset" style="border-color:var(--Q);color:var(--Q-deep);" data-alpha="30">α = 30°</button>
+          <button class="preset" style="border-color:var(--Q);color:var(--Q-deep);" data-alpha="45">α = 45°</button>
+          <button class="preset" style="border-color:var(--Q);color:var(--Q-deep);" data-alpha="60">α = 60°</button>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-title purple">Heart Key (Module B)</div>
+        <div class="heart-legend" style="margin-bottom:8px;">
+          <div class="hl-item"><span class="hl-heart h1">♥</span> angle α (pink)</div>
+          <div class="hl-item"><span class="hl-heart h2">♥</span> angle β = 90°−α (purple)</div>
+        </div>
+        <div style="font-size:13px; color:var(--ink-soft); line-height:1.7;">
+          Drop an altitude from the right-angle C to hypotenuse AB. You now have <strong>3 right triangles</strong>.<br>
+          Each triangle contains <em>exactly</em> one pink ♥ and one purple ♥. Same pair every time → <strong>all three are similar (AA)</strong>.
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-title purple">Live Angle Table</div>
+        <table class="sim-table" id="simTable">
+          <thead><tr><th>Triangle</th><th>♥ Pink (α)</th><th>♥ Purple (β)</th><th>Right ∠</th></tr></thead>
+          <tbody>
+            <tr><td>△ABC (big)</td><td id="tBig1">35°</td><td id="tBig2">55°</td><td>90°</td></tr>
+            <tr><td>△ACD (left)</td><td id="tLeft1">35°</td><td id="tLeft2">55°</td><td>90°</td></tr>
+            <tr><td>△CBD (right)</td><td id="tRight1">35°</td><td id="tRight2">55°</td><td>90°</td></tr>
+          </tbody>
+        </table>
+        <div class="formula-box purple-box" style="margin-top:10px;">
+          <div class="f-title purple-ft">Why they're similar (AA)</div>
+          <div class="f-line">All three share the same α and β.<br>
+          Two matching angles (AA) → similar triangles.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right: canvas -->
+    <div>
+      <div class="panel" style="padding-bottom:0;">
+        <div class="panel-title purple">Right Triangle Similarity — Move the Slider</div>
+        <div class="stage-wrap">
+          <canvas id="canvasB"></canvas>
+        </div>
+        <div style="padding:10px 14px 14px; font-size:12px; color:var(--ink-soft);">
+          C is the right-angle. CD is the altitude to hypotenuse AB.<br>
+          Same ♥ pattern in all three triangles → same shape, different sizes → <em>similar</em> (AA postulate).
+        </div>
+      </div>
+
+      <div class="insight" style="background: linear-gradient(135deg, var(--Q-soft) 0%, var(--P-soft) 100%);">
+        <span class="big" style="color:var(--Q-deep);">💡 The Connection to Distance Formula</span>
+        The altitude theorem leads directly to: $CD^2 = AD \cdot DB$ (geometric mean).<br>
+        That's exactly what powers the <strong>Distance Formula</strong> — the hypotenuse <em>c</em> in $\sqrt{(x_2-x_1)^2 + (y_2-y_1)^2}$ is the same hypotenuse from today's proof. Every distance you calculate is secretly a right triangle!
+      </div>
+    </div>
+
+  </div>
+</div><!-- /modB -->
+
+<footer>
+  Newton School &nbsp;·&nbsp; Evelyn Yoo &nbsp;·&nbsp; made with <span class="heart">♥</span> by Mr. Kenny &nbsp;·&nbsp; 5/15/2026
+</footer>
+
+</div><!-- /wrap -->
+
+<script>
+// ═══════════════════════════════════════════════════════════
+// Utilities
+// ═══════════════════════════════════════════════════════════
+const $ = id => document.getElementById(id);
+const sq = x => x * x;
+const rad = deg => deg * Math.PI / 180;
+const deg = r => r * 180 / Math.PI;
+
+function poly(ctx, pts, fill, stroke, lw) {
+  if (!pts.length) return;
+  ctx.beginPath();
+  ctx.moveTo(pts[0][0], pts[0][1]);
+  for (let i = 1; i < pts.length; i++) ctx.lineTo(pts[i][0], pts[i][1]);
+  ctx.closePath();
+  if (fill)   { ctx.fillStyle = fill; ctx.fill(); }
+  if (stroke) { ctx.strokeStyle = stroke; ctx.lineWidth = lw || 2; ctx.stroke(); }
+}
+
+function txt(ctx, t, x, y, color, size, weight, align) {
+  ctx.fillStyle = color || '#222';
+  ctx.font = `${weight||'600'} ${size||13}px Inter,system-ui,sans-serif`;
+  ctx.textAlign = align || 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillText(t, x, y);
+}
+
+// Draw a small right-angle marker
+function rightAngleMark(ctx, ox, oy, dx1, dy1, dx2, dy2, s, color) {
+  // ox,oy = corner; dx1,dy1 = unit vector along leg1; dx2,dy2 = unit vector along leg2
+  ctx.strokeStyle = color || '#888';
+  ctx.lineWidth = 1.5;
+  ctx.beginPath();
+  ctx.moveTo(ox + dx1*s, oy + dy1*s);
+  ctx.lineTo(ox + dx1*s + dx2*s, oy + dy1*s + dy2*s);
+  ctx.lineTo(ox + dx2*s, oy + dy2*s);
+  ctx.stroke();
+}
+
+// Draw an arc angle marker with optional heart label
+function arcMark(ctx, cx, cy, r, startAngle, endAngle, color, heartChar, hSize, flip) {
+  ctx.strokeStyle = color;
+  ctx.lineWidth = 2.5;
+  ctx.beginPath();
+  ctx.arc(cx, cy, r, startAngle, endAngle);
+  ctx.stroke();
+  // heart label at midpoint of arc
+  const mid = (startAngle + endAngle) / 2;
+  const hx = cx + (r + hSize * 0.85) * Math.cos(mid);
+  const hy = cy + (r + hSize * 0.85) * Math.sin(mid);
+  ctx.fillStyle = color;
+  ctx.font = `${hSize}px serif`;
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillText(heartChar || '♥', hx, hy);
+}
+
+// ═══════════════════════════════════════════════════════════
+// MODULE A — Bhaskara proof with heart angle marks
+// ═══════════════════════════════════════════════════════════
+const SA = { a: 3, b: 4 };
+
+function updateA_numbers() {
+  const a = SA.a, b = SA.b;
+  const c2 = sq(a) + sq(b);
+  const c  = Math.sqrt(c2);
+  $('aVal').textContent = a;
+  $('bVal').textContent = b;
+
+  // Area equation: (a+b)² = c² + 4·(½ab)
+  const lhs = sq(a+b);
+  const triArea = a * b; // 4 × ½ab = 2ab
+  const rhs_c2 = c2;
+  const rhs_tri = 2 * a * b;
+
+  $('areaEq').textContent =
+    `(${a}+${b})² = c² + 4·(½·${a}·${b})`;
+  $('simplifyEq').textContent =
+    `${lhs} = ${rhs_c2} + ${rhs_tri}   →   ${rhs_c2} = ${sq(a)} + ${sq(b)}`;
+
+  const badge = $('checkBadge');
+  if (rhs_c2 === sq(a) + sq(b)) {
+    badge.style.display = 'inline-block';
+  } else {
+    badge.style.display = 'none';
+  }
+}
+
+function drawModuleA() {
+  const canvas = $('canvasA');
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width, H = canvas.height;
+
+  ctx.clearRect(0, 0, W, H);
+  ctx.fillStyle = '#fffcfe';
+  ctx.fillRect(0, 0, W, H);
+
+  const a = SA.a, b = SA.b;
+  const maxUnits = (a + b) + 3;
+  const k = Math.min(W - 100, H - 80) / maxUnits;
+  const side = (a + b) * k;
+  const ax = a * k, bx = b * k;
+
+  // Center the big square
+  const ox = (W - side) / 2;
+  const oy = (H - side) / 2;
+
+  // Big square
+  ctx.fillStyle = '#fff';
+  ctx.strokeStyle = '#ccc';
+  ctx.lineWidth = 2;
+  ctx.fillRect(ox, oy, side, side);
+  ctx.strokeRect(ox, oy, side, side);
+
+  // (a+b)² label above
+  txt(ctx, `(a+b)² = ${sq(a+b)}  →  total area`, W/2, oy - 16, '#888', 13, '600');
+
+  // Label outside corners: a and b along top edge
+  txt(ctx, `a=${a}`, ox + ax/2, oy - 8, getComputedStyle(document.documentElement).getPropertyValue('--a-col').trim() || '#1565c0', 13, '700');
+  txt(ctx, `b=${b}`, ox + ax + bx/2, oy - 8, getComputedStyle(document.documentElement).getPropertyValue('--b-col').trim() || '#2e7d32', 13, '700');
+
+  // ── 4 right triangles ──
+  // Bhaskara Layout A: 4 congruent right triangles, each with legs a,b
+  // Triangles go clockwise, right-angle in each corner:
+  //   T1: TL corner. Hyp from (ox+ax, oy) to (ox, oy+bx)
+  //   T2: TR corner. Hyp from (ox+side, oy+ax) to (ox+side-bx, oy)
+  //   T3: BR corner. Hyp from (ox+side-ax, oy+side) to (ox+side, oy+side-bx)
+  //   T4: BL corner. Hyp from (ox, oy+side-ax) to (ox+bx, oy+side)
+
+  const tris = [
+    { pts: [[ox, oy], [ox+ax, oy], [ox, oy+bx]], ra: [ox, oy], l1: [1,0], l2: [0,1] },
+    { pts: [[ox+side, oy], [ox+side, oy+ax], [ox+side-bx, oy]], ra: [ox+side, oy], l1: [0,1], l2: [-1,0] },
+    { pts: [[ox+side, oy+side], [ox+side-ax, oy+side], [ox+side, oy+side-bx]], ra: [ox+side, oy+side], l1: [-1,0], l2: [0,-1] },
+    { pts: [[ox, oy+side], [ox, oy+side-ax], [ox+bx, oy+side]], ra: [ox, oy+side], l1: [0,-1], l2: [1,0] },
+  ];
+
+  const triFill = 'rgba(236,64,122,0.15)';
+  const triStroke = '#c2185b';
+
+  tris.forEach(t => {
+    poly(ctx, t.pts, triFill, triStroke, 2);
+
+    // Right-angle marker at corner
+    const ms = Math.min(ax, bx) * 0.12;
+    rightAngleMark(ctx, t.ra[0], t.ra[1], t.l1[0], t.l1[1], t.l2[0], t.l2[1], ms, '#c2185b');
+
+    // Heart angle markers at the two acute angle vertices
+    // We need to figure out: for each triangle, which vertex is the "α angle" (opposite to b leg)
+    // and which is the "β angle" (opposite to a leg).
+    // Acute vertices = the two non-right-angle vertices.
+    const verts = t.pts;
+    const raIdx = t.pts.indexOf(t.ra) !== -1
+      ? t.pts.findIndex(p => p[0] === t.ra[0] && p[1] === t.ra[1])
+      : 0;
+    const acuteVerts = verts.filter((_, i) => i !== raIdx);
+
+    // Identify which acute vertex is at the end of leg-a (length ax) vs leg-b (length bx)
+    const ra = t.ra;
+    const d0 = Math.hypot(acuteVerts[0][0]-ra[0], acuteVerts[0][1]-ra[1]);
+    const d1 = Math.hypot(acuteVerts[1][0]-ra[0], acuteVerts[1][1]-ra[1]);
+
+    // The vertex at leg-a distance from right-angle has the β angle (smaller if a<b)
+    const alphaV = Math.abs(d0 - bx) < 1 ? acuteVerts[0] : acuteVerts[1];
+    const betaV  = Math.abs(d0 - ax) < 1 ? acuteVerts[0] : acuteVerts[1];
+
+    // Draw heart arcs
+    const arcR = Math.min(ax, bx) * 0.22;
+    drawHeartAtVertex(ctx, alphaV, verts, '#ec407a', '♥', arcR, 12);
+    drawHeartAtVertex(ctx, betaV,  verts, '#7c4dff', '♥', arcR * 0.85, 10);
+  });
+
+  // ── Inner tilted square (c²) ──
+  const cSqVerts = [
+    [ox+ax,      oy],
+    [ox+side,    oy+ax],
+    [ox+side-ax, oy+side],
+    [ox,         oy+side-ax]
+  ];
+  poly(ctx, cSqVerts, 'rgba(136,14,79,0.12)', '#880e4f', 2.5);
+
+  // c label inside
+  const cCx = (cSqVerts[0][0]+cSqVerts[2][0])/2;
+  const cCy = (cSqVerts[0][1]+cSqVerts[2][1])/2;
+  const cVal = Math.sqrt(sq(a)+sq(b));
+  txt(ctx, `c²=${sq(a)+sq(b)}`, cCx, cCy-8, '#880e4f', 15, '700');
+  txt(ctx, `c=${cVal.toFixed(2)}`, cCx, cCy+10, '#880e4f', 12, '600');
+
+  // ── Area equation banner ──
+  const bannerY = oy + side + 22;
+  txt(ctx, `(${a}+${b})² = ${sq(a+b)}   =   c²(${sq(a)+sq(b)}) + 4·½·${a}·${b}(${2*a*b})`, W/2, bannerY, '#880e4f', 13, '600');
+}
+
+// Helper: draw a heart at a triangle vertex using an arc marker
+function drawHeartAtVertex(ctx, vtx, allVerts, color, char, r, hSize) {
+  // Find the two other vertices to compute the incoming directions
+  const others = allVerts.filter(p => p !== vtx);
+  if (others.length < 2) return;
+  const ang1 = Math.atan2(others[0][1]-vtx[1], others[0][0]-vtx[0]);
+  const ang2 = Math.atan2(others[1][1]-vtx[1], others[1][0]-vtx[0]);
+
+  let start = Math.min(ang1, ang2);
+  let end   = Math.max(ang1, ang2);
+  // Make sure we draw the short arc
+  if (end - start > Math.PI) {
+    [start, end] = [end, start + 2*Math.PI];
+  }
+
+  ctx.strokeStyle = color;
+  ctx.lineWidth = 2;
+  ctx.beginPath();
+  ctx.arc(vtx[0], vtx[1], r, start, end);
+  ctx.stroke();
+
+  const mid = (start + end) / 2;
+  const hx = vtx[0] + (r + hSize * 0.9) * Math.cos(mid);
+  const hy = vtx[1] + (r + hSize * 0.9) * Math.sin(mid);
+  ctx.fillStyle = color;
+  ctx.font = `${hSize}px serif`;
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillText(char, hx, hy);
+}
+
+// ═══════════════════════════════════════════════════════════
+// MODULE B — Right Triangle Similarity (altitude on hypotenuse)
+// ═══════════════════════════════════════════════════════════
+const SB = { alpha: 35 };  // degrees
+
+function updateB_table() {
+  const a = SB.alpha;
+  const b = 90 - a;
+  $('alphaVal').textContent = a;
+  $('tBig1').textContent  = `${a}°`;
+  $('tBig2').textContent  = `${b}°`;
+  $('tLeft1').textContent = `${a}°`;
+  $('tLeft2').textContent = `${b}°`;
+  $('tRight1').textContent = `${b}°`;
+  $('tRight2').textContent = `${a}°`;
+}
+
+function drawModuleB() {
+  const canvas = $('canvasB');
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width, H = canvas.height;
+
+  ctx.clearRect(0, 0, W, H);
+  ctx.fillStyle = '#fdfcff';
+  ctx.fillRect(0, 0, W, H);
+
+  const alpha = rad(SB.alpha);
+  const beta  = Math.PI/2 - alpha;
+
+  // We'll place the big right triangle with:
+  //   A at bottom-left, B at bottom-right, C at top (right angle at C)
+  // Then D is foot of altitude from C to AB.
+  //
+  // Hypotenuse c = 1 (unit), scale to pixels.
+  // A = angle alpha at A, B = angle beta at B (since C = 90).
+  //
+  // Place A at origin, B to the right.
+  const hyp = Math.min(W, H) * 0.72; // pixels
+  const margin = 60;
+
+  // A, B on bottom
+  const Ax = margin + (W - 2*margin - hyp) / 2;
+  const Ay = H - margin - 30;
+  const Bx = Ax + hyp;
+  const By = Ay;
+
+  // C = right-angle vertex
+  // If angle at A = alpha, then C is at:
+  //   distance from A = hyp * cos(alpha), height = hyp * sin(alpha) * cos(alpha) ...
+  // Let's use: C projects onto AB at distance AD = hyp * cos²(alpha) from A.
+  // Cx = Ax + hyp*cos²(alpha), Cy = Ay - hyp*sin(alpha)*cos(alpha)
+  const Cx = Ax + hyp * sq(Math.cos(alpha));
+  const Cy = Ay - hyp * Math.sin(alpha) * Math.cos(alpha);
+
+  // D = foot of altitude
+  const Dx = Cx;  // altitude is vertical in this setup? No.
+  // D is the foot of perpendicular from C onto AB (which is horizontal here).
+  // Since AB is horizontal (Ay = By), D is just directly below C.
+  const Dy = Ay;
+
+  // ── Draw big triangle △ABC ──
+  poly(ctx, [[Ax,Ay],[Bx,By],[Cx,Cy]], 'rgba(124,77,255,0.06)', '#7c4dff', 2.5);
+
+  // ── Draw altitude CD ──
+  ctx.strokeStyle = '#880e4f';
+  ctx.lineWidth = 2;
+  ctx.setLineDash([5, 4]);
+  ctx.beginPath();
+  ctx.moveTo(Cx, Cy);
+  ctx.lineTo(Cx, Dy);
+  ctx.stroke();
+  ctx.setLineDash([]);
+
+  // ── Draw sub-triangles ──
+  // △ACD (left)
+  poly(ctx, [[Ax,Ay],[Cx,Cy],[Dx,Dy]], 'rgba(236,64,122,0.13)', '#ec407a', 2);
+  // △CBD (right)
+  poly(ctx, [[Bx,By],[Cx,Cy],[Dx,Dy]], 'rgba(21,101,192,0.13)', '#1565c0', 2);
+
+  // ── Right-angle markers ──
+  const ms = hyp * 0.035;
+  // Right angle at C (big triangle)
+  const unitCA = [Ax-Cx, Ay-Cy];
+  const lenCA = Math.hypot(unitCA[0], unitCA[1]);
+  const unitCB = [Bx-Cx, By-Cy];
+  const lenCB = Math.hypot(unitCB[0], unitCB[1]);
+  rightAngleMark(ctx, Cx, Cy, unitCA[0]/lenCA, unitCA[1]/lenCA, unitCB[0]/lenCB, unitCB[1]/lenCB, ms*1.2, '#7c4dff');
+
+  // Right angle at D (altitude foot) — in △ACD and △CBD
+  rightAngleMark(ctx, Dx, Dy, -1, 0, 0, -1, ms, '#880e4f');
+
+  // ── Heart angle markers ──
+  // At A: angle alpha (pink ♥)
+  const r_arc = hyp * 0.08;
+  const angAC = Math.atan2(Cy-Ay, Cx-Ax);  // direction A→C
+  const angAB = 0;                           // direction A→B (horizontal, 0)
+  arcMark(ctx, Ax, Ay, r_arc, angAB, angAC, '#ec407a', '♥', 13);
+
+  // At B: angle beta (purple ♥)
+  const angBC = Math.atan2(Cy-By, Cx-Bx);   // direction B→C
+  const angBA = Math.PI;                      // direction B→A
+  arcMark(ctx, Bx, By, r_arc, angBC, angBA, '#7c4dff', '♥', 13);
+
+  // At C in △ACD: angle beta at C-top toward A (pink ♥ because it's 90-alpha)
+  // In △ACD, angles are: α at A, 90° at D, β at C
+  const angCAD = Math.atan2(Ay-Cy, Ax-Cx);  // C→A
+  const angCD  = Math.atan2(Dy-Cy, Dx-Cx);  // C→D
+  arcMark(ctx, Cx, Cy, r_arc * 0.7, angCD, angCAD, '#7c4dff', '♥', 11);
+
+  // At C in △CBD: angle alpha at C toward B (pink ♥)
+  const angCBD = Math.atan2(By-Cy, Bx-Cx);  // C→B
+  const angCDA = Math.atan2(Dy-Cy, Dx-Cx);  // C→D
+  arcMark(ctx, Cx, Cy, r_arc * 0.55, angCBD, angCDA, '#ec407a', '♥', 11);
+
+  // In △ACD at D: right angle already marked. The two acute angles confirmed by table.
+  // In △CBD at D: already marked right angle.
+
+  // ── Vertex labels ──
+  txt(ctx, 'A', Ax - 14, Ay + 6, '#1a1a1a', 15, '700');
+  txt(ctx, 'B', Bx + 14, By + 6, '#1a1a1a', 15, '700');
+  txt(ctx, 'C', Cx, Cy - 16, '#7c4dff', 15, '700');
+  txt(ctx, 'D', Dx, Dy + 16, '#880e4f', 14, '600');
+
+  // ── Angle annotations ──
+  const a_deg = SB.alpha;
+  const b_deg = 90 - a_deg;
+
+  txt(ctx, `α=${a_deg}°`, Ax + r_arc*2.2, Ay - 10, '#ec407a', 12, '700');
+  txt(ctx, `β=${b_deg}°`, Bx - r_arc*2.2, By - 10, '#7c4dff', 12, '700', 'right');
+
+  // Title
+  txt(ctx, '△ABC ~ △ACD ~ △CBD  (AA)', W/2, 20, '#444', 13, '700');
+
+  // Small annotation: "α+β=90°"
+  txt(ctx, `♥ + ♥ = ${a_deg}° + ${b_deg}° = 90°`, W/2, H - 14, '#880e4f', 12, '600');
+}
+
+// ═══════════════════════════════════════════════════════════
+// Canvas resize
+// ═══════════════════════════════════════════════════════════
+function fitCanvas(canvas) {
+  const wrap = canvas.parentElement;
+  const rect = wrap.getBoundingClientRect();
+  const W = Math.max(300, Math.floor(rect.width));
+  const H = Math.floor(W * 0.62);
+  canvas.width  = W;
+  canvas.height = H;
+}
+
+function renderAll() {
+  fitCanvas($('canvasA'));
+  fitCanvas($('canvasB'));
+  drawModuleA();
+  drawModuleB();
+  updateA_numbers();
+  updateB_table();
+}
+
+window.addEventListener('resize', () => {
+  fitCanvas($('canvasA'));
+  fitCanvas($('canvasB'));
+  drawModuleA();
+  drawModuleB();
+});
+
+// ═══════════════════════════════════════════════════════════
+// Tab switching
+// ═══════════════════════════════════════════════════════════
+document.querySelectorAll('.tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.module').forEach(m => m.classList.remove('visible'));
+    tab.classList.add('active');
+    $(tab.dataset.mod).classList.add('visible');
+    // Refit + redraw after tab becomes visible
+    setTimeout(() => {
+      if (tab.dataset.mod === 'modA') { fitCanvas($('canvasA')); drawModuleA(); }
+      if (tab.dataset.mod === 'modB') { fitCanvas($('canvasB')); drawModuleB(); }
+    }, 30);
+  });
+});
+
+// ═══════════════════════════════════════════════════════════
+// Module A — sliders + presets
+// ═══════════════════════════════════════════════════════════
+$('aSlider').addEventListener('input', e => {
+  SA.a = +e.target.value;
+  updateA_numbers();
+  drawModuleA();
+  typeset();
+});
+$('bSlider').addEventListener('input', e => {
+  SA.b = +e.target.value;
+  updateA_numbers();
+  drawModuleA();
+  typeset();
+});
+document.querySelectorAll('.preset[data-a]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    SA.a = +btn.dataset.a;
+    SA.b = +btn.dataset.b;
+    $('aSlider').value = SA.a;
+    $('bSlider').value = SA.b;
+    updateA_numbers();
+    drawModuleA();
+    typeset();
+  });
+});
+
+// ═══════════════════════════════════════════════════════════
+// Module B — slider + presets
+// ═══════════════════════════════════════════════════════════
+$('alphaSlider').addEventListener('input', e => {
+  SB.alpha = +e.target.value;
+  updateB_table();
+  drawModuleB();
+});
+document.querySelectorAll('.preset[data-alpha]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    SB.alpha = +btn.dataset.alpha;
+    $('alphaSlider').value = SB.alpha;
+    updateB_table();
+    drawModuleB();
+  });
+});
+
+// ═══════════════════════════════════════════════════════════
+// MathJax typeset
+// ═══════════════════════════════════════════════════════════
+function typeset() {
+  if (window.MathJax && window.MathJax.typesetPromise) {
+    window.MathJax.typesetPromise();
+  }
+}
+
+// ═══════════════════════════════════════════════════════════
+// Boot
+// ═══════════════════════════════════════════════════════════
+renderAll();
+window.addEventListener('load', () => {
+  renderAll();
+  typeset();
+});
+</script>
+</body>
+</html>
