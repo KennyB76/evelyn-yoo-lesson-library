@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<!--
+  ============================================================================
+  STEALTH META — Interactive: Radical Two-Way Race (DRAFT, deploy pending)
+  ----------------------------------------------------------------------------
+  Student : Evelyn Yoo (8th, HM, Algebra 1)
+  Date    : 2026-05-21
+  Concept : For every radical combination problem, there are TWO valid
+            solution paths (Kenny insight 2026-05-21):
+              Way 1 — rationalize each term first, then combine
+              Way 2 — build a common radical denominator first, rationalize last
+            Both produce the same final answer.
+  Format  : Multiple-choice round → answer reveal → toggle Way 1 / Way 2
+            walkthrough → next round. Score / streak HUD.
+  ============================================================================
+-->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Radical Two-Way Race · Evelyn Yoo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script>
+window.MathJax = {
+    tex: {
+        inlineMath: [['\\(', '\\)'], ['$', '$']],
+        processEscapes: true
+    },
+    options: { skipHtmlTags: ['script','noscript','style','textarea','pre'] },
+    startup: {
+        typeset: false,
+        ready: () => {
+            MathJax.startup.defaultReady();
+            MathJax.startup.promise.then(() => {
+                window.__mjReady = true;
+                if (typeof loadQuestion === 'function') loadQuestion();
+            });
+        }
+    }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+<style>
+:root {
+    --rose: #c2185b;
+    --rose-soft: #fce4ec;
+    --rose-deep: #880e4f;
+    --purple: #7b1fa2;
+    --purple-soft: #f3e5f5;
+    --green: #2e7d32;
+    --green-soft: #e6f4ea;
+    --red: #c62828;
+    --red-soft: #ffebee;
+    --gold: #d4a017;
+    --gold-soft: #fef3c7;
+    --ink: #1f2937;
+    --ink-soft: #475569;
+    --bg: #fff5f8;
+    --paper: #fff;
+    --line: #e8d4dd;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+    font-family: 'Inter', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.5;
+    padding: 18px 12px 36px;
+}
+.wrap {
+    max-width: 780px;
+    margin: 0 auto;
+    background: var(--paper);
+    border-radius: 16px;
+    box-shadow: 0 6px 26px rgba(194, 24, 91, 0.16);
+    overflow: hidden;
+}
+header.top {
+    background: linear-gradient(135deg, var(--rose-deep) 0%, var(--purple) 100%);
+    color: #fff;
+    padding: 20px 26px;
+    text-align: center;
+}
+header.top h1 { font-family: 'Playfair Display', 'Georgia', serif; font-weight: 700; font-size: 24px; line-height: 1.2; margin: 4px 0 2px; }
+header.top .sub { font-size: 13px; opacity: 0.92; font-style: italic; }
+
+.hud {
+    display: flex;
+    justify-content: space-around;
+    background: var(--rose-soft);
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--line);
+}
+.hud .stat { text-align: center; }
+.hud .stat .num { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 700; color: var(--rose-deep); }
+.hud .stat .lbl { font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-soft); font-weight: 600; margin-top: 1px; }
+
+main { padding: 20px 24px 28px; }
+
+.kenny-insight {
+    background: var(--gold-soft);
+    border: 2px dashed var(--gold);
+    border-radius: 10px;
+    padding: 10px 14px;
+    margin-bottom: 14px;
+    font-size: 13px;
+    line-height: 1.55;
+}
+.kenny-insight .head { font-family: 'Playfair Display', serif; font-weight: 700; color: var(--rose-deep); font-size: 14px; margin-bottom: 3px; }
+
+.q-card {
+    background: var(--purple-soft);
+    border-radius: 12px;
+    padding: 14px 18px;
+    margin-bottom: 14px;
+    text-align: center;
+}
+.q-card .qno { font-size: 11px; color: var(--purple); font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; }
+.q-card .expr {
+    font-family: 'Playfair Display', 'Georgia', serif;
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--rose-deep);
+    margin-top: 4px;
+    line-height: 1.3;
+}
+
+.opts {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    margin-bottom: 12px;
+}
+.opt {
+    background: var(--paper);
+    border: 2px solid var(--rose);
+    color: var(--rose-deep);
+    padding: 12px 8px;
+    border-radius: 10px;
+    font-family: 'Playfair Display', 'Georgia', serif;
+    font-size: 17px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.18s ease;
+}
+.opt:hover { background: var(--rose-soft); transform: translateY(-2px); }
+.opt.correct { background: var(--green); border-color: var(--green); color: #fff; }
+.opt.wrong { background: var(--red-soft); border-color: var(--red); color: var(--red); }
+
+.feedback-row {
+    text-align: center;
+    margin: 10px 0;
+    font-size: 14px;
+    min-height: 22px;
+}
+.feedback-row.correct { color: var(--green); font-weight: 700; }
+.feedback-row.wrong { color: var(--red); }
+
+.ways-toggle {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 10px;
+    justify-content: center;
+}
+.way-btn {
+    background: var(--paper);
+    border: 2px solid var(--purple);
+    color: var(--purple);
+    padding: 7px 14px;
+    border-radius: 18px;
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+.way-btn:hover { background: var(--purple-soft); }
+.way-btn.active { background: var(--purple); color: #fff; }
+
+.way-content {
+    background: #fcfbff;
+    border: 1px solid var(--purple);
+    border-radius: 10px;
+    padding: 12px 14px;
+    font-size: 13.5px;
+    line-height: 1.7;
+    margin-bottom: 12px;
+    min-height: 60px;
+}
+.way-content .step-line { margin: 4px 0; padding-left: 6px; border-left: 3px solid var(--purple); }
+.way-content .step-line strong { color: var(--rose); }
+.way-content .conclusion {
+    margin-top: 8px;
+    padding: 6px 10px;
+    background: var(--green-soft);
+    border-radius: 6px;
+    color: var(--green);
+    font-weight: 700;
+    text-align: center;
+}
+
+.controls { text-align: center; }
+.btn {
+    background: linear-gradient(135deg, var(--rose) 0%, var(--purple) 100%);
+    color: #fff;
+    border: none;
+    padding: 10px 22px;
+    border-radius: 22px;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(194, 24, 91, 0.3);
+    transition: transform 0.15s ease;
+}
+.btn:hover { transform: translateY(-2px); }
+.btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+.btn.ghost {
+    background: transparent;
+    color: var(--ink-soft);
+    border: 2px solid var(--line);
+    box-shadow: none;
+}
+
+footer.bot {
+    text-align: center;
+    padding: 10px;
+    font-size: 11px;
+    color: var(--ink-soft);
+    border-top: 1px solid var(--line);
+    background: var(--bg);
+}
+footer.bot strong { color: var(--rose); }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+<header class="top">
+    <h1>Radical Two-Way Race</h1>
+    <div class="sub">Pick the right simplified form, then see BOTH ways the answer was earned.</div>
+</header>
+
+<div class="hud">
+    <div class="stat"><div class="num" id="hudScore">0</div><div class="lbl">Correct</div></div>
+    <div class="stat"><div class="num" id="hudStreak">0</div><div class="lbl">Streak</div></div>
+    <div class="stat"><div class="num" id="hudSolved">0</div><div class="lbl">Solved</div></div>
+</div>
+
+<main>
+
+<div class="kenny-insight">
+    <div class="head">★ Kenny's #1 Rule</div>
+    Every radical problem has <strong>TWO valid paths</strong> to the same answer. WAY 1 = rationalize each term first, then combine. WAY 2 = build a common radical denominator first, rationalize at the end. Pick whichever is easier — they always match.
+</div>
+
+<div class="q-card">
+    <div class="qno" id="qNo">Question 1</div>
+    <div class="expr" id="qExpr">$\,$</div>
+</div>
+
+<div class="opts" id="opts"></div>
+
+<div class="feedback-row" id="feedback"></div>
+
+<div class="ways-toggle" id="waysToggle" style="display:none;">
+    <button class="way-btn active" data-way="1">Way 1 (rationalize first)</button>
+    <button class="way-btn" data-way="2">Way 2 (combine first)</button>
+</div>
+
+<div class="way-content" id="wayContent" style="display:none;"></div>
+
+<div class="controls">
+    <button class="btn" id="nextBtn" style="display:none;">Next →</button>
+</div>
+
+</main>
+
+<footer class="bot">
+    Made for <strong>Evelyn Yoo</strong> · Newton School · 2026-05-21 · Two-way thinking
+</footer>
+
+</div>
+
+<script>
+// ============================================================================
+// Problem bank — each has both Way 1 and Way 2 worked-out steps
+// ============================================================================
+const PROBLEMS = [
+    {
+        expr: '\\(4\\sqrt{\\tfrac{5}{6}} - \\sqrt{\\tfrac{3}{10}}\\)',
+        opts: ['\\(\\tfrac{17\\sqrt{30}}{30}\\)', '\\(\\tfrac{\\sqrt{30}}{30}\\)', '\\(\\tfrac{2\\sqrt{30}}{3}\\)', '\\(\\tfrac{17\\sqrt{15}}{15}\\)'],
+        ans: 0,
+        way1: [
+            'Rationalize each term first.',
+            '\\(\\tfrac{4\\sqrt{5}}{\\sqrt{6}} \\cdot \\tfrac{\\sqrt{6}}{\\sqrt{6}} = \\tfrac{4\\sqrt{30}}{6} = \\tfrac{2\\sqrt{30}}{3}\\)',
+            '\\(\\tfrac{\\sqrt{3}}{\\sqrt{10}} \\cdot \\tfrac{\\sqrt{10}}{\\sqrt{10}} = \\tfrac{\\sqrt{30}}{10}\\)',
+            'LCD 30: \\(\\tfrac{20\\sqrt{30}}{30} - \\tfrac{3\\sqrt{30}}{30}\\)'
+        ],
+        way2: [
+            'Build common \\(\\sqrt{30}\\) denominator first.',
+            '\\(\\tfrac{4\\sqrt{5}}{\\sqrt{6}} \\cdot \\tfrac{\\sqrt{5}}{\\sqrt{5}} = \\tfrac{20}{\\sqrt{30}}\\)',
+            '\\(\\tfrac{\\sqrt{3}}{\\sqrt{10}} \\cdot \\tfrac{\\sqrt{3}}{\\sqrt{3}} = \\tfrac{3}{\\sqrt{30}}\\)',
+            '\\(\\tfrac{17}{\\sqrt{30}} \\cdot \\tfrac{\\sqrt{30}}{\\sqrt{30}} = \\tfrac{17\\sqrt{30}}{30}\\)'
+        ],
+        answer: '\\(\\tfrac{17\\sqrt{30}}{30}\\)'
+    },
+    {
+        expr: '\\(\\tfrac{1}{\\sqrt{2}} + \\tfrac{1}{\\sqrt{3}}\\)',
+        opts: ['\\(\\tfrac{3\\sqrt{2} + 2\\sqrt{3}}{6}\\)', '\\(\\tfrac{\\sqrt{5}}{6}\\)', '\\(\\tfrac{1}{\\sqrt{6}}\\)', '\\(\\tfrac{5}{\\sqrt{6}}\\)'],
+        ans: 0,
+        way1: [
+            '\\(\\tfrac{1}{\\sqrt{2}} \\cdot \\tfrac{\\sqrt{2}}{\\sqrt{2}} = \\tfrac{\\sqrt{2}}{2}\\)',
+            '\\(\\tfrac{1}{\\sqrt{3}} \\cdot \\tfrac{\\sqrt{3}}{\\sqrt{3}} = \\tfrac{\\sqrt{3}}{3}\\)',
+            'LCD 6: \\(\\tfrac{3\\sqrt{2}}{6} + \\tfrac{2\\sqrt{3}}{6}\\)'
+        ],
+        way2: [
+            'Common denom \\(\\sqrt{6}\\):',
+            '\\(\\tfrac{1}{\\sqrt{2}} \\cdot \\tfrac{\\sqrt{3}}{\\sqrt{3}} = \\tfrac{\\sqrt{3}}{\\sqrt{6}}\\)',
+            '\\(\\tfrac{1}{\\sqrt{3}} \\cdot \\tfrac{\\sqrt{2}}{\\sqrt{2}} = \\tfrac{\\sqrt{2}}{\\sqrt{6}}\\)',
+            '\\(\\tfrac{\\sqrt{3} + \\sqrt{2}}{\\sqrt{6}} \\cdot \\tfrac{\\sqrt{6}}{\\sqrt{6}} = \\tfrac{\\sqrt{18} + \\sqrt{12}}{6} = \\tfrac{3\\sqrt{2} + 2\\sqrt{3}}{6}\\)'
+        ],
+        answer: '\\(\\tfrac{3\\sqrt{2} + 2\\sqrt{3}}{6}\\)'
+    },
+    {
+        expr: '\\(\\sqrt{\\tfrac{2}{3}} + \\sqrt{\\tfrac{3}{2}}\\)',
+        opts: ['\\(\\tfrac{5\\sqrt{6}}{6}\\)', '\\(\\tfrac{\\sqrt{6}}{6}\\)', '\\(\\sqrt{6}\\)', '\\(\\tfrac{5}{\\sqrt{6}}\\)'],
+        ans: 0,
+        way1: [
+            '\\(\\sqrt{\\tfrac{2}{3}} = \\tfrac{\\sqrt{2}}{\\sqrt{3}} \\cdot \\tfrac{\\sqrt{3}}{\\sqrt{3}} = \\tfrac{\\sqrt{6}}{3}\\)',
+            '\\(\\sqrt{\\tfrac{3}{2}} = \\tfrac{\\sqrt{3}}{\\sqrt{2}} \\cdot \\tfrac{\\sqrt{2}}{\\sqrt{2}} = \\tfrac{\\sqrt{6}}{2}\\)',
+            'LCD 6: \\(\\tfrac{2\\sqrt{6} + 3\\sqrt{6}}{6}\\)'
+        ],
+        way2: [
+            'Common denom \\(\\sqrt{6}\\):',
+            '\\(\\tfrac{\\sqrt{2}}{\\sqrt{3}} \\cdot \\tfrac{\\sqrt{2}}{\\sqrt{2}} = \\tfrac{2}{\\sqrt{6}}\\)',
+            '\\(\\tfrac{\\sqrt{3}}{\\sqrt{2}} \\cdot \\tfrac{\\sqrt{3}}{\\sqrt{3}} = \\tfrac{3}{\\sqrt{6}}\\)',
+            '\\(\\tfrac{5}{\\sqrt{6}} \\cdot \\tfrac{\\sqrt{6}}{\\sqrt{6}} = \\tfrac{5\\sqrt{6}}{6}\\)'
+        ],
+        answer: '\\(\\tfrac{5\\sqrt{6}}{6}\\)'
+    },
+    {
+        expr: '\\(\\sqrt{8} + \\sqrt{18} - \\sqrt{2}\\)',
+        opts: ['\\(4\\sqrt{2}\\)', '\\(6\\sqrt{2}\\)', '\\(\\sqrt{24}\\)', '\\(2\\sqrt{7}\\)'],
+        ans: 0,
+        way1: [
+            'Simplify each radical:',
+            '\\(\\sqrt{8} = 2\\sqrt{2},\\;\\;\\sqrt{18} = 3\\sqrt{2}\\)',
+            'Combine like radicals: \\(2\\sqrt{2} + 3\\sqrt{2} - \\sqrt{2}\\)'
+        ],
+        way2: [
+            'Pull out a \\(\\sqrt{2}\\) factor first:',
+            '\\(\\sqrt{8} + \\sqrt{18} - \\sqrt{2} = \\sqrt{2}(\\sqrt{4} + \\sqrt{9} - 1)\\)',
+            '\\(= \\sqrt{2}(2 + 3 - 1)\\)'
+        ],
+        answer: '\\(4\\sqrt{2}\\)'
+    },
+    {
+        expr: '\\(\\tfrac{3}{\\sqrt{5}} - \\tfrac{2}{\\sqrt{15}}\\)',
+        opts: ['\\(\\tfrac{9\\sqrt{5} - 2\\sqrt{15}}{15}\\)', '\\(\\tfrac{1}{\\sqrt{20}}\\)', '\\(\\tfrac{\\sqrt{5}}{15}\\)', '\\(\\tfrac{7\\sqrt{5}}{15}\\)'],
+        ans: 0,
+        way1: [
+            '\\(\\tfrac{3}{\\sqrt{5}} \\cdot \\tfrac{\\sqrt{5}}{\\sqrt{5}} = \\tfrac{3\\sqrt{5}}{5}\\)',
+            '\\(\\tfrac{2}{\\sqrt{15}} \\cdot \\tfrac{\\sqrt{15}}{\\sqrt{15}} = \\tfrac{2\\sqrt{15}}{15}\\)',
+            'LCD 15: \\(\\tfrac{9\\sqrt{5} - 2\\sqrt{15}}{15}\\)'
+        ],
+        way2: [
+            'Common denom \\(\\sqrt{15}\\):',
+            '\\(\\tfrac{3}{\\sqrt{5}} \\cdot \\tfrac{\\sqrt{3}}{\\sqrt{3}} = \\tfrac{3\\sqrt{3}}{\\sqrt{15}}\\)',
+            '\\(\\tfrac{3\\sqrt{3} - 2}{\\sqrt{15}} \\cdot \\tfrac{\\sqrt{15}}{\\sqrt{15}} = \\tfrac{3\\sqrt{45} - 2\\sqrt{15}}{15} = \\tfrac{9\\sqrt{5} - 2\\sqrt{15}}{15}\\)'
+        ],
+        answer: '\\(\\tfrac{9\\sqrt{5} - 2\\sqrt{15}}{15}\\)'
+    },
+    {
+        expr: '\\(2\\sqrt{\\tfrac{1}{8}} + \\sqrt{\\tfrac{1}{2}}\\)',
+        opts: ['\\(\\sqrt{2}\\)', '\\(\\tfrac{\\sqrt{2}}{2}\\)', '\\(2\\sqrt{2}\\)', '\\(\\tfrac{3\\sqrt{2}}{4}\\)'],
+        ans: 0,
+        way1: [
+            '\\(2\\sqrt{\\tfrac{1}{8}} = \\tfrac{2}{\\sqrt{8}} = \\tfrac{2}{2\\sqrt{2}} = \\tfrac{1}{\\sqrt{2}} = \\tfrac{\\sqrt{2}}{2}\\)',
+            '\\(\\sqrt{\\tfrac{1}{2}} = \\tfrac{1}{\\sqrt{2}} = \\tfrac{\\sqrt{2}}{2}\\)',
+            'Add: \\(\\tfrac{\\sqrt{2}}{2} + \\tfrac{\\sqrt{2}}{2}\\)'
+        ],
+        way2: [
+            'Both terms share \\(\\tfrac{1}{\\sqrt{2}}\\) factor:',
+            '\\(\\tfrac{2}{2\\sqrt{2}} + \\tfrac{1}{\\sqrt{2}} = \\tfrac{1}{\\sqrt{2}} + \\tfrac{1}{\\sqrt{2}}\\)',
+            '\\(= \\tfrac{2}{\\sqrt{2}} \\cdot \\tfrac{\\sqrt{2}}{\\sqrt{2}} = \\tfrac{2\\sqrt{2}}{2}\\)'
+        ],
+        answer: '\\(\\sqrt{2}\\)'
+    },
+    {
+        expr: '\\(3\\sqrt{3} - 2\\sqrt{12} + 4\\sqrt{\\tfrac{1}{3}}\\)',
+        opts: ['\\(\\tfrac{\\sqrt{3}}{3}\\)', '\\(\\sqrt{3}\\)', '\\(\\tfrac{2\\sqrt{3}}{3}\\)', '\\(0\\)'],
+        ans: 0,
+        way1: [
+            '\\(3\\sqrt{3} - 2(2\\sqrt{3}) + 4 \\cdot \\tfrac{\\sqrt{3}}{3}\\)',
+            '\\(= 3\\sqrt{3} - 4\\sqrt{3} + \\tfrac{4\\sqrt{3}}{3}\\)',
+            '\\(= (3 - 4 + \\tfrac{4}{3})\\sqrt{3} = \\tfrac{1}{3}\\sqrt{3}\\)'
+        ],
+        way2: [
+            'Factor \\(\\sqrt{3}\\) out and combine the coefficients:',
+            'Coeffs: \\(3, -4, \\tfrac{4}{3}\\) → \\(\\tfrac{9 - 12 + 4}{3} = \\tfrac{1}{3}\\)',
+            '\\(= \\tfrac{1}{3}\\sqrt{3} = \\tfrac{\\sqrt{3}}{3}\\)'
+        ],
+        answer: '\\(\\tfrac{\\sqrt{3}}{3}\\)'
+    },
+    {
+        expr: '\\((\\sqrt{3} + \\sqrt{2})(\\sqrt{3} - \\sqrt{2})\\)',
+        opts: ['\\(1\\)', '\\(\\sqrt{6}\\)', '\\(5\\)', '\\(\\sqrt{5}\\)'],
+        ans: 0,
+        way1: [
+            'Conjugate pair → use \\(a^2 - b^2\\):',
+            '\\((\\sqrt{3})^2 - (\\sqrt{2})^2 = 3 - 2\\)'
+        ],
+        way2: [
+            'FOIL:',
+            '\\(\\sqrt{9} - \\sqrt{6} + \\sqrt{6} - \\sqrt{4} = 3 - 2\\)',
+            'Cross terms cancel.'
+        ],
+        answer: '\\(1\\)'
+    },
+];
+
+let state = { idx: 0, score: 0, streak: 0, solved: 0, currentWay: 1, answered: false };
+
+const qNo = document.getElementById('qNo');
+const qExpr = document.getElementById('qExpr');
+const optsDiv = document.getElementById('opts');
+const feedback = document.getElementById('feedback');
+const waysToggle = document.getElementById('waysToggle');
+const wayContent = document.getElementById('wayContent');
+const nextBtn = document.getElementById('nextBtn');
+const hudScore = document.getElementById('hudScore');
+const hudStreak = document.getElementById('hudStreak');
+const hudSolved = document.getElementById('hudSolved');
+
+function shuffleIdx(n) {
+    return Array.from({length: n}, (_, i) => i).sort(() => Math.random() - 0.5);
+}
+
+let questionOrder = [];
+let orderPtr = 0;
+
+function pickNext() {
+    if (orderPtr >= questionOrder.length) {
+        questionOrder = shuffleIdx(PROBLEMS.length);
+        orderPtr = 0;
+    }
+    state.idx = questionOrder[orderPtr++];
+}
+
+function loadQuestion() {
+    pickNext();
+    const p = PROBLEMS[state.idx];
+    state.answered = false;
+    state.currentWay = 1;
+
+    qNo.textContent = `Question ${state.solved + 1}`;
+    qExpr.innerHTML = p.expr;
+    optsDiv.innerHTML = '';
+    // Shuffle option indices so the correct option position varies
+    const optOrder = shuffleIdx(p.opts.length);
+    optOrder.forEach((origIdx) => {
+        const btn = document.createElement('button');
+        btn.className = 'opt';
+        btn.innerHTML = p.opts[origIdx];
+        btn.dataset.orig = origIdx;
+        btn.addEventListener('click', () => onAnswer(btn, origIdx));
+        optsDiv.appendChild(btn);
+    });
+    feedback.textContent = '';
+    feedback.className = 'feedback-row';
+    waysToggle.style.display = 'none';
+    wayContent.style.display = 'none';
+    nextBtn.style.display = 'none';
+    if (window.MathJax && MathJax.typesetPromise) MathJax.typesetPromise();
+}
+
+function onAnswer(btn, origIdx) {
+    if (state.answered) return;
+    state.answered = true;
+    state.solved++;
+    const p = PROBLEMS[state.idx];
+
+    if (origIdx === p.ans) {
+        btn.classList.add('correct');
+        state.score++;
+        state.streak++;
+        feedback.className = 'feedback-row correct';
+        feedback.innerHTML = `★ Correct! Answer: ${p.answer}`;
+    } else {
+        btn.classList.add('wrong');
+        state.streak = 0;
+        feedback.className = 'feedback-row wrong';
+        feedback.innerHTML = `Almost. Correct answer: ${p.answer}`;
+        // highlight correct option
+        Array.from(optsDiv.children).forEach(b => {
+            if (parseInt(b.dataset.orig) === p.ans) b.classList.add('correct');
+        });
+    }
+    updateHUD();
+    showWay(state.currentWay);
+    waysToggle.style.display = '';
+    wayContent.style.display = '';
+    nextBtn.style.display = '';
+}
+
+function showWay(way) {
+    state.currentWay = way;
+    const p = PROBLEMS[state.idx];
+    const steps = way === 1 ? p.way1 : p.way2;
+    const lbl = way === 1 ? 'WAY 1 — Rationalize each term first' : 'WAY 2 — Build common radical denom first';
+    let html = `<div style="font-weight:700;color:var(--purple);font-size:11px;letter-spacing:0.06em;margin-bottom:5px;">${lbl}</div>`;
+    steps.forEach(s => { html += `<div class="step-line">${s}</div>`; });
+    html += `<div class="conclusion">→ Final answer: ${p.answer}</div>`;
+    wayContent.innerHTML = html;
+    // Update toggle active
+    document.querySelectorAll('.way-btn').forEach(b => {
+        b.classList.toggle('active', parseInt(b.dataset.way) === way);
+    });
+    if (window.MathJax && MathJax.typesetPromise) MathJax.typesetPromise();
+}
+
+function updateHUD() {
+    hudScore.textContent = state.score;
+    hudStreak.textContent = state.streak;
+    hudSolved.textContent = state.solved;
+}
+
+document.querySelectorAll('.way-btn').forEach(b => {
+    b.addEventListener('click', () => showWay(parseInt(b.dataset.way)));
+});
+nextBtn.addEventListener('click', loadQuestion);
+
+questionOrder = shuffleIdx(PROBLEMS.length);
+// First load: wait for MathJax to finish booting if it isn't ready yet.
+// MathJax startup.ready already calls loadQuestion() once promise resolves,
+// but this fallback covers the case where MathJax fails to load (offline, CDN issue).
+if (window.__mjReady) {
+    loadQuestion();
+} else {
+    setTimeout(() => { if (!state.answered && !document.getElementById('qExpr').textContent.trim()) loadQuestion(); }, 2500);
+}
+</script>
+
+</body>
+</html>
