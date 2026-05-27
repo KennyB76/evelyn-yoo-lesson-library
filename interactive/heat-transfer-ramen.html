@@ -1,0 +1,1316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Heat Transfer — Cooking Ramen (Evelyn Yoo)</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&family=Playfair+Display:wght@500;700&display=swap" rel="stylesheet">
+
+<style>
+/* ── Theme: amber (portal-matched) ── */
+:root {
+  --P:      #e6a817;   /* primary amber */
+  --P-soft: #fef8e7;   /* soft cream */
+  --P-deep: #a07000;   /* deep amber */
+  --P-mid:  #c48a00;   /* mid amber */
+
+  --hot:    #d32f2f;   /* hot red */
+  --hot-2:  #ff6f00;   /* orange */
+  --cold:   #1565c0;   /* cool blue */
+  --mid:    #f9a825;   /* warm yellow */
+
+  --ink:     #1a1a1a;
+  --ink-soft:#555;
+  --bg:      #fffdf5;
+  --paper:   #ffffff;
+  --line:    #ece2c8;
+
+  --serif: 'Playfair Display', Georgia, serif;
+  --sans:  'Inter', system-ui, sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: var(--sans);
+  background: var(--bg);
+  color: var(--ink);
+  line-height: 1.6;
+  padding: 16px 12px 40px;
+}
+.wrap { max-width: 1080px; margin: 0 auto; }
+
+/* ── Masthead ── */
+.masthead {
+  background: var(--paper);
+  border-top: 4px solid var(--P);
+  border-radius: 12px;
+  padding: 24px 28px 18px;
+  margin-bottom: 16px;
+  box-shadow: 0 2px 10px rgba(230,168,23,0.10);
+}
+.masthead .school { font-size: 11px; letter-spacing: 0.4em; text-transform: uppercase; color: var(--P); font-weight: 700; margin-bottom: 8px; }
+.masthead h1 { font-family: var(--serif); font-size: 28px; color: var(--P-deep); margin-bottom: 4px; line-height: 1.15; }
+.masthead .sub { font-size: 14px; color: var(--ink-soft); font-style: italic; }
+.masthead .intro { margin-top: 12px; background: var(--P-soft); border-left: 3px solid var(--P); border-radius: 6px; padding: 10px 14px; font-size: 13px; line-height: 1.65; }
+.masthead .intro strong { color: var(--P-deep); }
+
+/* ── Slide navigation ── */
+.slide-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  gap: 10px;
+}
+.nav-btn {
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  border: 2px solid var(--P);
+  background: var(--paper);
+  color: var(--P-deep);
+  cursor: pointer;
+  transition: all 0.15s;
+  font-family: var(--sans);
+}
+.nav-btn:hover:not(:disabled) { background: var(--P-soft); }
+.nav-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+.dots { display: flex; gap: 8px; }
+.dot {
+  width: 10px; height: 10px; border-radius: 50%;
+  background: var(--line); cursor: pointer; transition: all 0.15s;
+  border: none; padding: 0;
+}
+.dot.active { background: var(--P); transform: scale(1.3); }
+.dot:hover { background: var(--P-mid); }
+.slide-label { font-size: 12px; color: var(--ink-soft); font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; }
+
+/* ── Slides ── */
+.slide { display: none; }
+.slide.visible { display: block; }
+
+/* ── Grid layout per slide ── */
+.grid-2 { display: grid; grid-template-columns: 300px 1fr; gap: 16px; }
+@media (max-width: 820px) { .grid-2 { grid-template-columns: 1fr; } }
+
+.panel {
+  background: var(--paper);
+  border-radius: 10px;
+  padding: 16px 18px;
+  box-shadow: 0 1px 6px rgba(230,168,23,0.08);
+  margin-bottom: 12px;
+}
+.panel-title {
+  font-size: 10px; letter-spacing: 0.32em; text-transform: uppercase;
+  font-weight: 700; color: var(--P-deep); margin-bottom: 12px;
+  border-bottom: 1px solid var(--line); padding-bottom: 8px;
+}
+
+/* ── Controls ── */
+.field { margin-bottom: 14px; }
+.field:last-child { margin-bottom: 0; }
+.ctrl-row { display: flex; justify-content: space-between; align-items: baseline; font-size: 13px; font-weight: 600; margin-bottom: 5px; }
+.ctrl-row .val { font-family: 'JetBrains Mono', monospace; color: var(--P-mid); font-size: 13px; font-weight: 700; }
+input[type=range] { width: 100%; accent-color: var(--P); }
+.help { font-size: 11px; color: var(--ink-soft); margin-top: 4px; line-height: 1.45; }
+
+.btn-row { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 6px; }
+.tbtn {
+  padding: 7px 12px; font-size: 12px; font-weight: 600;
+  border: 1.5px solid var(--P); background: var(--paper);
+  color: var(--P-deep); border-radius: 6px; cursor: pointer;
+  transition: all 0.15s; font-family: var(--sans);
+}
+.tbtn:hover { background: var(--P-soft); }
+.tbtn.active { background: var(--P); color: #fff; }
+.tbtn.danger { border-color: var(--hot); color: var(--hot); }
+.tbtn.danger.active { background: var(--hot); color: #fff; }
+.tbtn.cool { border-color: var(--cold); color: var(--cold); }
+.tbtn.cool.active { background: var(--cold); color: #fff; }
+
+/* ── Canvas stage ── */
+.stage-wrap { border: 1px solid var(--line); border-radius: 8px; overflow: hidden; background: #fff; }
+canvas { display: block; width: 100%; height: auto; }
+
+/* ── Caption box ── */
+.caption {
+  background: var(--P-soft);
+  border-left: 4px solid var(--P);
+  border-radius: 6px;
+  padding: 12px 16px;
+  margin-top: 12px;
+  font-size: 13.5px;
+  line-height: 1.65;
+}
+.caption strong { color: var(--P-deep); }
+.caption .label-tag {
+  display: inline-block;
+  font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase;
+  font-weight: 700; color: #fff; background: var(--P);
+  border-radius: 4px; padding: 2px 8px;
+  margin-right: 8px; vertical-align: middle;
+}
+
+/* ── Discovery prompt ── */
+.prompt-box {
+  background: linear-gradient(135deg, var(--P-soft) 0%, #fff 100%);
+  border: 1px dashed var(--P);
+  border-radius: 8px;
+  padding: 12px 16px;
+  margin-top: 12px;
+  font-size: 13px;
+  line-height: 1.6;
+}
+.prompt-box .q-tag {
+  display: inline-block;
+  font-size: 9px; font-weight: 700; letter-spacing: 0.15em;
+  color: var(--P-deep); background: var(--P-soft);
+  border: 1px solid var(--P);
+  border-radius: 3px; padding: 2px 6px;
+  margin-right: 6px; vertical-align: middle; text-transform: uppercase;
+}
+.prompt-box em { color: var(--P-deep); font-style: italic; }
+
+/* ── Slide title ── */
+.slide-title {
+  font-family: var(--serif);
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--P-deep);
+  margin-bottom: 4px;
+}
+.slide-title .num {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  background: var(--P);
+  color: #fff;
+  border-radius: 4px;
+  padding: 3px 8px;
+  margin-right: 10px;
+  vertical-align: middle;
+  text-transform: uppercase;
+  font-family: var(--sans);
+}
+.slide-sub {
+  font-size: 13px;
+  color: var(--ink-soft);
+  font-style: italic;
+  margin-bottom: 14px;
+}
+
+/* ── Summary slide ── */
+.summary-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 14px;
+  margin-bottom: 18px;
+}
+@media (max-width: 820px) { .summary-grid { grid-template-columns: 1fr; } }
+.sum-card {
+  background: var(--paper);
+  border-top: 4px solid var(--P);
+  border-radius: 8px;
+  padding: 16px 18px;
+  box-shadow: 0 1px 6px rgba(230,168,23,0.08);
+}
+.sum-card.cond { border-top-color: var(--hot); }
+.sum-card.conv { border-top-color: var(--hot-2); }
+.sum-card.rad  { border-top-color: var(--mid); }
+.sum-card .icon { font-size: 28px; margin-bottom: 6px; }
+.sum-card .name { font-family: var(--serif); font-size: 19px; font-weight: 700; color: var(--P-deep); margin-bottom: 4px; }
+.sum-card .def { font-size: 12.5px; color: var(--ink-soft); line-height: 1.55; margin-bottom: 8px; }
+.sum-card .example { font-size: 12px; color: var(--ink); font-style: italic; padding-top: 8px; border-top: 1px solid var(--line); }
+
+.matrix {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  margin-top: 6px;
+  background: var(--paper);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 1px 6px rgba(230,168,23,0.08);
+}
+.matrix th, .matrix td {
+  border: 1px solid var(--line);
+  padding: 10px 14px;
+  text-align: center;
+}
+.matrix th {
+  background: var(--P-soft);
+  color: var(--P-deep);
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 0.05em;
+}
+.matrix td.row-label {
+  text-align: left;
+  font-weight: 700;
+  color: var(--P-deep);
+  background: #fcfaf3;
+}
+.matrix .yes { color: #2e7d32; font-weight: 700; }
+.matrix .no  { color: #c62828; font-weight: 700; }
+.matrix .sort { color: #ef6c00; font-weight: 600; font-style: italic; }
+
+.kenny-note {
+  background: var(--P-soft);
+  border-left: 4px solid var(--P);
+  border-radius: 8px;
+  padding: 14px 18px;
+  margin-top: 18px;
+  font-size: 14px;
+  font-style: italic;
+  color: var(--ink);
+  line-height: 1.7;
+}
+.kenny-note .sig { display: block; margin-top: 6px; font-style: normal; font-weight: 600; color: var(--P-deep); text-align: right; }
+
+footer { text-align: center; padding: 24px 16px; font-size: 11px; color: var(--ink-soft); margin-top: 12px; }
+footer .heart { color: var(--P); }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- ── MASTHEAD ── -->
+  <div class="masthead">
+    <div class="school">Newton School · Evelyn Yoo · 5/27/2026</div>
+    <h1>Heat Transfer — Cooking Ramen</h1>
+    <div class="sub">Three ways heat moves, all happening in one pot of ramen.</div>
+    <div class="intro">
+      <strong>Today's idea:</strong> Heat doesn't just &ldquo;exist&rdquo; — it <em>travels</em>. And it has three different ways of getting from place to place. The cool part? All three are happening, right now, while you cook ramen. Watch the chopstick. Watch the soup. Watch the sunny window. Three transit systems, one bowl.
+    </div>
+  </div>
+
+  <!-- ── SLIDE NAV ── -->
+  <div class="slide-nav">
+    <button class="nav-btn" id="prevBtn">&larr; Prev</button>
+    <div class="dots">
+      <button class="dot active" data-i="0" aria-label="Slide 1"></button>
+      <button class="dot" data-i="1" aria-label="Slide 2"></button>
+      <button class="dot" data-i="2" aria-label="Slide 3"></button>
+      <button class="dot" data-i="3" aria-label="Slide 4"></button>
+    </div>
+    <button class="nav-btn" id="nextBtn">Next &rarr;</button>
+  </div>
+  <div style="text-align:center; margin-bottom:14px;">
+    <span class="slide-label" id="slideLabel">Slide 1 of 4 — Conduction</span>
+  </div>
+
+  <!-- ════════════════════════════════════════════════════════════
+       SLIDE 1 — CONDUCTION (metal chopstick)
+  ═════════════════════════════════════════════════════════════ -->
+  <div id="slide-0" class="slide visible">
+    <div class="slide-title"><span class="num">Module 1</span>Conduction — The Chopstick</div>
+    <div class="slide-sub">Heat crawling along a stick, one atom at a time.</div>
+
+    <div class="grid-2">
+      <div>
+        <div class="panel">
+          <div class="panel-title">Stir the Pot</div>
+          <div class="field">
+            <div class="ctrl-row">
+              <span>Time on the stove</span>
+              <span class="val" id="condTimeVal">0 s</span>
+            </div>
+            <input type="range" id="condTime" min="0" max="180" value="0" step="1">
+            <div class="help">Slide right, or press <strong>Play</strong>. Watch the heat creep up the chopstick.</div>
+          </div>
+          <div class="field">
+            <div class="btn-row">
+              <button class="tbtn" id="condPlay">&#9654; Play</button>
+              <button class="tbtn" id="condReset">Reset</button>
+            </div>
+          </div>
+          <div class="field">
+            <div class="ctrl-row" style="margin-bottom:8px;"><span>Chopstick material</span></div>
+            <div class="btn-row">
+              <button class="tbtn active" id="condMetal">&#129687; Metal</button>
+              <button class="tbtn" id="condPlastic">&#129752; Plastic</button>
+            </div>
+            <div class="help">Same pot, same time — different material. What happens to the handle?</div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="stage-wrap">
+          <canvas id="condCanvas" width="640" height="380"></canvas>
+        </div>
+        <div class="caption">
+          <span class="label-tag">Conduction</span>
+          Heat travels <strong>through the chopstick itself</strong> — atom bumping atom, like a row of dominoes. Metal atoms pass the signal fast; plastic atoms barely pass it at all. That&rsquo;s <strong>conduction</strong> — touch-to-touch heat transfer.
+        </div>
+        <div class="prompt-box">
+          <span class="q-tag">Think</span>
+          Why does Mr. Kenny tell you <em>not</em> to leave a metal spoon sitting in the pot?
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════════════════════════
+       SLIDE 2 — CONVECTION (water circulation)
+  ═════════════════════════════════════════════════════════════ -->
+  <div id="slide-1" class="slide">
+    <div class="slide-title"><span class="num">Module 2</span>Convection — The Soup Currents</div>
+    <div class="slide-sub">Hot rises, cold sinks, and the water moves in a loop.</div>
+
+    <div class="grid-2">
+      <div>
+        <div class="panel">
+          <div class="panel-title">Flame Control</div>
+          <div class="field">
+            <div class="ctrl-row">
+              <span>Heat level</span>
+              <span class="val" id="convHeatVal">Medium</span>
+            </div>
+            <input type="range" id="convHeat" min="0" max="3" value="2" step="1">
+            <div class="help">0 = off, 1 = low, 2 = medium, 3 = high. Higher = faster, wilder loop.</div>
+          </div>
+          <div class="field">
+            <div class="btn-row">
+              <button class="tbtn cool" id="convOff">Turn off heat</button>
+              <button class="tbtn" id="convOn">Re-light</button>
+            </div>
+            <div class="help">Watch what happens to the loop when the flame goes out.</div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="stage-wrap">
+          <canvas id="convCanvas" width="640" height="380"></canvas>
+        </div>
+        <div class="caption">
+          <span class="label-tag">Convection</span>
+          The water itself is <strong>moving</strong> — hot water rises because it&rsquo;s lighter, cool water sinks to take its place. The water is the messenger <em>carrying</em> the heat around the pot. That&rsquo;s <strong>convection</strong> — moving-fluid transfer.
+        </div>
+        <div class="prompt-box">
+          <span class="q-tag">Think</span>
+          Why does the soup taste hotter near the <em>top</em> after a few seconds of boiling?
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════════════════════════
+       SLIDE 3 — RADIATION (sunlight through window)
+  ═════════════════════════════════════════════════════════════ -->
+  <div id="slide-2" class="slide">
+    <div class="slide-title"><span class="num">Module 3</span>Radiation — Sunlight at the Window</div>
+    <div class="slide-sub">No touch, no fluid — heat as a wave that crosses empty space.</div>
+
+    <div class="grid-2">
+      <div>
+        <div class="panel">
+          <div class="panel-title">Kitchen Window</div>
+          <div class="field">
+            <div class="ctrl-row" style="margin-bottom:8px;"><span>Blinds</span></div>
+            <div class="btn-row">
+              <button class="tbtn active" id="radBlindsOpen">Open</button>
+              <button class="tbtn" id="radBlindsClosed">Closed</button>
+            </div>
+            <div class="help">Drop the blinds — the rays get blocked, the room cools off.</div>
+          </div>
+          <div class="field">
+            <div class="ctrl-row" style="margin-bottom:8px;"><span>Window</span></div>
+            <div class="btn-row">
+              <button class="tbtn active" id="radWindowShut">Closed</button>
+              <button class="tbtn" id="radWindowOpen">Open</button>
+            </div>
+            <div class="help">Crack the window — does the warmth change? (Hint: barely.)</div>
+          </div>
+          <div class="field">
+            <div class="ctrl-row">
+              <span>Sun strength</span>
+              <span class="val" id="radSunVal">100%</span>
+            </div>
+            <input type="range" id="radSun" min="0" max="100" value="100" step="5">
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="stage-wrap">
+          <canvas id="radCanvas" width="640" height="380"></canvas>
+        </div>
+        <div class="caption">
+          <span class="label-tag">Radiation</span>
+          No touch. No moving water. The Sun&rsquo;s heat travels through <strong>empty space</strong> as invisible waves, then turns back into warmth when it hits something. That&rsquo;s <strong>radiation</strong> — wave-based transfer that works through <em>anything</em>, even vacuum.
+        </div>
+        <div class="prompt-box">
+          <span class="q-tag">Think</span>
+          On a cold winter day, why does the spot by the window feel warm even when the heater is off?
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════════════════════════
+       SLIDE 4 — SUMMARY
+  ═════════════════════════════════════════════════════════════ -->
+  <div id="slide-3" class="slide">
+    <div class="slide-title"><span class="num">All Three</span>One Pot, Three Transit Systems</div>
+    <div class="slide-sub">Conduction touches. Convection rides. Radiation beams.</div>
+
+    <div class="summary-grid">
+      <div class="sum-card cond">
+        <div class="icon">&#129687;</div>
+        <div class="name">Conduction</div>
+        <div class="def">Heat moves <strong>through</strong> a solid — atom to atom, touch to touch.</div>
+        <div class="example">The metal chopstick handle getting hot.</div>
+      </div>
+      <div class="sum-card conv">
+        <div class="icon">&#127836;</div>
+        <div class="name">Convection</div>
+        <div class="def">Heat rides on a <strong>moving fluid</strong> — hot rises, cold sinks, the loop carries warmth.</div>
+        <div class="example">Soup currents swirling in the pot.</div>
+      </div>
+      <div class="sum-card rad">
+        <div class="icon">&#9728;&#65039;</div>
+        <div class="name">Radiation</div>
+        <div class="def">Heat travels as <strong>waves</strong> through space — needs no touch, no fluid, not even air.</div>
+        <div class="example">Sun warming your face at the window.</div>
+      </div>
+    </div>
+
+    <table class="matrix">
+      <thead>
+        <tr>
+          <th></th>
+          <th>Needs touching?</th>
+          <th>Needs fluid?</th>
+          <th>Works in vacuum?</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="row-label">Conduction</td>
+          <td class="yes">YES</td>
+          <td class="no">No</td>
+          <td class="no">No</td>
+        </tr>
+        <tr>
+          <td class="row-label">Convection</td>
+          <td class="sort">sort of</td>
+          <td class="yes">YES</td>
+          <td class="no">No</td>
+        </tr>
+        <tr>
+          <td class="row-label">Radiation</td>
+          <td class="no">No</td>
+          <td class="no">No</td>
+          <td class="yes">YES</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="kenny-note">
+      Three different transit systems for heat — touch, ride, and beam. Once you see them in your ramen, you&rsquo;ll see them everywhere — the warm mug in your hand, the steam rising off the bowl, the sunny patch on the kitchen floor. Same physics. Different bowls.
+      <span class="sig">— Mr. K</span>
+    </div>
+  </div>
+
+  <footer>
+    Newton School &middot; Evelyn Yoo &middot; Heat Transfer Lab &middot; <span class="heart">&hearts;</span>
+    <div style="margin-top:6px; font-style:italic;">If your physics homework had a punchline, this would be it.</div>
+  </footer>
+
+</div>
+
+<script>
+/* ═════════════════════════════════════════════════════════════
+   SLIDE NAVIGATION
+═════════════════════════════════════════════════════════════ */
+const SLIDE_NAMES = ['Conduction', 'Convection', 'Radiation', 'All Three'];
+let currentSlide = 0;
+const slides = document.querySelectorAll('.slide');
+const dots = document.querySelectorAll('.dot');
+const prevBtn = document.getElementById('prevBtn');
+const nextBtn = document.getElementById('nextBtn');
+const slideLabel = document.getElementById('slideLabel');
+
+function showSlide(i) {
+  currentSlide = Math.max(0, Math.min(3, i));
+  slides.forEach((s, k) => s.classList.toggle('visible', k === currentSlide));
+  dots.forEach((d, k) => d.classList.toggle('active', k === currentSlide));
+  prevBtn.disabled = currentSlide === 0;
+  nextBtn.disabled = currentSlide === 3;
+  slideLabel.textContent = `Slide ${currentSlide + 1} of 4 — ${SLIDE_NAMES[currentSlide]}`;
+}
+prevBtn.addEventListener('click', () => showSlide(currentSlide - 1));
+nextBtn.addEventListener('click', () => showSlide(currentSlide + 1));
+dots.forEach(d => d.addEventListener('click', () => showSlide(parseInt(d.dataset.i, 10))));
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowLeft')  showSlide(currentSlide - 1);
+  if (e.key === 'ArrowRight') showSlide(currentSlide + 1);
+});
+showSlide(0);
+
+/* ═════════════════════════════════════════════════════════════
+   HELPER — color blend (cold blue → hot red) based on t in [0,1]
+═════════════════════════════════════════════════════════════ */
+function heatColor(t) {
+  t = Math.max(0, Math.min(1, t));
+  // 3 stops: cold blue (0) → warm yellow (0.5) → hot red (1)
+  let r, g, b;
+  if (t < 0.5) {
+    const k = t / 0.5;
+    r = Math.round( 21 + (249 -  21) * k);
+    g = Math.round(101 + (168 - 101) * k);
+    b = Math.round(192 + ( 37 - 192) * k);
+  } else {
+    const k = (t - 0.5) / 0.5;
+    r = Math.round(249 + (211 - 249) * k);
+    g = Math.round(168 + ( 47 - 168) * k);
+    b = Math.round( 37 + ( 47 -  37) * k);
+  }
+  return `rgb(${r},${g},${b})`;
+}
+
+/* ═════════════════════════════════════════════════════════════
+   SLIDE 1 — CONDUCTION
+═════════════════════════════════════════════════════════════ */
+(function() {
+  const canvas = document.getElementById('condCanvas');
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width, H = canvas.height;
+
+  let time = 0;        // 0..180 seconds
+  let material = 'metal';  // 'metal' or 'plastic'
+  let playing = false;
+  let rafId = null;
+
+  const timeSlider = document.getElementById('condTime');
+  const timeVal = document.getElementById('condTimeVal');
+  const playBtn = document.getElementById('condPlay');
+  const resetBtn = document.getElementById('condReset');
+  const metalBtn = document.getElementById('condMetal');
+  const plasticBtn = document.getElementById('condPlastic');
+
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+
+    // ── kitchen counter background ──
+    ctx.fillStyle = '#fffaf0';
+    ctx.fillRect(0, 0, W, H);
+    // counter line
+    ctx.strokeStyle = '#d6c8a8';
+    ctx.lineWidth = 1.5;
+    ctx.beginPath();
+    ctx.moveTo(0, H - 50);
+    ctx.lineTo(W, H - 50);
+    ctx.stroke();
+
+    // ── stove burner ──
+    const potCX = W/2, potCY = H - 110;
+    const potW = 220, potH = 110;
+    // flames under pot
+    drawFlame(ctx, potCX - 70, H - 50, 18, 36);
+    drawFlame(ctx, potCX,      H - 50, 22, 44);
+    drawFlame(ctx, potCX + 70, H - 50, 18, 36);
+
+    // ── pot ──
+    ctx.fillStyle = '#444';
+    ctx.fillRect(potCX - potW/2, potCY - potH/2, potW, potH);
+    ctx.fillStyle = '#222';
+    ctx.fillRect(potCX - potW/2 - 14, potCY - potH/2 + 8, 14, 14);
+    ctx.fillRect(potCX + potW/2,      potCY - potH/2 + 8, 14, 14);
+    // water (boiling)
+    const waterTop = potCY - potH/2 + 20;
+    ctx.fillStyle = '#e88a4f';  // ramen broth color
+    ctx.fillRect(potCX - potW/2 + 8, waterTop, potW - 16, potH - 28);
+    // bubbles
+    const t = Date.now() / 300;
+    for (let i = 0; i < 6; i++) {
+      const bx = potCX - 80 + i * 30 + Math.sin(t + i) * 6;
+      const by = waterTop + 10 + (Math.sin(t * 1.3 + i * 0.7) + 1) * 8;
+      ctx.fillStyle = 'rgba(255,240,200,0.7)';
+      ctx.beginPath();
+      ctx.arc(bx, by, 3 + (i % 2), 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    // ── chopstick ──
+    // chopstick goes from inside the pot (bottom-left area) up to handle outside (top-right)
+    const stickBotX = potCX + 30, stickBotY = potCY + 20;
+    const stickTopX = potCX + 130, stickTopY = potCY - 200;
+    const stickLen = Math.hypot(stickTopX - stickBotX, stickTopY - stickBotY);
+    const segments = 24;
+
+    // For conduction: the bottom (in water) heats up first, heat creeps toward top
+    // Speed depends on material
+    // time = 0..180 sec. Heat front position along stick from bottom (0) to top (1).
+    const conductSpeed = material === 'metal' ? 1/40 : 1/200;  // metal: full in 40s, plastic: 200s+
+    const frontPos = Math.min(1, time * conductSpeed);  // 0..1, distance from bottom that's heated
+
+    ctx.lineWidth = 8;
+    ctx.lineCap = 'round';
+    for (let i = 0; i < segments; i++) {
+      const t0 = i / segments;
+      const t1 = (i + 1) / segments;
+      // distance from bottom = (1 - t0) since bottom is at i = 0 from segment start
+      // Actually we go from bot (t=0) → top (t=1)
+      // segments interpolate from bot to top
+      const x0 = stickBotX + (stickTopX - stickBotX) * t0;
+      const y0 = stickBotY + (stickTopY - stickBotY) * t0;
+      const x1 = stickBotX + (stickTopX - stickBotX) * t1;
+      const y1 = stickBotY + (stickTopY - stickBotY) * t1;
+
+      // heat intensity at this segment (1 = full hot, 0 = cold)
+      // The front is at frontPos along the stick from bottom.
+      // Segment position from bottom = t0
+      // If t0 < frontPos: heated, intensity decreases linearly from base
+      const segPos = t0;  // 0 = bottom (hot end), 1 = top (handle)
+      let intensity;
+      if (segPos >= frontPos) {
+        intensity = 0;  // cold (front hasn't reached here)
+      } else {
+        // closer to bottom = hotter. intensity = 1 at bottom, scaled by frontPos
+        intensity = (1 - segPos / frontPos) * Math.min(1, time / 30);
+      }
+
+      ctx.strokeStyle = material === 'metal'
+        ? heatColor(intensity * 0.95)
+        : heatColor(intensity * 0.55);
+      // Plastic: even at high heat, top doesn't get above warm-yellow
+      ctx.beginPath();
+      ctx.moveTo(x0, y0);
+      ctx.lineTo(x1, y1);
+      ctx.stroke();
+    }
+
+    // Chopstick base outline
+    ctx.strokeStyle = '#5a4a2a';
+    ctx.lineWidth = 0.5;
+    ctx.beginPath();
+    ctx.moveTo(stickBotX, stickBotY);
+    ctx.lineTo(stickTopX, stickTopY);
+    ctx.stroke();
+
+    // handle label
+    ctx.fillStyle = '#444';
+    ctx.font = '600 12px Inter, sans-serif';
+    ctx.textAlign = 'left';
+    ctx.fillText('handle', stickTopX + 8, stickTopY + 4);
+    ctx.fillText('(your hand)', stickTopX + 8, stickTopY + 18);
+
+    // material label
+    ctx.font = '700 13px Inter, sans-serif';
+    ctx.fillStyle = material === 'metal' ? '#444' : '#a07000';
+    ctx.fillText(material.toUpperCase() + ' chopstick', stickTopX + 8, stickTopY - 12);
+
+    // temperature gauge at handle
+    const handleTemp = material === 'metal'
+      ? Math.min(1, time / 60) * 0.85
+      : Math.min(1, time / 200) * 0.30;
+    ctx.fillStyle = heatColor(handleTemp);
+    ctx.beginPath();
+    ctx.arc(stickTopX, stickTopY, 9, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.strokeStyle = '#333';
+    ctx.lineWidth = 1.2;
+    ctx.stroke();
+
+    // Pot label
+    ctx.fillStyle = '#fff';
+    ctx.font = '600 11px Inter, sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText('Boiling ramen (~100°C)', potCX, potCY + potH/2 - 4);
+
+    // Title
+    ctx.fillStyle = '#a07000';
+    ctx.font = '700 13px Inter, sans-serif';
+    ctx.textAlign = 'left';
+    ctx.fillText(`t = ${time}s`, 14, 22);
+  }
+
+  function drawFlame(ctx, x, baseY, w, h) {
+    const t = Date.now() / 200;
+    const flick = Math.sin(t + x) * 3;
+    const grad = ctx.createLinearGradient(x, baseY, x, baseY - h - flick);
+    grad.addColorStop(0, '#ffeb3b');
+    grad.addColorStop(0.5, '#ff9800');
+    grad.addColorStop(1, 'rgba(244,67,54,0)');
+    ctx.fillStyle = grad;
+    ctx.beginPath();
+    ctx.moveTo(x - w/2, baseY);
+    ctx.quadraticCurveTo(x - w/2, baseY - h/2, x, baseY - h - flick);
+    ctx.quadraticCurveTo(x + w/2, baseY - h/2, x + w/2, baseY);
+    ctx.closePath();
+    ctx.fill();
+  }
+
+  function update() {
+    timeVal.textContent = `${time} s`;
+    timeSlider.value = time;
+    draw();
+  }
+
+  timeSlider.addEventListener('input', () => {
+    time = parseInt(timeSlider.value, 10);
+    update();
+  });
+  playBtn.addEventListener('click', () => {
+    if (playing) {
+      playing = false;
+      playBtn.innerHTML = '&#9654; Play';
+      cancelAnimationFrame(rafId);
+    } else {
+      playing = true;
+      playBtn.innerHTML = '&#9208; Pause';
+      let last = performance.now();
+      const tick = (now) => {
+        const dt = (now - last) / 1000;
+        last = now;
+        time = Math.min(180, time + dt * 8);
+        if (time >= 180) {
+          playing = false;
+          playBtn.innerHTML = '&#9654; Play';
+        }
+        update();
+        if (playing) rafId = requestAnimationFrame(tick);
+      };
+      rafId = requestAnimationFrame(tick);
+    }
+  });
+  resetBtn.addEventListener('click', () => {
+    time = 0;
+    playing = false;
+    playBtn.innerHTML = '&#9654; Play';
+    cancelAnimationFrame(rafId);
+    update();
+  });
+  metalBtn.addEventListener('click', () => {
+    material = 'metal';
+    metalBtn.classList.add('active');
+    plasticBtn.classList.remove('active');
+    draw();
+  });
+  plasticBtn.addEventListener('click', () => {
+    material = 'plastic';
+    plasticBtn.classList.add('active');
+    metalBtn.classList.remove('active');
+    draw();
+  });
+
+  // Constant redraw for bubbles + flames
+  function loop() {
+    draw();
+    requestAnimationFrame(loop);
+  }
+  update();
+  loop();
+})();
+
+/* ═════════════════════════════════════════════════════════════
+   SLIDE 2 — CONVECTION
+═════════════════════════════════════════════════════════════ */
+(function() {
+  const canvas = document.getElementById('convCanvas');
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width, H = canvas.height;
+
+  let heatLevel = 2;  // 0..3
+  const HEAT_NAMES = ['Off', 'Low', 'Medium', 'High'];
+  const heatSlider = document.getElementById('convHeat');
+  const heatVal = document.getElementById('convHeatVal');
+  const offBtn = document.getElementById('convOff');
+  const onBtn = document.getElementById('convOn');
+
+  // particles
+  const N = 28;
+  const particles = [];
+  // Pot cross-section bounds in canvas
+  const potX = 90, potY = 60, potW = W - 180, potH = 280;
+  const wallThick = 12;
+  // Two circulation cells, one on each side: left side rises in middle-left, sinks at edges
+  // Simpler: single big cell — particles in left half rise, top moves right, right half sinks, bottom moves left
+  for (let i = 0; i < N; i++) {
+    particles.push({
+      x: potX + wallThick + Math.random() * (potW - 2*wallThick),
+      y: potY + wallThick + Math.random() * (potH - 2*wallThick),
+      temp: Math.random() * 0.3,
+    });
+  }
+
+  function step() {
+    const speed = heatLevel * 0.6;  // 0..1.8 px/frame
+    const innerL = potX + wallThick + 6;
+    const innerR = potX + potW - wallThick - 6;
+    const innerT = potY + wallThick + 6;
+    const innerB = potY + potH - wallThick - 6;
+    const midX = (innerL + innerR) / 2;
+    const midY = (innerT + innerB) / 2;
+
+    for (const p of particles) {
+      if (heatLevel === 0) {
+        // cool down slowly, settle
+        p.temp = Math.max(0, p.temp - 0.003);
+        // slight downward drift if hot (loses convection)
+        const settle = Math.min(1, (1 - p.temp) * 0.3);
+        p.y += settle * 0.2;
+        continue;
+      }
+
+      // Heat from bottom: particles near bottom heat up
+      const distFromBot = (innerB - p.y) / (innerB - innerT);  // 0 at bot, 1 at top
+      if (distFromBot < 0.2) {
+        p.temp = Math.min(1, p.temp + 0.02 * heatLevel);
+      }
+      // Cool when near top (loses heat to air/surface)
+      if (distFromBot > 0.75) {
+        p.temp = Math.max(0, p.temp - 0.012);
+      }
+
+      // Convection flow: single torus
+      // Left half (x < midX): rises (negative dy)
+      // Top (y < midY): drifts right (positive dx)
+      // Right half (x > midX): sinks (positive dy)
+      // Bottom (y > midY): drifts left (negative dx)
+      // Magnitude based on temperature contribution + heatLevel
+      const rel_x = (p.x - midX) / (innerR - midX);  // -1..+1
+      const rel_y = (p.y - midY) / (innerB - midY);  // -1..+1 (positive = bottom)
+
+      // Tangential flow around the center: clockwise loop
+      // velocity = (rel_y, -rel_x) * speed gives a clockwise rotation around (midX,midY)
+      let vx = rel_y * speed;
+      let vy = -rel_x * speed;
+
+      // Boost lift for hot, sink for cold
+      vy += (0.5 - p.temp) * speed * 0.3;
+
+      // Random jitter (Brownian-ish — looks more lively at high heat)
+      vx += (Math.random() - 0.5) * 0.4 * heatLevel;
+      vy += (Math.random() - 0.5) * 0.4 * heatLevel;
+
+      p.x += vx;
+      p.y += vy;
+
+      // Bounce off inner walls
+      if (p.x < innerL) p.x = innerL;
+      if (p.x > innerR) p.x = innerR;
+      if (p.y < innerT) p.y = innerT;
+      if (p.y > innerB) p.y = innerB;
+    }
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+
+    // background
+    ctx.fillStyle = '#fffaf0';
+    ctx.fillRect(0, 0, W, H);
+
+    // counter
+    ctx.strokeStyle = '#d6c8a8';
+    ctx.lineWidth = 1.5;
+    ctx.beginPath();
+    ctx.moveTo(0, potY + potH + 10);
+    ctx.lineTo(W, potY + potH + 10);
+    ctx.stroke();
+
+    // flames below pot (if on)
+    if (heatLevel > 0) {
+      const flameH = 18 + heatLevel * 14;
+      const flameY = potY + potH + 10;
+      for (let i = 0; i < 5; i++) {
+        const fx = potX + 40 + i * (potW - 80) / 4;
+        drawFlame(ctx, fx, flameY, 16, flameH);
+      }
+    }
+
+    // pot outline (cross-section)
+    ctx.fillStyle = '#444';
+    ctx.fillRect(potX, potY + potH - wallThick, potW, wallThick);  // bottom
+    ctx.fillRect(potX, potY, wallThick, potH);  // left wall
+    ctx.fillRect(potX + potW - wallThick, potY, wallThick, potH);  // right wall
+
+    // water (broth)
+    ctx.fillStyle = '#f0c994';
+    ctx.fillRect(potX + wallThick, potY + 18, potW - 2*wallThick, potH - wallThick - 18);
+
+    // surface label
+    ctx.fillStyle = '#a07000';
+    ctx.font = '600 11px Inter, sans-serif';
+    ctx.textAlign = 'left';
+    ctx.fillText('water surface', potX + wallThick + 4, potY + 14);
+
+    // flow arrows (visual hint for circulation)
+    if (heatLevel > 0) {
+      const midX = potX + potW/2;
+      const midY = potY + potH/2;
+      const arrowAlpha = 0.18 + heatLevel * 0.08;
+      ctx.strokeStyle = `rgba(192,87,23,${arrowAlpha})`;
+      ctx.fillStyle = `rgba(192,87,23,${arrowAlpha})`;
+      ctx.lineWidth = 2;
+      // clockwise loop: up-left, right-top, down-right, left-bottom
+      drawArrow(ctx, midX - 90, midY + 60, midX - 90, midY - 60);
+      drawArrow(ctx, midX - 60, midY - 80, midX + 60, midY - 80);
+      drawArrow(ctx, midX + 90, midY - 60, midX + 90, midY + 60);
+      drawArrow(ctx, midX + 60, midY + 80, midX - 60, midY + 80);
+    }
+
+    // particles
+    for (const p of particles) {
+      // noodle bit: small dash
+      ctx.fillStyle = heatColor(p.temp);
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, 4, 0, Math.PI * 2);
+      ctx.fill();
+      // outline
+      ctx.strokeStyle = 'rgba(60,30,10,0.4)';
+      ctx.lineWidth = 0.6;
+      ctx.stroke();
+    }
+
+    // labels
+    ctx.fillStyle = '#a07000';
+    ctx.font = '700 12px Inter, sans-serif';
+    ctx.textAlign = 'left';
+    ctx.fillText('Pot cross-section view', 14, 22);
+
+    if (heatLevel === 0) {
+      ctx.fillStyle = '#888';
+      ctx.font = 'italic 12px Inter, sans-serif';
+      ctx.fillText('flame off — current dies down', 14, 40);
+    }
+
+    // hot/cold legend
+    ctx.font = '600 10px Inter, sans-serif';
+    ctx.fillStyle = heatColor(1);
+    ctx.fillText('● hot', W - 90, 22);
+    ctx.fillStyle = heatColor(0);
+    ctx.fillText('● cold', W - 90, 38);
+  }
+
+  function drawFlame(ctx, x, baseY, w, h) {
+    const t = Date.now() / 200;
+    const flick = Math.sin(t + x) * 3;
+    const grad = ctx.createLinearGradient(x, baseY, x, baseY - h - flick);
+    grad.addColorStop(0, '#ffeb3b');
+    grad.addColorStop(0.5, '#ff9800');
+    grad.addColorStop(1, 'rgba(244,67,54,0)');
+    ctx.fillStyle = grad;
+    ctx.beginPath();
+    ctx.moveTo(x - w/2, baseY);
+    ctx.quadraticCurveTo(x - w/2, baseY - h/2, x, baseY - h - flick);
+    ctx.quadraticCurveTo(x + w/2, baseY - h/2, x + w/2, baseY);
+    ctx.closePath();
+    ctx.fill();
+  }
+
+  function drawArrow(ctx, x1, y1, x2, y2) {
+    ctx.beginPath();
+    ctx.moveTo(x1, y1);
+    ctx.lineTo(x2, y2);
+    ctx.stroke();
+    // arrowhead
+    const ang = Math.atan2(y2 - y1, x2 - x1);
+    const ah = 8;
+    ctx.beginPath();
+    ctx.moveTo(x2, y2);
+    ctx.lineTo(x2 - ah * Math.cos(ang - 0.4), y2 - ah * Math.sin(ang - 0.4));
+    ctx.lineTo(x2 - ah * Math.cos(ang + 0.4), y2 - ah * Math.sin(ang + 0.4));
+    ctx.closePath();
+    ctx.fill();
+  }
+
+  heatSlider.addEventListener('input', () => {
+    heatLevel = parseInt(heatSlider.value, 10);
+    heatVal.textContent = HEAT_NAMES[heatLevel];
+  });
+  offBtn.addEventListener('click', () => {
+    heatLevel = 0;
+    heatSlider.value = 0;
+    heatVal.textContent = HEAT_NAMES[0];
+  });
+  onBtn.addEventListener('click', () => {
+    heatLevel = 2;
+    heatSlider.value = 2;
+    heatVal.textContent = HEAT_NAMES[2];
+  });
+
+  function loop() {
+    step();
+    draw();
+    requestAnimationFrame(loop);
+  }
+  loop();
+})();
+
+/* ═════════════════════════════════════════════════════════════
+   SLIDE 3 — RADIATION
+═════════════════════════════════════════════════════════════ */
+(function() {
+  const canvas = document.getElementById('radCanvas');
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width, H = canvas.height;
+
+  let blindsClosed = false;
+  let windowOpen = false;
+  let sunStrength = 100;
+
+  const blindsOpenBtn = document.getElementById('radBlindsOpen');
+  const blindsClosedBtn = document.getElementById('radBlindsClosed');
+  const windowShutBtn = document.getElementById('radWindowShut');
+  const windowOpenBtn = document.getElementById('radWindowOpen');
+  const sunSlider = document.getElementById('radSun');
+  const sunVal = document.getElementById('radSunVal');
+
+  // photon packets
+  const photons = [];
+  function spawnPhoton() {
+    photons.push({
+      // start near the sun (upper-left, outside)
+      x: 50 + Math.random() * 60,
+      y: 40 + Math.random() * 80,
+      // travel toward center of room (rays go down-right)
+      vx: 2.2 + Math.random() * 0.6,
+      vy: 1.2 + Math.random() * 0.4,
+      life: 1.0,
+    });
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+
+    // ── outside (sky) ──
+    const skyGrad = ctx.createLinearGradient(0, 0, 0, H);
+    skyGrad.addColorStop(0, '#9bd1ff');
+    skyGrad.addColorStop(1, '#d6ecff');
+    ctx.fillStyle = skyGrad;
+    ctx.fillRect(0, 0, W * 0.45, H);
+
+    // sun
+    const sunX = 80, sunY = 80;
+    const sunR = 36 * (sunStrength / 100);
+    if (sunR > 0) {
+      const sg = ctx.createRadialGradient(sunX, sunY, 5, sunX, sunY, sunR + 20);
+      sg.addColorStop(0, 'rgba(255,236,90,1)');
+      sg.addColorStop(0.5, 'rgba(255,193,7,0.7)');
+      sg.addColorStop(1, 'rgba(255,193,7,0)');
+      ctx.fillStyle = sg;
+      ctx.beginPath();
+      ctx.arc(sunX, sunY, sunR + 20, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.fillStyle = '#ffd54f';
+      ctx.beginPath();
+      ctx.arc(sunX, sunY, sunR, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    // ── inside (kitchen interior) ──
+    // Wall: from x = wallX to right edge
+    const wallX = W * 0.45;
+    // Inside warmth shows as gradient if rays getting through
+    const lightingReach = blindsClosed ? 0 : (sunStrength / 100);
+    const interiorGrad = ctx.createLinearGradient(wallX, 0, W, 0);
+    if (lightingReach > 0.1) {
+      const warm = lightingReach;
+      interiorGrad.addColorStop(0, `rgba(255,${Math.round(230 - warm * 30)},${Math.round(170 - warm * 40)},1)`);
+      interiorGrad.addColorStop(1, `rgba(${Math.round(240 - warm * 20)},${Math.round(225 - warm * 25)},${Math.round(200 - warm * 30)},1)`);
+    } else {
+      interiorGrad.addColorStop(0, '#cfc8b8');
+      interiorGrad.addColorStop(1, '#aaa39a');
+    }
+    ctx.fillStyle = interiorGrad;
+    ctx.fillRect(wallX, 0, W - wallX, H);
+
+    // window frame
+    const winX = wallX - 6, winY = 70, winW = 80, winH = 220;
+    ctx.fillStyle = '#6d4c1f';
+    ctx.fillRect(winX - 4, winY - 6, winW + 8, winH + 12);  // outer frame
+    // glass pane (or open)
+    if (windowOpen) {
+      // window cranked open — show a gap
+      ctx.fillStyle = '#9bd1ff';
+      ctx.fillRect(winX, winY, winW, winH);
+      ctx.strokeStyle = '#6d4c1f';
+      ctx.lineWidth = 2;
+      ctx.strokeRect(winX, winY, winW, winH);
+      // small "opened" arrow above
+      ctx.fillStyle = '#6d4c1f';
+      ctx.font = '600 10px Inter, sans-serif';
+      ctx.textAlign = 'left';
+      ctx.fillText('window cracked open', winX - 4, winY - 12);
+    } else {
+      ctx.fillStyle = 'rgba(190,220,250,0.5)';
+      ctx.fillRect(winX, winY, winW, winH);
+      ctx.strokeStyle = '#6d4c1f';
+      ctx.lineWidth = 2;
+      ctx.strokeRect(winX, winY, winW, winH);
+      // cross mullion
+      ctx.beginPath();
+      ctx.moveTo(winX + winW/2, winY);
+      ctx.lineTo(winX + winW/2, winY + winH);
+      ctx.moveTo(winX, winY + winH/2);
+      ctx.lineTo(winX + winW, winY + winH/2);
+      ctx.stroke();
+    }
+
+    // blinds (slats covering window)
+    if (blindsClosed) {
+      ctx.fillStyle = 'rgba(120,90,50,0.92)';
+      ctx.fillRect(winX, winY, winW, winH);
+      ctx.strokeStyle = 'rgba(70,50,30,1)';
+      ctx.lineWidth = 0.5;
+      for (let i = 0; i < 14; i++) {
+        const y = winY + 6 + i * 15;
+        ctx.beginPath();
+        ctx.moveTo(winX, y);
+        ctx.lineTo(winX + winW, y);
+        ctx.stroke();
+      }
+      ctx.fillStyle = '#fff';
+      ctx.font = '600 10px Inter, sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('BLINDS CLOSED', winX + winW/2, winY + winH/2);
+    }
+
+    // sun rays — geometric beams from sun through window
+    if (!blindsClosed && sunStrength > 5) {
+      const rayAlpha = (sunStrength / 100) * 0.45;
+      ctx.strokeStyle = `rgba(255,210,80,${rayAlpha})`;
+      ctx.lineWidth = 3;
+      // beam = parallelogram from window into room
+      ctx.fillStyle = `rgba(255,220,100,${rayAlpha * 0.5})`;
+      ctx.beginPath();
+      ctx.moveTo(winX + winW, winY + 20);
+      ctx.lineTo(W, winY + 40);
+      ctx.lineTo(W, winY + winH + 120);
+      ctx.lineTo(winX + winW, winY + winH);
+      ctx.closePath();
+      ctx.fill();
+
+      // discrete rays (lines)
+      for (let i = 0; i < 6; i++) {
+        const startY = winY + 10 + i * (winH - 20) / 5;
+        const endY = startY + 80;
+        ctx.beginPath();
+        ctx.moveTo(winX + winW, startY);
+        ctx.lineTo(W - 20, endY);
+        ctx.stroke();
+      }
+    }
+
+    // ── person/face by the window (catches the warmth) ──
+    const faceX = wallX + 120, faceY = winY + winH/2;
+    ctx.fillStyle = '#f4d2a8';
+    ctx.beginPath();
+    ctx.arc(faceX, faceY, 24, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.strokeStyle = '#a07000';
+    ctx.lineWidth = 1.5;
+    ctx.stroke();
+    // simple smile
+    ctx.fillStyle = '#3a2200';
+    ctx.beginPath();
+    ctx.arc(faceX - 8, faceY - 4, 2, 0, Math.PI * 2);
+    ctx.arc(faceX + 8, faceY - 4, 2, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.strokeStyle = '#3a2200';
+    ctx.lineWidth = 1.4;
+    ctx.beginPath();
+    if (blindsClosed) {
+      // sad-ish
+      ctx.arc(faceX, faceY + 12, 6, Math.PI * 1.1, Math.PI * 1.9);
+    } else if (sunStrength > 50) {
+      // big smile
+      ctx.arc(faceX, faceY + 4, 8, 0, Math.PI);
+    } else {
+      // neutral
+      ctx.moveTo(faceX - 6, faceY + 8);
+      ctx.lineTo(faceX + 6, faceY + 8);
+    }
+    ctx.stroke();
+
+    // warmth glow on face
+    if (!blindsClosed && sunStrength > 10) {
+      const warmRing = (sunStrength / 100) * 0.5;
+      const gg = ctx.createRadialGradient(faceX, faceY, 24, faceX, faceY, 50);
+      gg.addColorStop(0, `rgba(255,180,80,${warmRing * 0.55})`);
+      gg.addColorStop(1, 'rgba(255,180,80,0)');
+      ctx.fillStyle = gg;
+      ctx.beginPath();
+      ctx.arc(faceX, faceY, 50, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    // photon packets
+    for (let i = photons.length - 1; i >= 0; i--) {
+      const p = photons[i];
+      const blocked = blindsClosed && p.x > winX - 20 && p.x < winX + winW;
+      ctx.fillStyle = `rgba(255,200,40,${p.life * 0.85})`;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, 2.5, 0, Math.PI * 2);
+      ctx.fill();
+      // trail
+      ctx.strokeStyle = `rgba(255,210,80,${p.life * 0.3})`;
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.moveTo(p.x, p.y);
+      ctx.lineTo(p.x - p.vx * 6, p.y - p.vy * 6);
+      ctx.stroke();
+      // step
+      p.x += p.vx;
+      p.y += p.vy;
+      if (blocked) {
+        p.life -= 0.05;
+      }
+      if (p.x > W || p.y > H || p.life <= 0) {
+        photons.splice(i, 1);
+      }
+    }
+
+    // ── floor / counter ──
+    ctx.fillStyle = '#8a6f4a';
+    ctx.fillRect(0, H - 30, W, 30);
+
+    // labels
+    ctx.fillStyle = '#a07000';
+    ctx.font = '700 12px Inter, sans-serif';
+    ctx.textAlign = 'left';
+    ctx.fillText('Outside (sunshine)', 14, 22);
+    ctx.fillText('Inside (kitchen)', wallX + 14, 22);
+  }
+
+  blindsOpenBtn.addEventListener('click', () => {
+    blindsClosed = false;
+    blindsOpenBtn.classList.add('active');
+    blindsClosedBtn.classList.remove('active');
+  });
+  blindsClosedBtn.addEventListener('click', () => {
+    blindsClosed = true;
+    blindsClosedBtn.classList.add('active');
+    blindsOpenBtn.classList.remove('active');
+  });
+  windowShutBtn.addEventListener('click', () => {
+    windowOpen = false;
+    windowShutBtn.classList.add('active');
+    windowOpenBtn.classList.remove('active');
+  });
+  windowOpenBtn.addEventListener('click', () => {
+    windowOpen = true;
+    windowOpenBtn.classList.add('active');
+    windowShutBtn.classList.remove('active');
+  });
+  sunSlider.addEventListener('input', () => {
+    sunStrength = parseInt(sunSlider.value, 10);
+    sunVal.textContent = sunStrength + '%';
+  });
+
+  function loop() {
+    if (Math.random() < 0.35 && sunStrength > 5) spawnPhoton();
+    draw();
+    requestAnimationFrame(loop);
+  }
+  loop();
+})();
+</script>
+
+</body>
+</html>

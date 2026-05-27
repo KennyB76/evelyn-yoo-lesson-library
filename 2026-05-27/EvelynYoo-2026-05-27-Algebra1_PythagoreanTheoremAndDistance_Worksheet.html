@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Algebra 1 Worksheet · Pythagorean Theorem & Distance Formula Review</title>
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['$','$'], ['\\(','\\)']] },
+  startup: { ready: () => { MathJax.startup.defaultReady(); } }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+<style>
+/* ===== base-print.css ===== */
+@page { size: letter; margin: 0.5in; }
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; background: #fafafa; }
+body { font-family: 'Century Schoolbook', 'Times New Roman', serif; color: #000; }
+.page { max-width: 720px; margin: 0 auto; padding: 70px 50px 40px 50px; background: #fff; }
+.page-break { page-break-before: always; break-before: page; }
+@media print {
+  html, body { background: #fff; }
+  .page { max-width: none; padding: 0.7in 0.6in 0.5in 0.6in; margin: 0; box-shadow: none; }
+  .problem, .answer-block, .reminder, .parent-note, .example, .word-problem { page-break-inside: avoid; break-inside: avoid; }
+  .part-header, .directions, .problem-header, h1, h2, h3 { page-break-after: avoid; break-after: avoid; }
+  .page-break { page-break-before: always; break-before: page; }
+}
+/* ===== theme-girl.css ===== */
+:root {
+  --color-primary: #c2185b;
+  --color-primary-dark: #880e4f;
+  --color-accent: #7b1fa2;
+  --color-header-border: #c2185b;
+  --color-final-answer: #2e7d32;
+  --color-warning: #d84315;
+  --color-parent-note: #6a1b9a;
+  --color-tag-bg: transparent;
+  --color-tag-border: #c2185b;
+  --color-tag-text: #c2185b;
+  --color-muted: #555;
+  --color-rule: #ccc;
+}
+/* ===== level-middle.css ===== */
+body { font-family: 'Times New Roman', serif; font-size: 11pt; line-height: 1.5; }
+.header { text-align: center; padding-bottom: 12px; margin-bottom: 18px; border-bottom: 2px solid var(--color-header-border); }
+.school-name { font-size: 9pt; letter-spacing: 4px; color: var(--color-primary); font-weight: bold; }
+.subject-tag { display: inline-block; padding: 2px 10px; font-size: 8pt; letter-spacing: 2px; margin: 5px 3px 8px 3px; font-weight: bold; border: 1.5px solid var(--color-primary); color: var(--color-primary); }
+h1 { font-size: 15pt; margin: 6px 0 10px 0; font-weight: bold; line-height: 1.3; }
+.info { display: flex; justify-content: space-between; font-size: 10pt; margin-top: 6px; }
+.standard { font-size: 8pt; font-style: italic; margin-top: 5px; color: var(--color-muted); }
+.part-header { font-size: 12pt; font-weight: bold; color: var(--color-primary); margin: 22px 0 6px 0; padding-bottom: 3px; border-bottom: 2px solid var(--color-primary); }
+.directions { font-size: 10pt; font-style: italic; color: #333; margin-bottom: 12px; line-height: 1.5; }
+.directions strong { color: #000; font-style: normal; }
+.problem { margin: 12px 0; font-size: 11pt; line-height: 1.6; }
+.q-num { display: inline-block; min-width: 26px; font-weight: bold; color: var(--color-primary); }
+.ans-line { display: inline-block; border-bottom: 1.5px solid #000; min-width: 80px; height: 18px; margin: 0 4px; vertical-align: bottom; }
+.work-space { min-height: 100px; margin-left: 28px; margin-top: 4px; }
+.word-problem .work-space { min-height: 130px; }
+.footer { text-align: center; font-size: 8pt; color: #666; border-top: 1px solid var(--color-rule); margin-top: 22px; padding-top: 6px; }
+.reminder { background: transparent; border-left: 3px solid var(--color-warning); padding: 6px 12px; margin: 10px 0 16px 0; font-size: 9.5pt; font-style: italic; color: #333; }
+.reminder strong { color: var(--color-warning); font-style: normal; }
+.figure-text { margin-left: 28px; font-family: 'Courier New', monospace; font-size: 10pt; white-space: pre; color: #444; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="header">
+    <div class="school-name">N E W T O N&nbsp;&nbsp;S C H O O L</div>
+    <div class="subject-tag">ALGEBRA 1</div>
+    <h1>Pythagorean Theorem &amp; Distance Formula &mdash; Review</h1>
+    <div class="info">
+      <span><strong>Student:</strong> Evelyn Yoo</span>
+      <span><strong>Date:</strong> 2026-05-27</span>
+    </div>
+    <div class="standard">
+      <strong>Standard:</strong> CCSS.MATH.CONTENT.8.G.B.7 &amp; 8.G.B.8 &mdash;
+      Apply the Pythagorean Theorem to determine unknown side lengths in right triangles
+      and to find the distance between two points in a coordinate plane.
+    </div>
+  </div>
+
+  <div class="reminder">
+    <strong>Before you start:</strong> Read each problem twice. If it says <em>Find</em>, you are <strong>solving</strong> &mdash;
+    your answer is one number. Do not invent extra steps the problem did not ask for.
+    Show the equation you used, then your work.
+  </div>
+
+  <!-- ===== Part A ===== -->
+  <div class="part-header">Part A &mdash; Find the Missing Side</div>
+  <div class="directions">
+    For each right triangle, use the Pythagorean Theorem $a^2 + b^2 = c^2$ where $c$ is the hypotenuse.
+    <strong>Find</strong> the missing length. Leave answers as integers or in simplified radical form.
+  </div>
+
+  <div class="problem">
+    <span class="q-num">1.</span>
+    Legs $a = 6$ and $b = 8$. Find the hypotenuse $c$.
+    <div class="work-space"></div>
+    Answer: $c =$ <span class="ans-line"></span>
+  </div>
+
+  <div class="problem">
+    <span class="q-num">2.</span>
+    Legs $a = 5$ and $b = 12$. Find the hypotenuse $c$.
+    <div class="work-space"></div>
+    Answer: $c =$ <span class="ans-line"></span>
+  </div>
+
+  <div class="problem">
+    <span class="q-num">3.</span>
+    One leg $a = 9$, hypotenuse $c = 15$. Find the other leg $b$.
+    <div class="work-space"></div>
+    Answer: $b =$ <span class="ans-line"></span>
+  </div>
+
+  <div class="problem">
+    <span class="q-num">4.</span>
+    Hypotenuse $c = 25$, one leg $b = 24$. Find the other leg $a$.
+    <div class="work-space"></div>
+    Answer: $a =$ <span class="ans-line"></span>
+  </div>
+
+  <!-- ===== Part B (page 2) ===== -->
+  <div class="part-header page-break">Part B &mdash; Pythagorean Word Problems</div>
+  <div class="directions">
+    <strong>Draw</strong> a right triangle for each situation. Label the two known sides and
+    the unknown side. Then apply the theorem.
+  </div>
+
+  <div class="problem word-problem">
+    <span class="q-num">5.</span>
+    A 13&nbsp;ft ladder leans against the back wall of a comedy club. The base of the ladder
+    is 5&nbsp;ft away from the wall. How high up the wall does the ladder reach?
+    <div class="work-space"></div>
+    Answer: <span class="ans-line"></span> ft
+  </div>
+
+  <div class="problem word-problem">
+    <span class="q-num">6.</span>
+    A rectangular stage at the Just For Laughs Festival measures 9&nbsp;ft by 12&nbsp;ft.
+    A microphone cable runs from one corner of the stage to the opposite corner along the
+    diagonal. How long is the diagonal?
+    <div class="work-space"></div>
+    Answer: <span class="ans-line"></span> ft
+  </div>
+
+  <!-- ===== Part C ===== -->
+  <div class="part-header">Part C &mdash; Distance Formula</div>
+  <div class="directions">
+    Use the Distance Formula
+    $\;d = \sqrt{(x_2 - x_1)^2 + (y_2 - y_1)^2}\;$
+    to find the distance between the two points. Leave answers as exact values
+    (integers or simplified radicals).
+  </div>
+
+  <div class="problem">
+    <span class="q-num">7.</span>
+    Find the distance between $(1,\,2)$ and $(4,\,6)$.
+    <div class="work-space"></div>
+    Answer: $d =$ <span class="ans-line"></span>
+  </div>
+
+  <div class="problem">
+    <span class="q-num">8.</span>
+    Find the distance between $(-3,\,4)$ and $(2,\,-8)$.
+    <div class="work-space"></div>
+    Answer: $d =$ <span class="ans-line"></span>
+  </div>
+
+  <!-- ===== Part D (page 3) ===== -->
+  <div class="part-header page-break">Part D &mdash; Mixed Challenge</div>
+  <div class="directions">
+    These problems connect both ideas. Show every step.
+  </div>
+
+  <div class="problem word-problem">
+    <span class="q-num">9.</span>
+    On a map of Montreal, the comedy stage is at point $(2,\,1)$ and the back exit is at
+    point $(7,\,13)$. Each unit on the map equals one meter. How far apart are the stage
+    and the exit?
+    <div class="work-space"></div>
+    Answer: <span class="ans-line"></span> meters
+  </div>
+
+  <div class="problem word-problem">
+    <span class="q-num">10.</span>
+    Triangle $\triangle ABC$ has vertices $A(0,\,0)$, $B(8,\,0)$, and $C(8,\,6)$.<br>
+    <strong>(a)</strong> Use the Distance Formula to find the length of side $AC$.<br>
+    <strong>(b)</strong> Verify your answer using the Pythagorean Theorem on the right triangle
+    with legs $AB$ and $BC$.<br>
+    Both methods should give the same length.
+    <div class="work-space" style="min-height: 180px;"></div>
+    Answer: $AC =$ <span class="ans-line"></span>
+  </div>
+
+  <div class="footer">
+    Created by Newton School &middot; 2026-05-27 &middot; &copy; Copyright
+  </div>
+
+</div>
+</body>
+</html>
